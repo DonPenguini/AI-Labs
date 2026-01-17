@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S18 MOSFET Saturation Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MOSFET Saturation Region Simulator</h1>
+            <p class="subtitle">Long-Channel NMOS Square-Law Model</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Left Panel - Controls -->
+            <div class="control-panel">
+                <h2>Parameters</h2>
+                
+                <div class="param-group">
+                    <label for="kn">
+                        Transconductance (k<sub>n</sub>)
+                        <span class="value-display" id="kn-value">1.00e-3 A/V²</span>
+                    </label>
+                    <input type="range" id="kn" min="-6" max="-2" step="0.1" value="-3">
+                    <div class="range-labels">
+                        <span>1e-6</span>
+                        <span>1e-2</span>
+                    </div>
+                </div>
+
+                <div class="param-group">
+                    <label for="vth">
+                        Threshold Voltage (V<sub>th</sub>)
+                        <span class="value-display" id="vth-value">1.0 V</span>
+                    </label>
+                    <input type="range" id="vth" min="0.2" max="2" step="0.1" value="1.0">
+                    <div class="range-labels">
+                        <span>0.2 V</span>
+                        <span>2.0 V</span>
+                    </div>
+                </div>
+
+                <div class="param-group">
+                    <label for="lambda">
+                        Channel Length Mod (λ)
+                        <span class="value-display" id="lambda-value">0.02 1/V</span>
+                    </label>
+                    <input type="range" id="lambda" min="0" max="0.1" step="0.005" value="0.02">
+                    <div class="range-labels">
+                        <span>0</span>
+                        <span>0.1 1/V</span>
+                    </div>
+                </div>
+
+                <div class="param-group">
+                    <label for="vgs">
+                        Gate-Source Voltage (V<sub>gs</sub>)
+                        <span class="value-display" id="vgs-value">3.0 V</span>
+                    </label>
+                    <input type="range" id="vgs" min="0" max="5" step="0.1" value="3.0">
+                    <div class="range-labels">
+                        <span>0 V</span>
+                        <span>5 V</span>
+                    </div>
+                </div>
+
+                <div class="param-group">
+                    <label for="vds">
+                        Drain-Source Voltage (V<sub>ds</sub>)
+                        <span class="value-display" id="vds-value">5.0 V</span>
+                    </label>
+                    <input type="range" id="vds" min="0" max="10" step="0.1" value="5.0">
+                    <div class="range-labels">
+                        <span>0 V</span>
+                        <span>10 V</span>
+                    </div>
+                </div>
+
+                <div class="equation-box">
+                    <h3>Equation</h3>
+                    <p class="equation">I<sub>d</sub> = 0.5 × k<sub>n</sub> × (V<sub>gs</sub> - V<sub>th</sub>)² × (1 + λ × V<sub>ds</sub>)</p>
+                </div>
+            </div>
+
+            <!-- Right Panel - Visualization -->
+            <div class="visualization-panel">
+                <div class="result-card">
+                    <h2>Drain Current</h2>
+                    <div class="current-display" id="id-display">
+                        <span class="current-value">2.00</span>
+                        <span class="current-unit">mA</span>
+                    </div>
+                    <div class="status-indicator" id="status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Saturation Region</span>
+                    </div>
+                </div>
+
+                <div class="mosfet-visual">
+                    <svg id="mosfet-svg" viewBox="0 0 400 300">
+                        <!-- MOSFET Structure -->
+                        <defs>
+                            <linearGradient id="channelGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:0" />
+                                <stop offset="50%" style="stop-color:#4CAF50;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#4CAF50;stop-opacity:0" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Substrate -->
+                        <rect x="100" y="180" width="200" height="80" fill="#34495e" opacity="0.3"/>
+                        
+                        <!-- Source and Drain -->
+                        <rect x="110" y="150" width="30" height="30" fill="#2c3e50" id="source"/>
+                        <rect x="260" y="150" width="30" height="30" fill="#2c3e50" id="drain"/>
+                        
+                        <!-- Gate Oxide -->
+                        <rect x="100" y="140" width="200" height="5" fill="#95a5a6"/>
+                        
+                        <!-- Gate -->
+                        <rect x="100" y="110" width="200" height="25" fill="#e74c3c" id="gate"/>
+                        
+                        <!-- Channel (animated) -->
+                        <rect x="140" y="155" width="120" height="15" fill="url(#channelGradient)" id="channel" opacity="0"/>
+                        
+                        <!-- Electron flow particles -->
+                        <g id="particles"></g>
+                        
+                        <!-- Labels -->
+                        <text x="125" y="105" fill="#fff" font-size="12" text-anchor="middle">Gate</text>
+                        <text x="125" y="170" fill="#fff" font-size="12" text-anchor="middle">S</text>
+                        <text x="275" y="170" fill="#fff" font-size="12" text-anchor="middle">D</text>
+                        
+                        <!-- Voltage indicators -->
+                        <text x="50" y="125" fill="#e74c3c" font-size="11" id="vgs-label">V_gs</text>
+                        <text x="320" y="170" fill="#3498db" font-size="11" id="vds-label">V_ds</text>
+                    </svg>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Assumptions: Saturation Region | Long Channel | V<sub>gs</sub> ≥ V<sub>th</sub></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

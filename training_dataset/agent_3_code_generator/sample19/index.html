@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transmission Line Delay Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+    <header>
+        <h1>Transmission Line Delay</h1>
+        <p class="subtitle">Calculate phase velocity and propagation delay ($t_d$)</p>
+    </header>
+
+    <div class="main-layout">
+        <aside class="controls">
+            <div class="control-section">
+                <h2>Parameters</h2>
+                
+                <div class="input-group">
+                    <label for="length">Line Length ($l$)</label>
+                    <div class="range-container">
+                        <input type="range" id="length" min="1" max="1000" step="1" value="100">
+                        <span id="val-length" class="value-display">100 m</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="permittivity">Relative Permittivity ($\epsilon_r$)</label>
+                    <div class="range-container">
+                        <input type="range" id="permittivity" min="1.0" max="10.0" step="0.1" value="2.2">
+                        <span id="val-perm" class="value-display">2.2</span>
+                    </div>
+                </div>
+
+                <button id="send-pulse-btn">Send Pulse</button>
+            </div>
+
+            <div class="results-section">
+                <h2>Calculated Results</h2>
+                
+                <div class="result-item">
+                    <span class="label">Phase Velocity ($v_p$):</span>
+                    <span id="res-vp" class="value">2.02e8 m/s</span>
+                    <small class="eq-hint">$v_p = \frac{c_0}{\sqrt{\epsilon_r}}$</small>
+                </div>
+
+                <div class="result-item">
+                    <span class="label">Time Delay ($t_d$):</span>
+                    <span id="res-td" class="value highlight">495 ns</span>
+                    <small class="eq-hint">$t_d = \frac{l}{v_p}$</small>
+                </div>
+            </div>
+        </aside>
+
+        <main class="visuals">
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <span>Signal Propagation Animation</span>
+                    <span id="timer-display">0.00 ns</span>
+                </div>
+                <canvas id="simCanvas"></canvas>
+                <div class="axis-labels">
+                    <span>Source (0 m)</span>
+                    <span>Load (<span id="len-label">100</span> m)</span>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3>Physics Insight</h3>
+                <p>
+                    
+
+[Image of coaxial cable cross section]
+
+                    The speed of a signal in a transmission line is determined by the medium surrounding the conductor. 
+                    As the dielectric constant ($\epsilon_r$) increases, the velocity decreases relative to the speed of light ($c_0$).
+                    <br><br>
+                    <strong>Current Speed:</strong> <span id="speed-ratio">67</span>% of $c_0$.
+                </p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

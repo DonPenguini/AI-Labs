@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideal Gas Law Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="lab-container">
+    <header>
+        <h1>Ideal Gas Law: $P = \frac{nRT}{V}$</h1>
+        <p class="subtitle">Observe the relationship between Pressure, Volume, Temperature, and Moles.</p>
+    </header>
+
+    <div class="main-interface">
+        <aside class="controls-panel">
+            <h2>State Variables</h2>
+
+            <div class="control-group">
+                <label for="moles">Moles of Gas ($n$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="moles" min="1" max="100" step="1" value="10">
+                    <span id="val-n" class="value-display">10.0 mol</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="temp">Temperature ($T$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="temp" min="200" max="1200" step="10" value="300">
+                    <span id="val-t" class="value-display">300 K</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="volume">Volume ($V$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="volume" min="0.1" max="10.0" step="0.1" value="1.0">
+                    <span id="val-v" class="value-display">1.00 m³</span>
+                </div>
+            </div>
+
+            <div class="readout-card">
+                <h3>Calculated Pressure ($P$)</h3>
+                <div class="pressure-value">
+                    <span id="res-p-pa">0</span> <span class="unit">Pa</span>
+                </div>
+                <div class="pressure-alt">
+                    <span id="res-p-atm">0.00</span> atm
+                </div>
+            </div>
+        </aside>
+
+        <main class="simulation-view">
+            <div class="canvas-wrapper">
+                <canvas id="gasCanvas"></canvas>
+                <div class="overlay-label top-label">Piston (Movable)</div>
+                <div class="overlay-label bottom-label">Gas Chamber</div>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Particle Behavior:</strong> Higher Temperature increases particle speed (kinetic energy). Smaller Volume increases collision frequency with walls, raising Pressure.</p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
