@@ -1,0 +1,236 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #9b59b6;
+    --accent-color: #e74c3c;
+    --bg-color: #f4f7f6;
+    --panel-bg: #ffffff;
+    --text-color: #2c3e50;
+    --chart-bg: #ecf0f1;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1100px;
+    width: 100%;
+    background: var(--panel-bg);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+h1 { margin: 0; }
+.formula-box { font-size: 1.2rem; margin: 10px 0; }
+.subtitle { color: #7f8c8d; font-size: 0.9rem; }
+
+.simulation-layout {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* Controls Panel */
+.controls-panel {
+    flex: 1;
+    min-width: 300px;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.panel-header h3 { margin: 0; font-size: 1.1rem; }
+
+.action-btn {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+.action-btn:hover { background: #eee; }
+
+.sliders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.class-label {
+    font-weight: bold;
+    width: 30px;
+    color: var(--text-color);
+}
+
+.input-slider {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.logit-val {
+    font-family: monospace;
+    width: 40px;
+    text-align: right;
+    color: var(--primary-color);
+}
+
+.temp-control {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+.note { font-size: 0.75rem; color: #888; margin-top: 5px; font-style: italic; }
+
+/* Visualization Panel */
+.viz-panel {
+    flex: 2;
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.charts-wrapper {
+    display: flex;
+    align-items: center; /* Center arrow vertically */
+    justify-content: space-between;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.chart-column {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-column h3 {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.bar-chart {
+    flex-grow: 1;
+    background: var(--chart-bg);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end; /* Bars grow from bottom */
+    justify-content: space-around;
+    padding: 10px;
+    position: relative;
+    border-bottom: 2px solid #ccc;
+}
+
+.bar-wrapper {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    position: relative;
+}
+
+.bar {
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s;
+    min-height: 2px; /* Ensure visibility */
+    position: relative;
+}
+
+/* Tooltip for value */
+.bar-value {
+    position: absolute;
+    top: -20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+/* Colors for specific classes to distinguish them */
+.bar-0 { background-color: #e74c3c; }
+.bar-1 { background-color: #3498db; }
+.bar-2 { background-color: #f1c40f; }
+.bar-3 { background-color: #2ecc71; }
+.bar-4 { background-color: #9b59b6; }
+
+/* Operator Arrow */
+.math-operator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    color: #7f8c8d;
+}
+
+.arrow { font-size: 2rem; }
+.op-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Calculation Details */
+.calc-details {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.detail-row {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.highlight-val {
+    font-weight: bold;
+    color: var(--text-color);
+    font-family: monospace;
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .simulation-layout { flex-direction: column; }
+    .charts-wrapper { flex-direction: column; height: auto; gap: 20px; }
+    .bar-chart { height: 200px; width: 100%; }
+    .arrow { transform: rotate(90deg); }
+}

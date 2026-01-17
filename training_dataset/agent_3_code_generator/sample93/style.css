@@ -1,0 +1,201 @@
+:root {
+    --bg-color: #f0f2f5;
+    --panel-bg: #ffffff;
+    --text-color: #333;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary: #64748b;
+    --accent-red: #ef4444;   
+    --accent-blue: #3b82f6;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sim-layout {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+    background: var(--panel-bg);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 900px) {
+    .sim-layout { grid-template-columns: 1fr; }
+}
+
+/* Controls Panel */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Training Panel Styling */
+.training-panel {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    border: 1px solid #e2e8f0;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85em;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn.primary {
+    background-color: var(--primary);
+    color: white;
+}
+.btn.primary:hover { background-color: var(--primary-hover); }
+.btn.primary:active { transform: translateY(1px); }
+
+.btn.secondary {
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    color: var(--secondary);
+}
+.btn.secondary:hover { background-color: #f1f5f9; }
+
+.instruction-text {
+    font-size: 0.85em;
+    color: #94a3b8;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    width: 100%;
+}
+
+/* Manual Controls */
+.control-group { margin-bottom: 15px; }
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+input[type=range] {
+    width: 100%;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.equation-box {
+    background: #eff6ff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #dbeafe;
+}
+
+.math-display {
+    color: #1e3a8a;
+    font-weight: 600;
+    overflow-x: auto;
+}
+
+/* Visualization */
+.visualization {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    cursor: crosshair;
+}
+
+.legend {
+    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 0.9em;
+    color: #475569;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.dot.class1 { background-color: var(--accent-blue); }
+.dot.class0 { background-color: var(--accent-red); }

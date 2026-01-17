@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Cross-Entropy Loss Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Binary Cross-Entropy Loss</h1>
+        <p class="subtitle">Visualizing the cost of wrong predictions in classification</p>
+    </header>
+
+    <main class="sim-layout">
+        
+        <section class="controls">
+            <div class="formula-card">
+                <h3>Loss Formula</h3>
+                <div id="math-formula">
+                    $$ L = -[y \log(p) + (1-y) \log(1-p)] $$
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>True Label ($y$)</label>
+                <div class="toggle-container">
+                    <button id="btn-y0" class="toggle-btn active" onclick="setLabel(0)">y = 0</button>
+                    <button id="btn-y1" class="toggle-btn" onclick="setLabel(1)">y = 1</button>
+                </div>
+                <p class="helper-text" id="label-desc">Target: Class 0 (Negative)</p>
+            </div>
+
+            <div class="control-group">
+                <label for="prob-p">Predicted Probability ($p$): <span id="val-p" class="highlight">0.10</span></label>
+                <input type="range" id="prob-p" min="0.01" max="0.99" step="0.01" value="0.10">
+                <div class="prob-bar-bg">
+                    <div id="prob-bar-fill" class="prob-bar-fill"></div>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <h4>Calculated Loss ($L$)</h4>
+                <span id="val-loss" class="loss-value">0.105</span>
+                <p id="loss-meaning" class="loss-desc">Low Loss: Good Prediction</p>
+            </div>
+        </section>
+
+        <section class="visualization">
+            <canvas id="lossCanvas"></canvas>
+            
+            
+            
+            <div class="visual-explanation">
+                <div class="prediction-visual">
+                    <div class="bucket" id="bucket-0">
+                        <span class="bucket-label">Class 0</span>
+                        <div class="liquid" id="liquid-0"></div>
+                    </div>
+                    <div class="bucket" id="bucket-1">
+                        <span class="bucket-label">Class 1</span>
+                        <div class="liquid" id="liquid-1"></div>
+                    </div>
+                </div>
+                <p>The filled height represents the model's confidence ($p$) vs $(1-p)$.</p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

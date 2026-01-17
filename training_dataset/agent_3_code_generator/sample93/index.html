@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistic Regression Training Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Logistic Regression: Training Visualizer</h1>
+        <p class="subtitle">Watch Gradient Descent find the optimal Boundary</p>
+    </header>
+
+    <main class="sim-layout">
+        <section class="controls">
+            
+            <div class="training-panel">
+                <h3>Training Control</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Epoch</span>
+                        <span id="epoch-display" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Log Loss</span>
+                        <span id="loss-display" class="stat-value">0.000</span>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="btn-train" class="btn primary">Start Training</button>
+                    <button id="btn-reset" class="btn secondary">Reset / New Data</button>
+                </div>
+                <p class="instruction-text">Click "Start Training" to animate the learning steps.</p>
+            </div>
+
+            <hr>
+
+            <h3>Manual Parameters</h3>
+            <div class="control-group">
+                <label for="w1">Weight $w_1$ (x-coeff): <span id="val-w1">1.0</span></label>
+                <input type="range" id="w1" min="-5" max="5" step="0.1" value="0.1">
+            </div>
+
+            <div class="control-group">
+                <label for="w2">Weight $w_2$ (y-coeff): <span id="val-w2">1.0</span></label>
+                <input type="range" id="w2" min="-5" max="5" step="0.1" value="0.5">
+            </div>
+
+            <div class="control-group">
+                <label for="b">Bias $b$ (Intercept): <span id="val-b">0.0</span></label>
+                <input type="range" id="b" min="-10" max="10" step="0.1" value="0.0">
+            </div>
+
+            <div class="equation-box">
+                <div id="boundary-eq" class="math-display">
+                    $$ 0.1x_1 + 0.5x_2 + 0.0 = 0 $$
+                </div>
+            </div>
+        </section>
+
+        <section class="visualization">
+            <canvas id="simCanvas"></canvas>
+            <div class="legend">
+                <span class="dot class1"></span> Class 1 (True)
+                <span class="dot class0"></span> Class 0 (True)
+                <span class="legend-text">Background: Model Probability</span>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

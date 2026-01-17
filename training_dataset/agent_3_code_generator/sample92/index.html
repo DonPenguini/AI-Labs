@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearson Correlation Animator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Pearson Correlation Animator</h1>
+            <div class="formula-box">
+                $$ r = \frac{\text{Cov}(x,y)}{\sigma_x \cdot \sigma_y} $$
+            </div>
+        </header>
+
+        <div class="simulation-layout">
+            
+            <div class="controls-panel">
+                <div class="header-row">
+                    <h3>Controls</h3>
+                    <button id="demoBtn" class="demo-btn">▶ Start Animation Loop</button>
+                </div>
+                
+                <div class="control-group">
+                    <div class="label-row">
+                        <label>Covariance (\(\text{Cov}_{xy}\))</label>
+                        <span id="covVal" class="val-display">0.0</span>
+                    </div>
+                    <input type="range" id="covInput" min="-100" max="100" step="1" value="0">
+                </div>
+
+                <div class="control-group">
+                    <div class="label-row">
+                        <label>Std Dev X (\(\sigma_x\))</label>
+                        <span id="sxVal" class="val-display">10.0</span>
+                    </div>
+                    <input type="range" id="sxInput" min="1" max="20" step="0.5" value="10">
+                </div>
+
+                <div class="control-group">
+                    <div class="label-row">
+                        <label>Std Dev Y (\(\sigma_y\))</label>
+                        <span id="syVal" class="val-display">10.0</span>
+                    </div>
+                    <input type="range" id="syInput" min="1" max="20" step="0.5" value="10">
+                </div>
+
+                <hr>
+
+                <div class="output-section">
+                    <h3>Correlation (\(r\))</h3>
+                    <div id="rOutput" class="r-display">0.000</div>
+                    <div class="meter-container">
+                        <div class="meter-bar"><div id="meterFill" class="meter-fill"></div></div>
+                        <div class="meter-labels"><span>-1</span><span>0</span><span>+1</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="scatterCanvas"></canvas>
+                
+                <div id="animOverlay" class="anim-overlay hidden">
+                    <div class="anim-card">
+                        <h4 id="animTitle">Title</h4>
+                        <p id="animText">Description goes here...</p>
+                    </div>
+                </div>
+                
+                <div class="overlay-info">Simulated Points: 300</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

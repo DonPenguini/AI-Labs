@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Linear Regression Slope Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Linear Regression Slope</h1>
+            <div class="formula">
+                $$ \beta_1 = \frac{Cov(x,y)}{Var(x)} $$
+            </div>
+        </header>
+
+        <main>
+            <section class="controls">
+                <div class="control-group">
+                    <label for="varX">Variance of X ($Var(x)$):</label>
+                    <input type="range" id="varX" min="1" max="200" value="50" step="1">
+                    <span id="varXValue" class="value-display">50</span>
+                </div>
+                <div class="control-group">
+                    <label for="covXY">Covariance of X,Y ($Cov(x,y)$):</label>
+                    <input type="range" id="covXY" min="-150" max="150" value="50" step="1">
+                    <span id="covXYValue" class="value-display">50</span>
+                </div>
+            </section>
+
+            <section class="output">
+                <p>Calculated Slope ($\beta_1$): <span id="beta1Value">1.00</span></p>
+            </section>
+
+            <section class="visualization">
+                <canvas id="simCanvas" width="640" height="400"></canvas>
+            </section>
+
+            <section class="description">
+                <p>
+                    This simulation visualizes how the regression slope $\beta_1$ is determined by the covariance between variables X and Y, and the variance of X.
+                </p>
+                <ul>
+                    <li>The <strong>Red Line</strong> is the fitted regression line with slope $\beta_1$.</li>
+                    <li>The <strong>Blue Dots</strong> are data points generated to match the chosen variance and covariance.</li>
+                    <li>Adjust <strong>$Var(x)$</strong> to see the spread of points change along the horizontal axis.</li>
+                    <li>Adjust <strong>$Cov(x,y)$</strong> to change the tilt and direction of the cloud and the line.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
