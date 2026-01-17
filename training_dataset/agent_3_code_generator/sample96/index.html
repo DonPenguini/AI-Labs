@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S96 Gradient Descent</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gradient Descent Optimizer</h1>
+            <p class="equation">w<sub>new</sub> = w - α · g</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="left-panel">
+                <div class="card control-card">
+                    <h2>Parameters</h2>
+                    
+                    <div class="param-group">
+                        <label>
+                            <span class="label-text">Current Weight (w)</span>
+                            <input type="number" id="weight" value="5" step="0.1">
+                        </label>
+                    </div>
+
+                    <div class="param-group">
+                        <label>
+                            <span class="label-text">Learning Rate (α)</span>
+                            <input type="number" id="alpha" value="0.1" step="0.01" min="0">
+                        </label>
+                        <input type="range" id="alphaSlider" min="0.001" max="1" step="0.001" value="0.1">
+                        <div class="slider-labels">
+                            <span>0.001</span>
+                            <span>1.0</span>
+                        </div>
+                    </div>
+
+                    <div class="param-group">
+                        <label>
+                            <span class="label-text">Gradient (g)</span>
+                            <input type="number" id="gradient" value="2" step="0.1">
+                        </label>
+                    </div>
+
+                    <button id="stepBtn" class="btn btn-primary">Single Step</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div class="card result-card">
+                    <h2>Update Result</h2>
+                    <div class="result-item">
+                        <span class="result-label">w<sub>old</sub>:</span>
+                        <span class="result-value" id="wOld">5.000</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">α · g:</span>
+                        <span class="result-value" id="stepSize">0.200</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">w<sub>new</sub>:</span>
+                        <span class="result-value" id="wNew">4.800</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Change:</span>
+                        <span class="result-value" id="change">-0.200</span>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h2>Loss Function Demo</h2>
+                    <div class="loss-selector">
+                        <label>
+                            <input type="radio" name="lossFunc" value="quadratic" checked>
+                            Quadratic: L = (w - 2)²
+                        </label>
+                        <label>
+                            <input type="radio" name="lossFunc" value="sine">
+                            Sine: L = sin(w) + 2
+                        </label>
+                        <label>
+                            <input type="radio" name="lossFunc" value="abs">
+                            Absolute: L = |w - 3|
+                        </label>
+                    </div>
+                    <button id="autoOptimize" class="btn btn-auto">Auto Optimize (20 steps)</button>
+                    <button id="clearHistory" class="btn btn-clear">Clear History</button>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="card viz-card">
+                    <h3>Loss Landscape & Trajectory</h3>
+                    <canvas id="lossCanvas"></canvas>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>Weight Evolution</h3>
+                    <canvas id="weightCanvas"></canvas>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>Step Size History</h3>
+                    <canvas id="stepCanvas"></canvas>
+                </div>
+
+                <div class="card stats-card">
+                    <h3>Optimization Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Steps Taken</div>
+                            <div class="stat-value" id="stepCount">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Current Loss</div>
+                            <div class="stat-value" id="currentLoss">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Min Loss</div>
+                            <div class="stat-value" id="minLoss">-</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Convergence</div>
+                            <div class="stat-value" id="convergence">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

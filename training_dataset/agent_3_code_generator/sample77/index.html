@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S77 First Order Step</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S77 First Order Step</h1>
+            <p class="subtitle">Transfer Function: G(s) = K/(τs + 1) | Step Response: y(t) = K(1 - e^(-t/τ))</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Gain (K): <span id="k-value">1.00</span>
+                    </label>
+                    <input type="range" id="k-slider" min="-10" max="10" step="0.1" value="1">
+                    <div class="range-labels">
+                        <span>-10</span>
+                        <span>10</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Time Constant (τ): <span id="tau-value">1.00 s</span>
+                    </label>
+                    <input type="range" id="tau-slider" min="0.1" max="10" step="0.1" value="1">
+                    <div class="range-labels">
+                        <span>0.1 s</span>
+                        <span>10 s</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Current Time (t): <span id="t-value">0.00 s</span>
+                    </label>
+                    <input type="range" id="t-slider" min="0" max="20" step="0.1" value="0">
+                    <div class="range-labels">
+                        <span>0 s</span>
+                        <span>20 s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <h2>Output at t = <span id="current-time">0.00</span> s</h2>
+                <div class="result-value" id="y-value">0.000</div>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="label">Steady State (K):</span>
+                        <span class="value" id="steady-state">1.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">% of Steady State:</span>
+                        <span class="value" id="percent-ss">0.0%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Time Constants:</span>
+                        <span class="value" id="time-constants">0.00τ</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Step Response</h3>
+                <div class="chart-container">
+                    <canvas id="response-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="characteristics">
+                <h3>System Characteristics</h3>
+                <div class="char-grid">
+                    <div class="char-card">
+                        <div class="char-label">Rise Time (10%-90%)</div>
+                        <div class="char-value" id="rise-time">2.20 s</div>
+                    </div>
+                    <div class="char-card">
+                        <div class="char-label">Settling Time (2%)</div>
+                        <div class="char-value" id="settling-time">4.00 s</div>
+                    </div>
+                    <div class="char-card">
+                        <div class="char-label">Time to 63.2% (1τ)</div>
+                        <div class="char-value" id="one-tau">1.00 s</div>
+                    </div>
+                    <div class="char-card">
+                        <div class="char-label">Final Value</div>
+                        <div class="char-value" id="final-value">1.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h3>Time Constant Milestones</h3>
+                <div class="milestone-container">
+                    <div class="milestone">
+                        <div class="milestone-label">1τ</div>
+                        <div class="milestone-value">63.2%</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-label">2τ</div>
+                        <div class="milestone-value">86.5%</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-label">3τ</div>
+                        <div class="milestone-value">95.0%</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-label">4τ</div>
+                        <div class="milestone-value">98.2%</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-label">5τ</div>
+                        <div class="milestone-value">99.3%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>⚙️ First-Order System Characteristics</h4>
+                <ul>
+                    <li><strong>Time Constant (τ):</strong> Time to reach 63.2% of final value</li>
+                    <li><strong>Settling Time:</strong> ~4τ (98.2% of final value)</li>
+                    <li><strong>No Overshoot:</strong> First-order systems never overshoot</li>
+                    <li><strong>Exponential Response:</strong> Asymptotic approach to steady state</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

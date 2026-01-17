@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S76 FM Bandwidth</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S76 FM Bandwidth</h1>
+            <p class="subtitle">Carson's Rule: BW ≈ 2(Δf + fm)</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Peak Frequency Deviation (Δf): <span id="delta-value">75 kHz</span>
+                    </label>
+                    <input type="range" id="delta-slider" min="1" max="200000" step="100" value="75000">
+                    <div class="range-labels">
+                        <span>1 Hz</span>
+                        <span>200 kHz</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Modulating Frequency (fm): <span id="fm-value">15 kHz</span>
+                    </label>
+                    <input type="range" id="fm-slider" min="1" max="50000" step="10" value="15000">
+                    <div class="range-labels">
+                        <span>1 Hz</span>
+                        <span>50 kHz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <h2>Carson's Bandwidth</h2>
+                <div class="result-value" id="bw-value">180 kHz</div>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="label">Modulation Index (β):</span>
+                        <span class="value" id="beta-value">5.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Type:</span>
+                        <span class="value" id="mod-type">Wideband FM</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Bandwidth Ratio:</span>
+                        <span class="value" id="bw-ratio">12.0×</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Frequency Spectrum</h3>
+                <div class="chart-container">
+                    <canvas id="spectrum-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>FM Signal Visualization</h3>
+                <div class="chart-container">
+                    <canvas id="signal-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="bandwidth-breakdown">
+                <h3>Bandwidth Components</h3>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <div class="component-label">Deviation Term</div>
+                        <div class="component-value" id="deviation-term">150 kHz</div>
+                        <div class="component-formula">2 × Δf</div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-label">Modulation Term</div>
+                        <div class="component-value" id="modulation-term">30 kHz</div>
+                        <div class="component-formula">2 × fm</div>
+                    </div>
+                    <div class="component-card highlight">
+                        <div class="component-label">Total Bandwidth</div>
+                        <div class="component-value" id="total-bw">180 kHz</div>
+                        <div class="component-formula">2(Δf + fm)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📻 FM Bandwidth Analysis</h4>
+                <ul>
+                    <li><strong>Carson's Rule:</strong> Approximates 98% of FM signal power</li>
+                    <li><strong>Narrowband FM:</strong> β < 0.3 → BW ≈ 2fm</li>
+                    <li><strong>Wideband FM:</strong> β > 1 → BW ≈ 2Δf</li>
+                    <li><strong>Modulation Index:</strong> β = Δf / fm</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

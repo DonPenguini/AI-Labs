@@ -1,0 +1,387 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    font-weight: 300;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 25px;
+}
+
+.controls-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.control-card, .metrics-card, .formula-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.control-card h2, .metrics-card h2, .formula-card h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    border-bottom: 3px solid #7e22ce;
+    padding-bottom: 10px;
+}
+
+.parameter-group {
+    margin-bottom: 25px;
+}
+
+.parameter-group label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.param-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.param-value {
+    font-weight: 700;
+    color: #7e22ce;
+    font-size: 1.1rem;
+}
+
+.param-unit {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #1e3c72, #7e22ce);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    border: none;
+}
+
+.calculate-btn, .reset-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calculate-btn {
+    background: linear-gradient(135deg, #1e3c72, #7e22ce);
+    color: white;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(126,34,206,0.4);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+}
+
+.reset-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.reset-btn:hover {
+    background: #c0392b;
+    transform: translateY(-3px);
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 4px solid #7e22ce;
+    transition: transform 0.2s;
+}
+
+.metric-item:hover {
+    transform: translateX(5px);
+}
+
+.metric-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.metric-value {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #1e3c72;
+    font-family: monospace;
+}
+
+.warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    margin-top: 15px;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+}
+
+.warning.hidden {
+    display: none;
+}
+
+.formula-card {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.formula {
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: #1e3c72;
+    border-left: 3px solid #7e22ce;
+}
+
+.visualization-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.viz-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.viz-card h3 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+canvas {
+    width: 100% !important;
+    height: 250px !important;
+    display: block;
+}
+
+.queue-container {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.servers-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.server {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    animation: serverPulse 2s infinite;
+}
+
+.server.busy {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.server.idle {
+    background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+.queue-line {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.customer {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    animation: customerBounce 1s infinite;
+}
+
+.queue-label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes serverPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes customerBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .visualization-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S99 Geometric Series Sum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Geometric Series Calculator</h1>
+            <p class="formula">S = a · (1 - r<sup>n</sup>) / (1 - r)</p>
+            <p class="subtitle">Finite Geometric Series Sum</p>
+        </header>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <div class="card params-card">
+                    <h2>Series Parameters</h2>
+                    
+                    <div class="param-block">
+                        <label class="param-label">
+                            <span class="label-text">First Term (a)</span>
+                        </label>
+                        <input type="number" id="firstTerm" value="1" step="0.1">
+                    </div>
+
+                    <div class="param-block">
+                        <label class="param-label">
+                            <span class="label-text">Common Ratio (r)</span>
+                            <span class="value-display" id="ratioDisplay">0.5</span>
+                        </label>
+                        <input type="range" id="ratio" min="-2" max="2" step="0.01" value="0.5">
+                        <div class="range-labels">
+                            <span>-2</span>
+                            <span>2</span>
+                        </div>
+                        <div class="ratio-warning" id="ratioWarning">
+                            ⚠️ r = 1 is undefined
+                        </div>
+                    </div>
+
+                    <div class="param-block">
+                        <label class="param-label">
+                            <span class="label-text">Number of Terms (n)</span>
+                            <span class="value-display" id="termsDisplay">10</span>
+                        </label>
+                        <input type="range" id="terms" min="1" max="50" step="1" value="10">
+                        <div class="range-labels">
+                            <span>1</span>
+                            <span>50</span>
+                        </div>
+                    </div>
+
+                    <button id="calculateBtn" class="btn btn-primary">Calculate Sum</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div class="card result-card">
+                    <h2>Sum Result</h2>
+                    <div class="sum-display">
+                        <div class="sum-label">S =</div>
+                        <div class="sum-value" id="sumValue">1.998</div>
+                    </div>
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <span>Numerator: a(1 - r<sup>n</sup>)</span>
+                            <span id="numerator">0.999</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Denominator: (1 - r)</span>
+                            <span id="denominator">0.500</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>r<sup>n</sup></span>
+                            <span id="rPowerN">0.001</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card properties-card">
+                    <h2>Series Properties</h2>
+                    <div class="property-item">
+                        <span class="prop-label">Type:</span>
+                        <span class="prop-value" id="seriesType">Convergent</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="prop-label">Behavior:</span>
+                        <span class="prop-value" id="behavior">Decreasing</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="prop-label">Last Term:</span>
+                        <span class="prop-value" id="lastTerm">0.002</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="prop-label">Infinite Sum:</span>
+                        <span class="prop-value" id="infiniteSum">2.000</span>
+                    </div>
+                </div>
+
+                <div class="card examples-card">
+                    <h2>Quick Examples</h2>
+                    <button class="example-btn" data-example="halving">
+                        Halving Series<br><small>a=1, r=0.5, n=10</small>
+                    </button>
+                    <button class="example-btn" data-example="doubling">
+                        Doubling Series<br><small>a=1, r=2, n=8</small>
+                    </button>
+                    <button class="example-btn" data-example="alternating">
+                        Alternating<br><small>a=1, r=-0.5, n=10</small>
+                    </button>
+                    <button class="example-btn" data-example="fraction">
+                        Fraction<br><small>a=100, r=0.1, n=5</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="card viz-card full-width">
+                    <h3>Series Terms Visualization</h3>
+                    <canvas id="termsCanvas"></canvas>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>Partial Sums</h3>
+                    <canvas id="partialSumsCanvas"></canvas>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>Cumulative Sum Progress</h3>
+                    <canvas id="cumulativeCanvas"></canvas>
+                </div>
+
+                <div class="card table-card">
+                    <h3>Term-by-Term Breakdown</h3>
+                    <div class="table-scroll" id="termsTable"></div>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>Ratio Effect on Sum</h3>
+                    <canvas id="ratioEffectCanvas"></canvas>
+                </div>
+
+                <div class="card formula-card">
+                    <h3>Formula Derivation</h3>
+                    <div class="derivation">
+                        <div class="step">S = a + ar + ar² + ... + ar<sup>n-1</sup></div>
+                        <div class="step">rS = ar + ar² + ar³ + ... + ar<sup>n</sup></div>
+                        <div class="step">S - rS = a - ar<sup>n</sup></div>
+                        <div class="step">S(1 - r) = a(1 - r<sup>n</sup>)</div>
+                        <div class="step highlight">S = a(1 - r<sup>n</sup>) / (1 - r)</div>
+                    </div>
+                    <div class="note">
+                        Note: Formula undefined when r = 1 (arithmetic series)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

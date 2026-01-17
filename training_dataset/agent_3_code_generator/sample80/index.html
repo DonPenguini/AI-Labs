@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S80 M/M/c Queue Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>M/M/c Queue Analyzer</h1>
+            <p class="subtitle">Multi-Server Queueing System with Erlang C</p>
+        </header>
+
+        <div class="main-content">
+            <div class="controls-section">
+                <div class="control-card">
+                    <h2>System Parameters</h2>
+                    
+                    <div class="parameter-group">
+                        <label>
+                            <span class="param-label">Arrival Rate (λ)</span>
+                            <span class="param-value" id="lambdaValue">5.0</span>
+                            <span class="param-unit">customers/hour</span>
+                        </label>
+                        <input type="range" id="lambda" min="0.1" max="50" step="0.1" value="5">
+                    </div>
+
+                    <div class="parameter-group">
+                        <label>
+                            <span class="param-label">Service Rate (μ)</span>
+                            <span class="param-value" id="muValue">2.0</span>
+                            <span class="param-unit">customers/hour/server</span>
+                        </label>
+                        <input type="range" id="mu" min="0.1" max="50" step="0.1" value="2">
+                    </div>
+
+                    <div class="parameter-group">
+                        <label>
+                            <span class="param-label">Number of Servers (c)</span>
+                            <span class="param-value" id="cValue">3</span>
+                            <span class="param-unit">servers</span>
+                        </label>
+                        <input type="range" id="c" min="1" max="20" step="1" value="3">
+                    </div>
+
+                    <button id="calculateBtn" class="calculate-btn">Calculate Metrics</button>
+                    <button id="resetBtn" class="reset-btn">Reset</button>
+                </div>
+
+                <div class="metrics-card">
+                    <h2>Performance Metrics</h2>
+                    <div class="metric-item">
+                        <span class="metric-label">Utilization (ρ)</span>
+                        <span class="metric-value" id="rhoValue">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">P(wait) - Erlang C</span>
+                        <span class="metric-value" id="pwaitValue">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Queue Length (L<sub>q</sub>)</span>
+                        <span class="metric-value" id="lqValue">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Wait Time (W<sub>q</sub>)</span>
+                        <span class="metric-value" id="wqValue">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">System Time (W)</span>
+                        <span class="metric-value" id="wValue">-</span>
+                    </div>
+                    <div id="stabilityWarning" class="warning hidden">
+                        ⚠️ System unstable: ρ ≥ 1
+                    </div>
+                </div>
+
+                <div class="formula-card">
+                    <h2>Key Formulas</h2>
+                    <div class="formula">ρ = λ / (c · μ)</div>
+                    <div class="formula">P<sub>wait</sub> = Erlang C Formula</div>
+                    <div class="formula">L<sub>q</sub> = (P<sub>wait</sub> · ρ) / (1 - ρ)</div>
+                    <div class="formula">W<sub>q</sub> = L<sub>q</sub> / λ</div>
+                </div>
+            </div>
+
+            <div class="visualization-section">
+                <div class="viz-card">
+                    <h3>Server Utilization</h3>
+                    <canvas id="utilizationChart"></canvas>
+                </div>
+
+                <div class="viz-card">
+                    <h3>Queue Visualization</h3>
+                    <div id="queueViz" class="queue-container"></div>
+                </div>
+
+                <div class="viz-card">
+                    <h3>Metrics vs Number of Servers</h3>
+                    <canvas id="metricsChart"></canvas>
+                </div>
+
+                <div class="viz-card">
+                    <h3>Utilization Heatmap (λ vs c)</h3>
+                    <canvas id="heatmapChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

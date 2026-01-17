@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S72 FFT Resolution</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S72 FFT Resolution</h1>
+            <p class="subtitle">Fourier Series Resolution: Frequency Bin Width df = fs/N</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Sampling Rate (fs): <span id="fs-value">1000 Hz</span>
+                    </label>
+                    <input type="range" id="fs-slider" min="1" max="100000" step="1" value="1000">
+                    <div class="range-labels">
+                        <span>1 Hz</span>
+                        <span>100 kHz</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Number of Samples (N): <span id="n-value">1024</span>
+                    </label>
+                    <input type="range" id="n-slider" min="2" max="16384" step="2" value="1024">
+                    <div class="range-labels">
+                        <span>2</span>
+                        <span>16384</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <h2>Frequency Bin Width (df)</h2>
+                <div class="result-value" id="df-value">0.98 Hz</div>
+                <div class="formula" id="formula">df = 1000 / 1024 Hz</div>
+            </div>
+
+            <div class="visualization">
+                <h3>Frequency Spectrum Visualization</h3>
+                <div class="chart-container">
+                    <canvas id="spectrum-canvas"></canvas>
+                </div>
+                <div class="chart-note">
+                    Each bin represents a frequency range of <span id="bin-width">0.98</span> Hz
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Key Insights</h4>
+                <ul>
+                    <li>Higher sampling rate (fs) → Wider frequency bin spacing</li>
+                    <li>More samples (N) → Narrower frequency bin spacing (better resolution)</li>
+                    <li>To resolve two closely spaced frequencies, they must be at least df apart</li>
+                    <li>FFT resolution is independent of signal frequency content</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

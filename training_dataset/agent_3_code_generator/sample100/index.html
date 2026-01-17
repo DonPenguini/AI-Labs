@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S100 Binomial PMF Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Binomial PMF Simulator</h1>
+            <p class="subtitle">Interactive visualization of the Binomial Probability Mass Function</p>
+            <div class="formula-box">
+                <p class="formula">P(X = k) = C(n, k) × p<sup>k</sup> × (1 - p)<sup>n - k</sup></p>
+            </div>
+        </header>
+
+        <!-- Controls Section -->
+        <section class="controls-section">
+            <h2>Parameters</h2>
+            <div class="controls-grid">
+                <!-- n control -->
+                <div class="control-group">
+                    <label for="n-slider">Number of Trials (n)</label>
+                    <input type="range" id="n-slider" min="1" max="100" value="10" class="slider slider-n">
+                    <input type="number" id="n-input" min="1" max="100" value="10" class="number-input">
+                </div>
+
+                <!-- p control -->
+                <div class="control-group">
+                    <label for="p-slider">Success Probability (p)</label>
+                    <input type="range" id="p-slider" min="0" max="1" step="0.01" value="0.5" class="slider slider-p">
+                    <input type="number" id="p-input" min="0" max="1" step="0.01" value="0.5" class="number-input">
+                </div>
+
+                <!-- k control -->
+                <div class="control-group">
+                    <label for="k-slider">Number of Successes (k)</label>
+                    <input type="range" id="k-slider" min="0" max="10" value="5" class="slider slider-k">
+                    <input type="number" id="k-input" min="0" max="10" value="5" class="number-input">
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Display -->
+        <section class="result-section">
+            <h2>Result</h2>
+            <div class="result-box" id="result-box">
+                <p class="result-label">P(X = <span id="result-k">5</span>) = </p>
+                <p class="result-value" id="result-value">0.24609375</p>
+                <p class="result-percent" id="result-percent">≈ 24.6094%</p>
+            </div>
+        </section>
+
+        <!-- Distribution Chart -->
+        <section class="chart-section">
+            <h2>Probability Distribution</h2>
+            <div class="chart-container">
+                <canvas id="distributionChart"></canvas>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #8b5cf6;"></span>
+                    <span>Probability</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #6366f1;"></span>
+                    <span>Selected k</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h2>About</h2>
+            <div class="info-content">
+                <p><strong>Domain:</strong> Statistics</p>
+                <p><strong>Description:</strong> Binomial probability mass function simulation</p>
+                <p><strong>Assumptions:</strong> Independent Bernoulli trials</p>
+                <p class="info-text">
+                    The binomial distribution models the number of successes in n independent trials, 
+                    each with probability p of success. The PMF gives the probability of exactly k successes.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

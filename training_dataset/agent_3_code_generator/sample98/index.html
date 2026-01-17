@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S98 Discrete Exponential Growth/Decay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Discrete Exponential Growth/Decay</h1>
+            <p class="formula">x<sub>n</sub> = x<sub>0</sub> · (1 + r)<sup>n</sup></p>
+            <p class="subtitle">Geometric Progression Calculator</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="left-panel">
+                <div class="card params-card">
+                    <h2>Parameters</h2>
+                    
+                    <div class="param-group">
+                        <label class="param-label">
+                            <span class="label-text">Initial Value (x<sub>0</sub>)</span>
+                        </label>
+                        <input type="number" id="x0" value="100" step="1">
+                    </div>
+
+                    <div class="param-group">
+                        <label class="param-label">
+                            <span class="label-text">Growth Rate (r)</span>
+                            <span class="rate-value" id="rateDisplay">0.05</span>
+                        </label>
+                        <input type="range" id="rate" min="-0.99" max="2" step="0.01" value="0.05">
+                        <div class="range-labels">
+                            <span>-0.99 (decay)</span>
+                            <span>2.0 (growth)</span>
+                        </div>
+                        <div class="rate-info">
+                            <div class="info-pill" id="rateType">Growth</div>
+                            <div class="info-pill" id="ratePercent">+5.0%</div>
+                        </div>
+                    </div>
+
+                    <div class="param-group">
+                        <label class="param-label">
+                            <span class="label-text">Number of Steps (n)</span>
+                            <span class="rate-value" id="stepsDisplay">10</span>
+                        </label>
+                        <input type="range" id="steps" min="0" max="100" step="1" value="10">
+                        <div class="range-labels">
+                            <span>0</span>
+                            <span>100</span>
+                        </div>
+                    </div>
+
+                    <button id="calculateBtn" class="btn btn-primary">Calculate</button>
+                    <button id="animateBtn" class="btn btn-animate">Animate Growth</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div class="card result-card">
+                    <h2>Result</h2>
+                    <div class="result-main">
+                        <div class="result-label">x<sub>n</sub></div>
+                        <div class="result-value" id="finalValue">100.00</div>
+                    </div>
+                    <div class="result-details">
+                        <div class="detail-row">
+                            <span>Base (1 + r):</span>
+                            <span id="base">1.050</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Multiplier (1 + r)<sup>n</sup>:</span>
+                            <span id="multiplier">1.629</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Change:</span>
+                            <span id="totalChange">+62.89</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Change %:</span>
+                            <span id="changePercent">+62.89%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card scenarios-card">
+                    <h2>Quick Scenarios</h2>
+                    <button class="scenario-btn" data-scenario="population">
+                        Population Growth<br><small>x₀=1000, r=0.02</small>
+                    </button>
+                    <button class="scenario-btn" data-scenario="investment">
+                        Investment<br><small>x₀=1000, r=0.07</small>
+                    </button>
+                    <button class="scenario-btn" data-scenario="decay">
+                        Radioactive Decay<br><small>x₀=1000, r=-0.1</small>
+                    </button>
+                    <button class="scenario-btn" data-scenario="compound">
+                        Compound Interest<br><small>x₀=10000, r=0.05</small>
+                    </button>
+                </div>
+
+                <div class="card info-card">
+                    <h2>Characteristics</h2>
+                    <div class="char-item">
+                        <span class="char-label">Doubling Time:</span>
+                        <span class="char-value" id="doublingTime">-</span>
+                    </div>
+                    <div class="char-item">
+                        <span class="char-label">Half-Life:</span>
+                        <span class="char-value" id="halfLife">-</span>
+                    </div>
+                    <div class="char-item">
+                        <span class="char-label">Type:</span>
+                        <span class="char-value" id="sequenceType">Geometric</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="card chart-card full-width">
+                    <h3>Growth/Decay Trajectory</h3>
+                    <canvas id="trajectoryCanvas"></canvas>
+                </div>
+
+                <div class="card chart-card">
+                    <h3>Step-by-Step Values</h3>
+                    <canvas id="stepsCanvas"></canvas>
+                </div>
+
+                <div class="card chart-card">
+                    <h3>Growth Factor per Step</h3>
+                    <canvas id="factorCanvas"></canvas>
+                </div>
+
+                <div class="card table-card">
+                    <h3>Value Table</h3>
+                    <div class="table-container" id="valueTable"></div>
+                </div>
+
+                <div class="card comparison-card">
+                    <h3>Rate Comparison</h3>
+                    <canvas id="comparisonCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

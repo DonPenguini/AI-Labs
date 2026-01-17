@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S97 Exponential Moving Average</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Exponential Moving Average</h1>
+            <p class="formula">m<sub>t</sub> = β · m<sub>t-1</sub> + (1 - β) · x<sub>t</sub></p>
+        </header>
+
+        <div class="main-layout">
+            <div class="left-column">
+                <div class="card control-card">
+                    <h2>EMA Parameters</h2>
+                    
+                    <div class="param-section">
+                        <label class="param-label">
+                            <span class="label-name">Decay Factor (β)</span>
+                            <span class="label-value" id="betaDisplay">0.9</span>
+                        </label>
+                        <input type="range" id="betaSlider" min="0" max="0.999" step="0.001" value="0.9">
+                        <div class="range-labels">
+                            <span>0 (no memory)</span>
+                            <span>1 (full memory)</span>
+                        </div>
+                        <div class="beta-info">
+                            <small>Half-life ≈ <span id="halfLife">6.6</span> steps</small>
+                        </div>
+                    </div>
+
+                    <div class="param-section">
+                        <label class="param-label">
+                            <span class="label-name">Previous Average (m<sub>t-1</sub>)</span>
+                        </label>
+                        <input type="number" id="prevAvg" value="50" step="0.1">
+                    </div>
+
+                    <div class="param-section">
+                        <label class="param-label">
+                            <span class="label-name">Current Value (x<sub>t</sub>)</span>
+                        </label>
+                        <input type="number" id="currentValue" value="80" step="0.1">
+                    </div>
+
+                    <button id="updateBtn" class="btn btn-primary">Update EMA</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div class="card result-card">
+                    <h2>Calculation Breakdown</h2>
+                    <div class="calc-step">
+                        <span class="calc-label">β · m<sub>t-1</sub></span>
+                        <span class="calc-value" id="term1">45.00</span>
+                    </div>
+                    <div class="calc-step">
+                        <span class="calc-label">(1 - β) · x<sub>t</sub></span>
+                        <span class="calc-value" id="term2">8.00</span>
+                    </div>
+                    <div class="calc-divider"></div>
+                    <div class="calc-step result-highlight">
+                        <span class="calc-label">m<sub>t</sub> (New Average)</span>
+                        <span class="calc-value" id="newAvg">53.00</span>
+                    </div>
+                    <div class="calc-step">
+                        <span class="calc-label">Change</span>
+                        <span class="calc-value" id="change">+3.00</span>
+                    </div>
+                </div>
+
+                <div class="card weights-card">
+                    <h2>Weight Distribution</h2>
+                    <div class="weight-bar-container">
+                        <div class="weight-bar">
+                            <div class="weight-fill old-weight" id="oldWeight" style="width: 90%">
+                                <span class="weight-label">β = 90%</span>
+                            </div>
+                        </div>
+                        <div class="weight-bar">
+                            <div class="weight-fill new-weight" id="newWeight" style="width: 10%">
+                                <span class="weight-label">(1-β) = 10%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weight-legend">
+                        <div class="legend-item">
+                            <div class="legend-color old-weight"></div>
+                            <span>Weight on previous average</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color new-weight"></div>
+                            <span>Weight on current value</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="card viz-card">
+                    <h3>Time Series with EMA</h3>
+                    <canvas id="timeSeriesCanvas"></canvas>
+                    <div class="chart-controls">
+                        <button id="addRandom" class="btn-small">Add Random Point</button>
+                        <button id="addStep" class="btn-small">Add Step Change</button>
+                        <button id="clearSeries" class="btn-small">Clear Series</button>
+                    </div>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>EMA Response to Input</h3>
+                    <canvas id="responseCanvas"></canvas>
+                </div>
+
+                <div class="card viz-card">
+                    <h3>Weight Decay Over Time</h3>
+                    <canvas id="decayCanvas"></canvas>
+                </div>
+
+                <div class="card info-card">
+                    <h3>EMA Properties</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Effective Window</div>
+                            <div class="info-value" id="effectiveWindow">10</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Current EMA</div>
+                            <div class="info-value" id="currentEMA">50.00</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Lag Factor</div>
+                            <div class="info-value" id="lagFactor">0.90</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Smoothness</div>
+                            <div class="info-value" id="smoothness">High</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

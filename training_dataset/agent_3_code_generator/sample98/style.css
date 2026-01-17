@@ -1,0 +1,460 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+header h1 {
+    font-size: 3.2rem;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 15px rgba(0,0,0,0.5);
+    font-weight: 700;
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.formula {
+    font-size: 2.2rem;
+    font-family: 'Courier New', monospace;
+    background: rgba(255,255,255,0.1);
+    padding: 20px 40px;
+    border-radius: 15px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.2);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 25px;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+    animation: slideIn 0.6s ease-out;
+}
+
+.card h2 {
+    color: #2c5364;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #3a7bd5;
+    padding-bottom: 10px;
+}
+
+.card h3 {
+    color: #2c5364;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.param-group {
+    margin-bottom: 25px;
+}
+
+.param-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.label-text {
+    font-weight: 600;
+    color: #555;
+    font-size: 1.05rem;
+}
+
+.rate-value {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #00d2ff;
+    font-family: 'Courier New', monospace;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3a7bd5;
+    box-shadow: 0 0 0 4px rgba(58,123,213,0.1);
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #e74c3c, #f39c12, #00d2ff, #3a7bd5);
+    outline: none;
+    -webkit-appearance: none;
+    margin: 10px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+    border: 4px solid #3a7bd5;
+    transition: transform 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+    border: 4px solid #3a7bd5;
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 5px;
+}
+
+.rate-info {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.info-pill {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+#rateType {
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    color: white;
+}
+
+#ratePercent {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #2c5364;
+}
+
+.btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(58,123,213,0.5);
+}
+
+.btn-animate {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+}
+
+.btn-animate:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(245,87,108,0.5);
+}
+
+.btn-secondary {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #c0392b;
+    transform: translateY(-3px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.result-main {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #e8f4f8, #d4e9f7);
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.result-label {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.result-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2c5364;
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+}
+
+.result-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.detail-row span:first-child {
+    color: #555;
+    font-weight: 600;
+}
+
+.detail-row span:last-child {
+    color: #2c5364;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+}
+
+.scenario-btn {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: #555;
+    text-align: left;
+}
+
+.scenario-btn:hover {
+    border-color: #3a7bd5;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    transform: translateX(5px);
+}
+
+.scenario-btn small {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    font-weight: 400;
+}
+
+.char-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.char-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.char-value {
+    font-weight: 700;
+    color: #2c5364;
+    font-family: 'Courier New', monospace;
+}
+
+.chart-card.full-width {
+    grid-column: 1 / -1;
+}
+
+canvas {
+    width: 100% !important;
+    height: 250px !important;
+    display: block;
+    border-radius: 10px;
+}
+
+.chart-card.full-width canvas {
+    height: 350px !important;
+}
+
+.table-container {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.value-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.value-table th {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    color: white;
+    padding: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.value-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.value-table tr:hover {
+    background: #f8f9fa;
+}
+
+.value-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.result-value.animating {
+    animation: pulse 0.5s ease-out;
+}
+
+@media (max-width: 1400px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .right-panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .formula {
+        font-size: 1.4rem;
+        padding: 15px 25px;
+    }
+    
+    .result-value {
+        font-size: 2rem;
+    }
+}

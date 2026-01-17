@@ -1,0 +1,261 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.equation {
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0.95;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 20px;
+}
+
+.controls-panel {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: fadeInLeft 0.6s ease-out;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.controls-panel h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.matrix-section {
+    margin-bottom: 20px;
+}
+
+.matrix-section h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.vector-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+input[type="number"] {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+input[type="number"].full-width {
+    width: 100%;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+#timeValue {
+    color: #667eea;
+    font-weight: bold;
+}
+
+.simulate-btn, .reset-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.simulate-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.simulate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+}
+
+.simulate-btn:active {
+    transform: translateY(0);
+}
+
+.reset-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.reset-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+.info-panel {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.info-panel h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.info-panel div {
+    margin-bottom: 8px;
+    color: #555;
+    font-family: monospace;
+}
+
+.visualization-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    animation: fadeInRight 0.6s ease-out;
+}
+
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: scaleIn 0.5s ease-out;
+}
+
+.chart-container h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+canvas {
+    width: 100% !important;
+    height: 250px !important;
+    display: block;
+}
+
+.phase-plot canvas {
+    height: 300px !important;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 1024px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+    
+    .controls-panel {
+        max-height: none;
+    }
+}

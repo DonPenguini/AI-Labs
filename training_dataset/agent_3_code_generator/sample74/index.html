@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S74 Butterworth Magnitude</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S74 Butterworth Magnitude</h1>
+            <p class="subtitle">Butterworth Low-Pass Filter: |H(jω)| = 1/√(1 + (ω/ωc)^(2n))</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Filter Order (n): <span id="n-value">2</span>
+                    </label>
+                    <input type="range" id="n-slider" min="1" max="10" step="1" value="2">
+                    <div class="range-labels">
+                        <span>1</span>
+                        <span>10</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Cutoff Frequency (ωc): <span id="wc-value">1000 rad/s</span>
+                    </label>
+                    <input type="range" id="wc-slider" min="1" max="10000" step="1" value="1000">
+                    <div class="range-labels">
+                        <span>1 rad/s</span>
+                        <span>10k rad/s</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Test Frequency (ω): <span id="w-value">500 rad/s</span>
+                    </label>
+                    <input type="range" id="w-slider" min="0" max="20000" step="1" value="500">
+                    <div class="range-labels">
+                        <span>0 rad/s</span>
+                        <span>20k rad/s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <h2>Magnitude Response</h2>
+                <div class="result-value" id="mag-value">0.894</div>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="label">Magnitude (dB):</span>
+                        <span class="value" id="mag-db">-0.97 dB</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Attenuation:</span>
+                        <span class="value" id="attenuation">10.6%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">ω/ωc Ratio:</span>
+                        <span class="value" id="ratio">0.50</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Frequency Response</h3>
+                <div class="chart-container">
+                    <canvas id="response-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>🔊 Butterworth Filter Characteristics</h4>
+                <ul>
+                    <li><strong>Maximally Flat:</strong> No ripple in passband or stopband</li>
+                    <li><strong>-3dB Point:</strong> Magnitude = 0.707 at ω = ωc</li>
+                    <li><strong>Roll-off:</strong> -20n dB/decade (n = filter order)</li>
+                    <li><strong>Higher Order:</strong> Steeper transition, better selectivity</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

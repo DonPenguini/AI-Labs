@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S75 AM Sideband Power</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S75 AM Sideband Power</h1>
+            <p class="subtitle">AM Modulation: s(t) = Ac(1 + m·cos(ωm t))cos(ωc t)</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Modulation Index (m): <span id="m-value">0.50</span>
+                    </label>
+                    <input type="range" id="m-slider" min="0" max="1" step="0.01" value="0.5">
+                    <div class="range-labels">
+                        <span>0.00</span>
+                        <span>1.00</span>
+                    </div>
+                    <div class="modulation-status" id="mod-status">50% Modulation</div>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <h2>Sideband Power Fraction</h2>
+                <div class="result-value" id="sideband-value">0.125</div>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="label">Sideband Power (%):</span>
+                        <span class="value" id="sideband-percent">12.5%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Carrier Power (%):</span>
+                        <span class="value" id="carrier-percent">87.5%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Efficiency:</span>
+                        <span class="value" id="efficiency">12.5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>AM Signal Waveform</h3>
+                <div class="chart-container">
+                    <canvas id="waveform-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Frequency Spectrum</h3>
+                <div class="chart-container">
+                    <canvas id="spectrum-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="power-breakdown">
+                <h3>Power Distribution</h3>
+                <div class="power-bars">
+                    <div class="power-bar-item">
+                        <div class="power-bar-label">Carrier</div>
+                        <div class="power-bar-container">
+                            <div class="power-bar carrier-bar" id="carrier-bar"></div>
+                        </div>
+                        <div class="power-bar-value" id="carrier-bar-value">87.5%</div>
+                    </div>
+                    <div class="power-bar-item">
+                        <div class="power-bar-label">Sidebands</div>
+                        <div class="power-bar-container">
+                            <div class="power-bar sideband-bar" id="sideband-bar"></div>
+                        </div>
+                        <div class="power-bar-value" id="sideband-bar-value">12.5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📡 AM Sideband Power Analysis</h4>
+                <ul>
+                    <li><strong>DSB-TC:</strong> Double Sideband with Transmitted Carrier</li>
+                    <li><strong>Power Formula:</strong> Psideband / Ptotal = m²/2</li>
+                    <li><strong>Maximum Efficiency:</strong> 33.3% at m = 1 (100% modulation)</li>
+                    <li><strong>Carrier Waste:</strong> Carrier contains no information but most power</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

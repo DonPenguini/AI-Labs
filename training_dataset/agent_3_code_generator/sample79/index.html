@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S79 State Space Step Response</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>State-Space Step Response Simulation</h1>
+            <p class="equation">x(t) = exp(A·t)·x₀ + ∫₀ᵗ exp(A·(t-τ))·B·u dτ</p>
+        </header>
+
+        <div class="content">
+            <div class="controls-panel">
+                <h2>System Configuration</h2>
+                
+                <div class="matrix-section">
+                    <h3>A Matrix (2×2)</h3>
+                    <div class="matrix-grid">
+                        <input type="number" id="a11" value="-1" step="0.1">
+                        <input type="number" id="a12" value="0" step="0.1">
+                        <input type="number" id="a21" value="0" step="0.1">
+                        <input type="number" id="a22" value="-2" step="0.1">
+                    </div>
+                </div>
+
+                <div class="matrix-section">
+                    <h3>B Matrix (2×1)</h3>
+                    <div class="vector-grid">
+                        <input type="number" id="b1" value="1" step="0.1">
+                        <input type="number" id="b2" value="1" step="0.1">
+                    </div>
+                </div>
+
+                <div class="matrix-section">
+                    <h3>Input u (scalar)</h3>
+                    <input type="number" id="u" value="1" step="0.1" class="full-width">
+                </div>
+
+                <div class="matrix-section">
+                    <h3>Initial State x₀ (2×1)</h3>
+                    <div class="vector-grid">
+                        <input type="number" id="x01" value="0" step="0.1">
+                        <input type="number" id="x02" value="0" step="0.1">
+                    </div>
+                </div>
+
+                <div class="matrix-section">
+                    <h3>Time Range</h3>
+                    <label>Max Time (s): <span id="timeValue">10</span></label>
+                    <input type="range" id="maxTime" min="1" max="50" value="10" step="0.5">
+                </div>
+
+                <button id="simulateBtn" class="simulate-btn">Run Simulation</button>
+                <button id="resetBtn" class="reset-btn">Reset</button>
+
+                <div class="info-panel">
+                    <h3>System Info</h3>
+                    <div id="eigenvalues">Eigenvalues: Calculating...</div>
+                    <div id="stability">Stability: Unknown</div>
+                </div>
+            </div>
+
+            <div class="visualization-panel">
+                <div class="chart-container">
+                    <h3>State Response x₁(t)</h3>
+                    <canvas id="chart1"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>State Response x₂(t)</h3>
+                    <canvas id="chart2"></canvas>
+                </div>
+                <div class="chart-container phase-plot">
+                    <h3>Phase Portrait (x₁ vs x₂)</h3>
+                    <canvas id="phaseChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

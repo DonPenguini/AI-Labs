@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S71 Planck Peak Frequency</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <!-- Header -->
+            <div class="header">
+                <h1>S71 Planck Peak Frequency</h1>
+                <p class="subtitle">Blackbody Radiation Spectral Peak</p>
+                <div class="formulas">
+                    <p class="formula">νₘₐₓ ≈ 2.821 × (kᵦT/h)</p>
+                    <div class="constants">
+                        <p class="formula-const">kᵦ = 1.381 × 10⁻²³ J/K</p>
+                        <p class="formula-const">h = 6.626 × 10⁻³⁴ J·s</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Visualization -->
+                <div class="visualization-section">
+                    <h2>Blackbody Radiation Spectrum</h2>
+                    <svg id="spectrumCanvas" width="600" height="500">
+                        <!-- Gradient definitions -->
+                        <defs>
+                            <linearGradient id="spectrumGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                <stop offset="20%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                <stop offset="40%" style="stop-color:#10b981;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#fbbf24;stop-opacity:1" />
+                                <stop offset="60%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0.1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Background -->
+                        <rect width="600" height="500" fill="#0a0e1a"/>
+                        
+                        <!-- Grid -->
+                        <g id="gridLines" opacity="0.2">
+                            <line x1="80" y1="50" x2="80" y2="400" stroke="#94a3b8" stroke-width="2"/>
+                            <line x1="80" y1="400" x2="570" y2="400" stroke="#94a3b8" stroke-width="2"/>
+                        </g>
+                        
+                        <!-- Spectrum color bar -->
+                        <rect x="80" y="420" width="490" height="20" fill="url(#spectrumGradient)" rx="4"/>
+                        <text x="80" y="455" fill="#94a3b8" font-size="11">UV</text>
+                        <text x="220" y="455" fill="#94a3b8" font-size="11">Visible</text>
+                        <text x="530" y="455" fill="#94a3b8" font-size="11">IR</text>
+                        
+                        <!-- Planck curve -->
+                        <path id="planckCurve" d="" fill="url(#curveGradient)" opacity="0.6"/>
+                        <path id="planckLine" d="" fill="none" stroke="#fbbf24" stroke-width="3"/>
+                        
+                        <!-- Peak marker -->
+                        <g id="peakMarker">
+                            <line x1="0" y1="400" x2="0" y2="0" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle cx="0" cy="0" r="6" fill="#ef4444" stroke="#fee2e2" stroke-width="2"/>
+                            <text x="0" y="0" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">νₘₐₓ</text>
+                        </g>
+                        
+                        <!-- Axes labels -->
+                        <text x="300" y="490" fill="#cbd5e1" font-size="14" text-anchor="middle" font-weight="bold">Frequency (Hz)</text>
+                        <text x="30" y="230" fill="#cbd5e1" font-size="14" text-anchor="middle" transform="rotate(-90 30 230)" font-weight="bold">Spectral Radiance</text>
+                        
+                        <!-- Temperature indicator -->
+                        <g id="tempIndicator">
+                            <rect x="430" y="60" width="140" height="80" fill="rgba(15, 23, 42, 0.9)" rx="8" stroke="#475569" stroke-width="2"/>
+                            <text x="500" y="85" fill="#f1f5f9" font-size="13" font-weight="bold" text-anchor="middle">Temperature</text>
+                            <text id="tempDisplay" x="500" y="110" fill="#fbbf24" font-size="24" font-weight="bold" text-anchor="middle">5778 K</text>
+                            <text id="tempType" x="500" y="130" fill="#94a3b8" font-size="11" text-anchor="middle">Sun's Surface</text>
+                        </g>
+                        
+                        <!-- Color representation of blackbody -->
+                        <g id="blackbodyGlow">
+                            <circle id="glowCircle" cx="500" cy="300" r="60" opacity="0.8"/>
+                            <circle id="bodyCircle" cx="500" cy="300" r="40" opacity="1"/>
+                            <text x="500" y="375" fill="#cbd5e1" font-size="12" text-anchor="middle">Blackbody</text>
+                            <text x="500" y="390" fill="#cbd5e1" font-size="12" text-anchor="middle">Emission</text>
+                        </g>
+                    </svg>
+                    
+                    <!-- Legend -->
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #fbbf24;"></div>
+                            <span>Planck Distribution</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div>
+                            <span>Peak Frequency</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(to right, #8b5cf6, #ef4444);"></div>
+                            <span>Electromagnetic Spectrum</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-section">
+                    <h2>Blackbody Parameters</h2>
+                    
+                    <!-- Temperature Slider -->
+                    <div class="control-group">
+                        <label>Temperature (T): <span id="tempValue">5778</span> K</label>
+                        <input type="range" id="tempSlider" min="100" max="10000" step="10" value="5778">
+                        <div class="slider-labels">
+                            <span>100 K</span>
+                            <span>5000 K</span>
+                            <span>10000 K</span>
+                        </div>
+                    </div>
+
+                    <!-- Preset Temperatures -->
+                    <div class="preset-section">
+                        <h4>Temperature Presets</h4>
+                        <div class="preset-grid">
+                            <button class="preset-btn" data-temp="2.7">CMB (2.7 K)</button>
+                            <button class="preset-btn" data-temp="300">Room (300 K)</button>
+                            <button class="preset-btn" data-temp="1000">Lava (1000 K)</button>
+                            <button class="preset-btn" data-temp="3000">Incandescent (3000 K)</button>
+                            <button class="preset-btn" data-temp="5778">Sun Surface (5778 K)</button>
+                            <button class="preset-btn" data-temp="10000">Hot Star (10000 K)</button>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="results-box">
+                        <h3>Spectral Peak Results</h3>
+                        <div class="result-item result-highlight">
+                            <span>Peak Frequency (νₘₐₓ):</span>
+                            <span id="peakFreqResult" class="result-value-large">3.39e14 Hz</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Peak Wavelength (λₘₐₓ):</span>
+                            <span id="peakWavelengthResult" class="result-value">502 nm</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Spectral Region:</span>
+                            <span id="spectralRegion" class="result-value">Visible (Green)</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Color Temperature:</span>
+                            <span id="colorTemp" class="result-value">Yellow-White</span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Physics Info -->
+                    <div class="physics-panel">
+                        <h4>Related Physics</h4>
+                        <div class="info-item">
+                            <span>Wien's Displacement:</span>
+                            <span id="wienDisp">λₘₐₓT = 2.90e-3 m·K</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Stefan-Boltzmann Power:</span>
+                            <span id="stefanPower">σT⁴ ∝ T⁴</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Energy at Peak:</span>
+                            <span id="energyAtPeak">E = hν = 2.24 eV</span>
+                        </div>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div class="info-box">
+                        <h4>About Planck's Law</h4>
+                        <p>Planck's radiation law describes the electromagnetic radiation emitted by a blackbody in thermal equilibrium. The peak frequency increases linearly with temperature, explaining why hot objects glow different colors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physics Information -->
+        <div class="physics-info">
+            <h3>Thermal Radiation Concepts</h3>
+            <div class="concepts-grid">
+                <div class="concept-card concept-blue">
+                    <h4>Blackbody Radiation</h4>
+                    <p>An idealized physical body that absorbs all incident electromagnetic radiation and emits thermal radiation according to Planck's law. Real objects approximate this behavior.</p>
+                </div>
+                <div class="concept-card concept-green">
+                    <h4>Wien's Displacement Law</h4>
+                    <p>The peak wavelength λₘₐₓ is inversely proportional to temperature: λₘₐₓT = 2.90×10⁻³ m·K. Hot objects emit at shorter wavelengths (blue), cool objects at longer wavelengths (red).</p>
+                </div>
+                <div class="concept-card concept-purple">
+                    <h4>Peak Frequency Formula</h4>
+                    <p>The approximate peak frequency νₘₐₓ ≈ 2.821kᵦT/h shows that hotter objects radiate at higher frequencies. This explains the color progression from red-hot to white-hot to blue-hot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

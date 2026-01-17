@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S73 Nyquist Check</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S73 Nyquist Check</h1>
+            <p class="subtitle">Nyquist Sampling Theorem: fs ≥ 2·fb</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Maximum Frequency (fb): <span id="fb-value">1000 Hz</span>
+                    </label>
+                    <input type="range" id="fb-slider" min="1" max="10000" step="1" value="1000">
+                    <div class="range-labels">
+                        <span>1 Hz</span>
+                        <span>10 kHz</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Sampling Rate (fs): <span id="fs-value">5000 Hz</span>
+                    </label>
+                    <input type="range" id="fs-slider" min="1" max="20000" step="1" value="5000">
+                    <div class="range-labels">
+                        <span>1 Hz</span>
+                        <span>20 kHz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-panel" id="result-panel">
+                <div class="status-icon" id="status-icon">✓</div>
+                <h2 id="status-text">Sampling Rate is Sufficient</h2>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="label">Nyquist Rate (2·fb):</span>
+                        <span class="value" id="nyquist-value">2000 Hz</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Current Sampling Rate:</span>
+                        <span class="value" id="current-fs">5000 Hz</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Margin:</span>
+                        <span class="value" id="margin-value">+3000 Hz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Signal Visualization</h3>
+                <div class="chart-container">
+                    <canvas id="signal-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4> Nyquist Sampling Theorem</h4>
+                <ul>
+                    <li><strong>Valid Sampling:</strong> fs ≥ 2·fb prevents aliasing</li>
+                    <li><strong>Nyquist Rate:</strong> Minimum sampling rate = 2·fb</li>
+                    <li><strong>Aliasing occurs</strong> when fs < 2·fb (undersampling)</li>
+                    <li><strong>Oversampling:</strong> fs > 2·fb provides margin for practical filters</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

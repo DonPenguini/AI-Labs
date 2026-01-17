@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S78 PID Placeholder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>S78 PID Controller</h1>
+            <p class="subtitle">PID: Gc(s) = Kp + Ki/s + Kd·s | Plant: Gp(s) = 1/(τs + 1)</p>
+
+            <div class="controls-grid">
+                <div class="control-panel">
+                    <label>
+                        Proportional Gain (Kp): <span id="kp-value">1.00</span>
+                    </label>
+                    <input type="range" id="kp-slider" min="0" max="50" step="0.1" value="1">
+                    <div class="range-labels">
+                        <span>0</span>
+                        <span>50</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Integral Gain (Ki): <span id="ki-value">0.50 1/s</span>
+                    </label>
+                    <input type="range" id="ki-slider" min="0" max="20" step="0.1" value="0.5">
+                    <div class="range-labels">
+                        <span>0 1/s</span>
+                        <span>20 1/s</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Derivative Gain (Kd): <span id="kd-value">0.10 s</span>
+                    </label>
+                    <input type="range" id="kd-slider" min="0" max="5" step="0.01" value="0.1">
+                    <div class="range-labels">
+                        <span>0 s</span>
+                        <span>5 s</span>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <label>
+                        Plant Time Constant (τ): <span id="tau-value">1.00 s</span>
+                    </label>
+                    <input type="range" id="tau-slider" min="0.1" max="10" step="0.1" value="1">
+                    <div class="range-labels">
+                        <span>0.1 s</span>
+                        <span>10 s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <h2>PID Controller Parameters</h2>
+                <div class="pid-equation">
+                    Gc(s) = <span id="kp-display">1.00</span> + <span id="ki-display">0.50</span>/s + <span id="kd-display">0.10</span>·s
+                </div>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="label">P Action:</span>
+                        <span class="value" id="p-action">Kp = 1.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">I Action:</span>
+                        <span class="value" id="i-action">Ki = 0.50</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">D Action:</span>
+                        <span class="value" id="d-action">Kd = 0.10</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Closed-Loop Step Response</h3>
+                <div class="chart-container">
+                    <canvas id="response-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <h3>Bode Plot (Open Loop L(s) = Gc(s)·Gp(s))</h3>
+                <div class="chart-container">
+                    <canvas id="bode-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="tuning-methods">
+                <h3>PID Tuning Guidelines</h3>
+                <div class="method-grid">
+                    <div class="method-card">
+                        <div class="method-name">Ziegler-Nichols (Ultimate)</div>
+                        <div class="method-info">Find Ku and Tu at stability limit</div>
+                        <div class="method-formula">Kp = 0.6·Ku, Ki = 2Kp/Tu, Kd = Kp·Tu/8</div>
+                    </div>
+                    <div class="method-card">
+                        <div class="method-name">Cohen-Coon</div>
+                        <div class="method-info">Based on process reaction curve</div>
+                        <div class="method-formula">Uses step response characteristics</div>
+                    </div>
+                    <div class="method-card highlight">
+                        <div class="method-name">Manual Tuning</div>
+                        <div class="method-info">Adjust sliders above</div>
+                        <div class="method-formula">Start with P, add I, then D carefully</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-breakdown">
+                <h3>PID Action Effects</h3>
+                <div class="action-grid">
+                    <div class="action-card p-card">
+                        <div class="action-title">Proportional (Kp)</div>
+                        <div class="action-effect">
+                            <div class="effect-item">✓ Fast response</div>
+                            <div class="effect-item">✓ Reduces steady-state error</div>
+                            <div class="effect-item">✗ Cannot eliminate steady-state error</div>
+                            <div class="effect-item">✗ May cause overshoot</div>
+                        </div>
+                    </div>
+                    <div class="action-card i-card">
+                        <div class="action-title">Integral (Ki)</div>
+                        <div class="action-effect">
+                            <div class="effect-item">✓ Eliminates steady-state error</div>
+                            <div class="effect-item">✓ Improves accuracy</div>
+                            <div class="effect-item">✗ Slows response</div>
+                            <div class="effect-item">✗ Can cause overshoot/oscillation</div>
+                        </div>
+                    </div>
+                    <div class="action-card d-card">
+                        <div class="action-title">Derivative (Kd)</div>
+                        <div class="action-effect">
+                            <div class="effect-item">✓ Anticipates error</div>
+                            <div class="effect-item">✓ Reduces overshoot</div>
+                            <div class="effect-item">✗ Amplifies noise</div>
+                            <div class="effect-item">✗ Can cause instability if too high</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>🎛️ PID Control Structure</h4>
+                <ul>
+                    <li><strong>Open Loop:</strong> L(s) = Gc(s) · Gp(s) = [Kp + Ki/s + Kd·s] / (τs + 1)</li>
+                    <li><strong>Closed Loop:</strong> T(s) = L(s) / (1 + L(s))</li>
+                    <li><strong>Tuning Goal:</strong> Balance speed, stability, and accuracy</li>
+                    <li><strong>Note:</strong> This is a placeholder - actual Ziegler-Nichols requires iterative calculations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
