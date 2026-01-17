@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S52 Wind Turbine Power Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Wind Turbine Power Calculator</h1>
+        <p>Interactive simulation of wind energy capture</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$P = \frac{1}{2} \rho A C_p V^3$$
+            </div>
+
+            <div class="input-group">
+                <label for="V-slider">Wind Speed ($V$)</label>
+                <div class="control-row">
+                    <input type="range" id="V-slider" min="0" max="30" step="0.1" value="10">
+                    <span class="value-display"><span id="V-val">10.0</span> m/s</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="A-slider">Swept Area ($A$)</label>
+                <div class="control-row">
+                    <input type="range" id="A-slider" min="1" max="10000" step="10" value="2000">
+                    <span class="value-display"><span id="A-val">2000</span> m²</span>
+                </div>
+                <small class="helper-text">Rotor Radius: <span id="radius-val">25.2</span> m</small>
+            </div>
+
+            <div class="input-group">
+                <label for="rho-slider">Air Density ($\rho$)</label>
+                <div class="control-row">
+                    <input type="range" id="rho-slider" min="0.9" max="1.3" step="0.01" value="1.225">
+                    <span class="value-display"><span id="rho-val">1.225</span> kg/m³</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="Cp-slider">Power Coeff ($C_p$)</label>
+                <div class="control-row">
+                    <input type="range" id="Cp-slider" min="0" max="0.59" step="0.01" value="0.4">
+                    <span class="value-display"><span id="Cp-val">0.40</span></span>
+                </div>
+                <small class="helper-text">Max 0.59 (Betz Limit)</small>
+            </div>
+
+            <div class="result-box">
+                <h3>Power Output</h3>
+                <div class="power-display">
+                    <span id="P-result">0.00</span>
+                    <span class="unit">kW</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="visualization">
+            <div class="canvas-container">
+                <canvas id="turbineCanvas"></canvas>
+                <div class="overlay-metrics">
+                    <div id="wind-meter">Wind: 10 m/s</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="powerCurveChart"></canvas>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

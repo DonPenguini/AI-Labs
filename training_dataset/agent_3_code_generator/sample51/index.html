@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S51: Battery RC Model Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <header>
+            <h2>Battery Equivalent Circuit</h2>
+            <p>1st-Order Thevenin (1-RC) Model</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group highlight-group">
+                <label>Current ($I$) <span id="val-I">0</span> A</label>
+                <input type="range" id="in-I" min="-100" max="100" step="1" value="0">
+                <div class="legend-text">(- Charge / + Discharge)</div>
+            </div>
+
+            <div class="control-group">
+                <label>Open Circuit Voltage ($OCV$) <span id="val-OCV">3.7</span> V</label>
+                <input type="range" id="in-OCV" min="2" max="5" step="0.1" value="3.7">
+            </div>
+
+            <div class="control-group">
+                <label>Ohmic Resistance ($R_0$) <span id="val-R0">0.05</span> &#937;</label>
+                <input type="range" id="in-R0" min="0.0001" max="0.1" step="0.0001" value="0.01">
+            </div>
+
+            <div class="control-group">
+                <label>Polarization Res ($R_1$) <span id="val-R1">0.1</span> &#937;</label>
+                <input type="range" id="in-R1" min="0.001" max="0.5" step="0.001" value="0.05">
+            </div>
+
+            <div class="control-group">
+                <label>Polarization Cap ($C_1$) <span id="val-C1">1000</span> F</label>
+                <input type="range" id="in-C1" min="10" max="10000" step="10" value="2000">
+            </div>
+            
+            <button id="pulse-btn" class="action-btn">Trigger 10s Pulse</button>
+        </div>
+
+        <div class="equations">
+            <h3>Model Dynamics</h3>
+            <p>$$ V_t = OCV - I R_0 - V_{rc} $$</p>
+            <p>$$ \frac{dV_{rc}}{dt} = \frac{I}{C_1} - \frac{V_{rc}}{R_1 C_1} $$</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-label">Terminal Voltage ($V_t$)</div>
+                <div class="card-value" id="disp-Vt">3.70 V</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Polarization Voltage ($V_{rc}$)</div>
+                <div class="card-value secondary" id="disp-Vrc">0.00 V</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Time Constant ($\tau$)</div>
+                <div class="card-value small" id="disp-Tau">0.00 s</div>
+            </div>
+        </div>
+
+        <div class="vis-container">
+            <div class="graph-wrapper">
+                <canvas id="graphCanvas"></canvas>
+            </div>
+            <div class="circuit-wrapper">
+                <canvas id="circuitCanvas"></canvas>
+                
+
+[Image of equivalent circuit of a battery]
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S50 Solar PV Single-Diode Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>Solar PV Single-Diode Model</h1>
+        <p>Interactive IV & PV Curve Simulation</p>
+    </header>
+
+    <div class="content-wrapper">
+        <aside class="sidebar">
+            <div class="equation-container">
+                $$I = I_L - I_0 \left( e^{\frac{V + I R_s}{n V_t}} - 1 \right) - \frac{V + I R_s}{R_p}$$
+            </div>
+
+            <div class="controls-section">
+                <h2>Parameters</h2>
+                
+                <div class="control-group">
+                    <label>Light Current ($I_L$) [A]</label>
+                    <input type="range" id="IL" min="0" max="20" step="0.1" value="8">
+                    <span id="IL-val" class="val-display">8.0</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Saturation Current ($I_0$) [A]</label>
+                    <input type="range" id="I0_log" min="-10" max="-3" step="0.1" value="-9">
+                    <span id="I0-val" class="val-display">1.0e-9</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Ideality Factor ($n$)</label>
+                    <input type="range" id="n" min="1" max="2" step="0.05" value="1.3">
+                    <span id="n-val" class="val-display">1.30</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Thermal Voltage ($V_t$) [V]</label>
+                    <input type="range" id="Vt" min="0.02" max="0.035" step="0.001" value="0.026">
+                    <span id="Vt-val" class="val-display">0.026</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Series Resistance ($R_s$) [Ω]</label>
+                    <input type="range" id="Rs" min="0" max="1" step="0.01" value="0.05">
+                    <span id="Rs-val" class="val-display">0.05</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Shunt Resistance ($R_p$) [Ω]</label>
+                    <input type="range" id="Rp_log" min="0" max="4" step="0.1" value="2.7">
+                    <span id="Rp-val" class="val-display">501</span>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h2>Key Metrics</h2>
+                <div class="metric-row"><span>Short Circuit ($I_{sc}$):</span> <strong id="res-isc">0.00 A</strong></div>
+                <div class="metric-row"><span>Open Circuit ($V_{oc}$):</span> <strong id="res-voc">0.00 V</strong></div>
+                <div class="metric-row"><span>Max Power ($P_{mp}$):</span> <strong id="res-pmp">0.00 W</strong></div>
+                <div class="metric-row"><span>Fill Factor (FF):</span> <strong id="res-ff">0.00 %</strong></div>
+            </div>
+        </aside>
+
+        <main class="visualization-panel">
+            <div class="chart-container">
+                <canvas id="ivChart"></canvas>
+            </div>
+
+            <div class="operating-point-control">
+                <label>Operating Voltage ($V$): <span id="V_op-val">0.0</span> V</label>
+                <input type="range" id="V_op" min="0" max="60" step="0.5" value="0">
+                <div class="op-results">
+                    Current: <strong id="op-I">0.00 A</strong> | Power: <strong id="op-P">0.00 W</strong>
+                </div>
+            </div>
+
+            <div class="animation-container" id="animContainer">
+                <canvas id="animCanvas"></canvas>
+                <div class="sim-sun"></div>
+                <div class="sim-panel">
+                    <div class="panel-grid"></div>
+                </div>
+                <div class="sim-bulb" id="simBulb"></div>
+                <div class="wire-top"></div>
+                <div class="wire-bottom"></div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

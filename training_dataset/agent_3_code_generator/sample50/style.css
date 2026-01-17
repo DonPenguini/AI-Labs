@@ -1,0 +1,197 @@
+:root {
+    --bg-color: #f0f2f5;
+    --panel-bg: #ffffff;
+    --accent-color: #3498db;
+    --text-color: #2c3e50;
+    --border-color: #e1e8ed;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--panel-bg);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+h1 { margin: 0; color: var(--accent-color); }
+h2 { font-size: 1.1rem; margin-bottom: 15px; color: var(--accent-color); border-bottom: 1px solid #eee; padding-bottom: 5px;}
+p { margin: 5px 0 0; color: #7f8c8d; }
+
+.content-wrapper {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 1;
+    min-width: 300px;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.equation-container {
+    background: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+    overflow-x: auto;
+}
+
+.control-group { margin-bottom: 15px; }
+.control-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; }
+.control-group input[type="range"] { width: 100%; cursor: pointer; }
+.val-display { display: block; text-align: right; font-family: monospace; font-weight: bold; color: var(--accent-color); }
+
+.results-section {
+    margin-top: 25px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+.metric-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+
+/* Visualization Panel */
+.visualization-panel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chart-container {
+    height: 350px;
+    position: relative;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.operating-point-control {
+    background: #eef6fc;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-color);
+}
+.op-results { margin-top: 10px; text-align: center; font-size: 1.1rem; }
+
+/* --- ANIMATION CONTAINER --- */
+.animation-container {
+    position: relative;
+    height: 250px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+    border-radius: 8px;
+    border: 1px solid #bdc3c7;
+    overflow: hidden;
+}
+
+/* Canvas overlay for particles */
+#animCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Static Elements (Sun, Panel, Bulb, Wires) */
+.sim-sun {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #ffd700, #f39c12);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    z-index: 5;
+}
+
+.sim-panel {
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    width: 100px;
+    height: 80px;
+    background: #2c3e50;
+    border: 3px solid #34495e;
+    transform: perspective(300px) rotateX(10deg);
+    z-index: 5;
+}
+
+.panel-grid {
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(#fff 1px, transparent 1px),
+        linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.2;
+}
+
+.sim-bulb {
+    position: absolute;
+    top: 50%;
+    right: 60px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #ecf0f1;
+    border: 2px solid #7f8c8d;
+    border-radius: 50%;
+    z-index: 5;
+    transition: background 0.1s, box-shadow 0.1s;
+}
+
+.wire-top {
+    position: absolute;
+    top: 40%;
+    left: 150px; /* Connect from panel */
+    right: 100px; /* Connect to bulb */
+    height: 2px;
+    background: #555;
+    z-index: 4;
+}
+
+.wire-bottom {
+    position: absolute;
+    bottom: 40%;
+    left: 150px;
+    right: 100px;
+    height: 2px;
+    background: #555;
+    z-index: 4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .content-wrapper { flex-direction: column; }
+    .sidebar, .visualization-panel { width: 100%; }
+}

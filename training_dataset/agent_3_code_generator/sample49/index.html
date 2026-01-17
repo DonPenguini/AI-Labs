@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermal Radiation Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <header>
+            <h2>S49: Radiation</h2>
+            <p>Net exchange between surface and surroundings.</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Emissivity ($\epsilon$) <span class="val" id="val-eps">0.80</span></label>
+                <input type="range" id="in-eps" min="0.01" max="1.0" step="0.01" value="0.8">
+            </div>
+
+            <div class="control-group">
+                <label>Surface Area ($A$) <span class="val" id="val-area">1.0</span> m²</label>
+                <input type="range" id="in-area" min="0.1" max="5.0" step="0.1" value="1.0">
+            </div>
+
+            <div class="control-group">
+                <label>Surface Temp ($T_s$) <span class="val hot-text" id="val-ts">800</span> K</label>
+                <input type="range" id="in-ts" min="200" max="1200" step="10" value="800">
+            </div>
+
+            <div class="control-group">
+                <label>Surroundings ($T_{sur}$) <span class="val cold-text" id="val-tsur">300</span> K</label>
+                <input type="range" id="in-tsur" min="200" max="1200" step="10" value="300">
+            </div>
+        </div>
+
+        <div class="equation-box">
+            $$ q = \epsilon \sigma A (T_s^4 - T_{sur}^4) $$
+            <small>$\sigma = 5.67 \times 10^{-8} W/m^2K^4$</small>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-title">Net Heat Rate ($q$)</div>
+                <div class="card-value" id="res-q">0.00 W</div>
+                <div class="card-sub" id="res-dir">Net Flow: Outward</div>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="simCanvas"></canvas>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="dot outgoing"></span> Emitted Photons (from Surface)
+                </div>
+                <div class="legend-item">
+                    <span class="dot incoming"></span> Absorbed Photons (from Surroundings)
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
