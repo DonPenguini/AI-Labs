@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S04: Logistic Growth Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>S04: Logistic Population Growth</h1>
+        <p class="subtitle">Dynamics of a single species approaching carrying capacity ($K$)</p>
+    </header>
+
+    <div class="simulation-layout">
+        
+        <section class="vis-panel">
+            <div class="canvas-wrapper">
+                <h3>Population View (Petri Dish)</h3>
+                <canvas id="petriCanvas" width="400" height="400"></canvas>
+                <div class="legend">
+                    <span class="dot"></span> Individual Organism
+                </div>
+            </div>
+            
+            <div class="graph-wrapper">
+                <h3>Population over Time</h3>
+                <canvas id="graphCanvas" width="400" height="200"></canvas>
+            </div>
+        </section>
+
+        <section class="control-panel">
+            
+            <div class="controls">
+                <h2>Parameters</h2>
+
+                <div class="input-group">
+                    <label>Carrying Capacity ($K$)</label>
+                    <input type="range" id="slider-K" min="100" max="2000" step="50" value="1000">
+                    <span class="value-display" id="val-K">1000</span> individuals
+                </div>
+
+                <div class="input-group">
+                    <label>Growth Rate ($r$)</label>
+                    <input type="range" id="slider-r" min="0.1" max="2.0" step="0.1" value="0.8">
+                    <span class="value-display" id="val-r">0.8</span> /time
+                </div>
+
+                <div class="input-group">
+                    <label>Initial Population ($P_0$)</label>
+                    <input type="range" id="slider-P0" min="10" max="500" step="10" value="50">
+                    <span class="value-display" id="val-P0">50</span> individuals
+                </div>
+
+                <div class="button-row">
+                    <button id="btn-reset" class="btn primary">Reset ($t=0$)</button>
+                    <button id="btn-pause" class="btn secondary">Pause</button>
+                </div>
+            </div>
+
+            <div class="readout">
+                <h2>Live Data</h2>
+                <div class="data-row">
+                    <span>Time ($t$):</span>
+                    <span id="out-t">0.00</span>
+                </div>
+                <div class="data-row">
+                    <span>Population ($P$):</span>
+                    <span id="out-P" class="highlight">--</span>
+                </div>
+                <div class="data-row">
+                    <span>Rate ($dP/dt$):</span>
+                    <span id="out-dPdt">--</span>
+                </div>
+            </div>
+
+            <div class="math-box">
+                <p><strong>Differential Equation:</strong><br>
+                $\frac{dP}{dt} = rP(1 - \frac{P}{K})$</p>
+                <p><strong>Solution:</strong><br>
+                $P(t) = \frac{K}{1 + (\frac{K - P_0}{P_0})e^{-rt}}$</p>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

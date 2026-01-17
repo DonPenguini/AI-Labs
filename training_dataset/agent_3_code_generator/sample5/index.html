@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S05: SIR Epidemic Model</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>S05: SIR Epidemic Model</h1>
+        <p>Deterministic Compartmental Model: <strong>S</strong>usceptible &rarr; <strong>I</strong>nfected &rarr; <strong>R</strong>ecovered</p>
+    </header>
+
+    <div class="sim-grid">
+        <section class="visuals">
+            <div class="canvas-container">
+                <h3>Population Sample (Homogeneous Mixing)</h3>
+                <canvas id="popCanvas" width="400" height="300"></canvas>
+            </div>
+            <div class="canvas-container">
+                <h3>Infection Curves</h3>
+                <canvas id="graphCanvas" width="400" height="200"></canvas>
+            </div>
+            <div class="legend">
+                <span class="badge sus">Susceptible (S)</span>
+                <span class="badge inf">Infected (I)</span>
+                <span class="badge rec">Recovered (R)</span>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="panel">
+                <h2>Parameters</h2>
+                
+                <div class="control-group">
+                    <label>Total Population ($N$)</label>
+                    <input type="range" id="slider-N" min="500" max="10000" step="100" value="2000">
+                    <span class="readout" id="val-N">2000</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Transmission Rate ($\beta$)</label>
+                    <input type="range" id="slider-beta" min="0.1" max="5.0" step="0.1" value="1.5">
+                    <span class="readout" id="val-beta">1.5</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Recovery Rate ($\gamma$)</label>
+                    <input type="range" id="slider-gamma" min="0.01" max="2.0" step="0.01" value="0.3">
+                    <span class="readout" id="val-gamma">0.3</span>
+                </div>
+
+                <div class="control-group">
+                    <label>Initial Infected ($I_0$)</label>
+                    <input type="range" id="slider-I0" min="1" max="100" step="1" value="10">
+                    <span class="readout" id="val-I0">10</span>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-restart" class="primary-btn">Restart Simulation</button>
+                    <button id="btn-pause" class="secondary-btn">Pause</button>
+                </div>
+            </div>
+
+            <div class="panel stats">
+                <h2>Live Statistics</h2>
+                <div class="stat-row">
+                    <span>Time ($t$):</span> <span id="out-t">0.0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Susceptible:</span> <span id="out-S" class="txt-sus">--</span>
+                </div>
+                <div class="stat-row">
+                    <span>Infected:</span> <span id="out-I" class="txt-inf">--</span>
+                </div>
+                <div class="stat-row">
+                    <span>Recovered:</span> <span id="out-R" class="txt-rec">--</span>
+                </div>
+                <hr>
+                <div class="stat-row large">
+                    <span>Basic Repro. Number ($R_0$):</span> 
+                    <span id="out-R0">--</span>
+                </div>
+                <small class="note">($R_0 = \beta / \gamma$) If $R_0 > 1$, outbreak grows.</small>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

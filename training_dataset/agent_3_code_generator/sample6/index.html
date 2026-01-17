@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S06: Mass-Spring-Damper Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>S06: Damped Harmonic Oscillator</h1>
+        <p>Underdamped Motion: $m\ddot{x} + c\dot{x} + kx = 0$</p>
+    </header>
+
+    <div class="sim-grid">
+        <section class="visuals">
+            <div class="canvas-wrapper">
+                <h3>Mechanical System</h3>
+                <canvas id="mechCanvas" width="300" height="400"></canvas>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <h3>Response (Displacement $x$ vs Time $t$)</h3>
+                <canvas id="graphCanvas" width="500" height="200"></canvas>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="panel">
+                <h2>System Parameters</h2>
+                
+                <div class="control-group">
+                    <label>Mass ($m$)</label>
+                    <div class="slider-row">
+                        <input type="range" id="slider-m" min="0.5" max="20" step="0.5" value="5">
+                        <span id="val-m">5.0</span> kg
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Spring Constant ($k$)</label>
+                    <div class="slider-row">
+                        <input type="range" id="slider-k" min="10" max="200" step="5" value="50">
+                        <span id="val-k">50</span> N/m
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Damping Coefficient ($c$)</label>
+                    <div class="slider-row">
+                        <input type="range" id="slider-c" min="0" max="20" step="0.1" value="2.0">
+                        <span id="val-c">2.0</span> Ns/m
+                    </div>
+                    <small id="damping-warning" class="warning-text">System is Overdamped!</small>
+                </div>
+
+                <hr>
+
+                <h2>Initial Conditions</h2>
+                <div class="control-group">
+                    <label>Init. Displacement ($x_0$)</label>
+                    <div class="slider-row">
+                        <input type="range" id="slider-x0" min="-1" max="1" step="0.1" value="0.8">
+                        <span id="val-x0">0.8</span> m
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Init. Velocity ($v_0$)</label>
+                    <div class="slider-row">
+                        <input type="range" id="slider-v0" min="-2" max="2" step="0.1" value="0">
+                        <span id="val-v0">0.0</span> m/s
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-reset" class="primary-btn">Reset / Apply $t=0$</button>
+                    <button id="btn-pause" class="secondary-btn">Pause</button>
+                </div>
+            </div>
+
+            <div class="panel stats">
+                <h3>Real-Time Values</h3>
+                <div class="stat-row">
+                    <span>Time ($t$):</span> <span id="out-t">0.00</span> s
+                </div>
+                <div class="stat-row">
+                    <span>Displacement ($x$):</span> <span id="out-x">--</span> m
+                </div>
+                <div class="stat-row">
+                    <span>Velocity ($v$):</span> <span id="out-v">--</span> m/s
+                </div>
+                <div class="stat-row">
+                    <span>Damped Freq ($\omega_d$):</span> <span id="out-wd">--</span> rad/s
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
