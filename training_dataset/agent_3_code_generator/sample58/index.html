@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S58 Seismic Moment Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Seismic Moment Calculator</h1>
+        <p>Convert Moment Magnitude ($M_w$) to Seismic Moment ($M_0$)</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$M_0 = 10^{1.5 M_w + 9.1}$$
+                <small>Result in Newton-meters (N·m)</small>
+            </div>
+
+            <div class="input-group">
+                <label for="Mw-slider">
+                    Moment Magnitude ($M_w$)
+                    <span class="tooltip-icon" title="A logarithmic scale of earthquake size.">?</span>
+                </label>
+                <div class="control-row">
+                    <input type="range" id="Mw-slider" min="0" max="9.5" step="0.1" value="5.0">
+                    <span class="value-display" id="Mw-val">5.0</span>
+                </div>
+                <div id="magnitude-desc" class="helper-text">Moderate Earthquake</div>
+            </div>
+
+            <div class="result-box">
+                <h3>Seismic Moment ($M_0$)</h3>
+                <div class="result-display">
+                    <span id="M0-result">0.00</span> 
+                    <span class="unit">N·m</span>
+                </div>
+                <div class="scientific-notation" id="M0-sci">
+                    (1.00 &times; 10<sup>16</sup> N·m)
+                </div>
+            </div>
+
+            <div class="energy-box">
+                <h4>Energy Equivalent</h4>
+                <p>Roughly equal to:</p>
+                <strong id="energy-equiv">Loading...</strong>
+            </div>
+        </aside>
+
+        <main class="visualization">
+            <div class="viz-header">
+                <h2>Scale Visualization</h2>
+                <p>Radius represents relative rupture area</p>
+                <div style="font-size:0.8em; margin-top:5px; color:#888;">
+                   
+                </div>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <canvas id="quakeCanvas"></canvas>
+                <div class="scale-legend">
+                    <span class="legend-dot current"></span> Selected Quake
+                    <span class="legend-dot ref-sm"></span> Mag 4
+                    <span class="legend-dot ref-md"></span> Mag 7
+                </div>
+            </div>
+            
+            <div class="historical-context">
+                <h3>Historical Context</h3>
+                <ul id="historical-list">
+                    <li data-mag="9.5">1960 Valdivia (9.5)</li>
+                    <li data-mag="9.1">2004 Sumatra (9.1)</li>
+                    <li data-mag="7.8">1906 San Francisco (7.8)</li>
+                    <li data-mag="7.0">2010 Haiti (7.0)</li>
+                    <li data-mag="6.9">1989 Loma Prieta (6.9)</li>
+                    <li data-mag="3.0">Minor Tremor (3.0)</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

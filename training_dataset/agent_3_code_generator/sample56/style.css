@@ -1,0 +1,211 @@
+:root {
+    --primary: #2980b9;
+    --accent: #3498db;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --bed-color: #795548; /* Brown/Earth */
+    --water-color: rgba(52, 152, 219, 0.6);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: var(--dark);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+header {
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+h1 { margin: 0; color: var(--primary); }
+p { margin: 5px 0 0; color: #7f8c8d; }
+
+.simulation-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Controls Panel */
+.controls {
+    flex: 1;
+    min-width: 320px;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.equation-box {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    border: 1px solid #eee;
+}
+
+.input-group { margin-bottom: 20px; }
+
+.input-group label {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.tooltip-icon {
+    background: #ddd;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    font-size: 12px;
+    cursor: help;
+    color: #555;
+}
+
+.diagram-hint {
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 5px;
+    display: none; /* Hidden by default, just there for context structure */
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+input[type=range] {
+    flex-grow: 1;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.value-display {
+    width: 70px;
+    text-align: right;
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.helper-text {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    text-align: right;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.results-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.res-item {
+    background: var(--dark);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.res-item.highlight {
+    background: var(--primary);
+}
+
+.res-item h3 { margin: 0 0 5px 0; font-size: 0.9rem; opacity: 0.8; }
+.res-item span { font-size: 1.5rem; font-weight: bold; }
+.unit { font-size: 1rem; font-weight: normal; opacity: 0.8; }
+
+/* Visualization Panel */
+.visualization {
+    flex: 2;
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #bdc3c7;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.overlay-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--dark);
+}
+
+.viz-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+}
+
+.swatch.water { background: var(--water-color); border: 1px solid var(--accent); }
+.swatch.bed { background: var(--bed-color); }
+
+.explanation {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #666;
+    background: #eee;
+    padding: 10px;
+    border-radius: 6px;
+}

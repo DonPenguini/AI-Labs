@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S55 Pump Affinity Laws Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Pump Affinity Laws</h1>
+        <p>Explore how Pump Speed (RPM) scales Flow, Head, and Power.</p>
+    </header>
+
+    <div class="simulation-grid">
+        <aside class="controls">
+            <div class="equations-box">
+                <div class="eq-item">$$ \frac{Q}{Q_{ref}} = \frac{N}{N_{ref}} $$</div>
+                <div class="eq-item">$$ \frac{H}{H_{ref}} = \left(\frac{N}{N_{ref}}\right)^2 $$</div>
+                <div class="eq-item">$$ \frac{P}{P_{ref}} = \left(\frac{N}{N_{ref}}\right)^3 $$</div>
+            </div>
+
+            <div class="control-group">
+                <h3>Operating Speed</h3>
+                <label>Speed ($N$) [RPM]</label>
+                <input type="range" id="speed" min="100" max="6000" step="50" value="3000">
+                <div class="val-display"><span id="val_speed">3000</span> RPM</div>
+            </div>
+
+            <hr>
+
+            <div class="control-group">
+                <h3>Reference Conditions</h3>
+                
+                <label>Ref. Speed ($N_{ref}$)</label>
+                <input type="range" id="ref_speed" min="100" max="6000" step="50" value="1500">
+                <div class="val-display"><span id="val_ref_speed">1500</span> RPM</div>
+
+                <label>Ref. Flow ($Q_{ref}$) [m³/s]</label>
+                <input type="range" id="ref_flow" min="0.001" max="10" step="0.1" value="1.5">
+                <div class="val-display"><span id="val_ref_flow">1.5</span> m³/s</div>
+
+                <label>Ref. Head ($H_{ref}$) [m]</label>
+                <input type="range" id="ref_head" min="0.5" max="200" step="1" value="50">
+                <div class="val-display"><span id="val_ref_head">50</span> m</div>
+
+                <label>Ref. Power ($P_{ref}$) [W]</label>
+                <input type="range" id="ref_power" min="100" max="100000" step="100" value="5000">
+                <div class="val-display"><span id="val_ref_power">5000</span> W</div>
+            </div>
+        </aside>
+
+        <main class="visualizer">
+            <div class="results-bar">
+                <div class="card flow-card">
+                    <h4>Flow ($Q$)</h4>
+                    <span id="out_Q" class="big-num">0</span> <span class="unit">m³/s</span>
+                </div>
+                <div class="card head-card">
+                    <h4>Head ($H$)</h4>
+                    <span id="out_H" class="big-num">0</span> <span class="unit">m</span>
+                </div>
+                <div class="card power-card">
+                    <h4>Power ($P$)</h4>
+                    <span id="out_P" class="big-num">0</span> <span class="unit">kW</span>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="pumpCanvas"></canvas>
+                <div class="overlay-legend">
+                    <p><strong>Visualizing Scaling Ratios:</strong></p>
+                    <p><span class="dot c-flow"></span> Flow $\propto N$ (Linear)</p>
+                    <p><span class="dot c-head"></span> Head $\propto N^2$ (Quadratic)</p>
+                    <p><span class="dot c-power"></span> Power $\propto N^3$ (Cubic)</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

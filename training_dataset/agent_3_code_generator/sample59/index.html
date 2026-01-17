@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S59 Apparent Magnitude Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="cosmos-container">
+    <header>
+        <h1>Stellar Magnitude Comparator</h1>
+        <p>Compare the brightness (flux) of two celestial objects based on their apparent magnitudes.</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$ \frac{F_2}{F_1} = 10^{-0.4(m_2 - m_1)} $$
+                <div class="note">A difference of 5 magnitudes = 100x brightness factor.</div>
+            </div>
+
+            <div class="control-group">
+                <label for="m1">Magnitude Object 1 ($m_1$)</label>
+                <div class="slider-row">
+                    <input type="range" id="m1" min="-5" max="20" step="0.1" value="0">
+                    <span id="val_m1" class="val-display">0.0</span>
+                </div>
+                <div class="obj-label">Reference Star (Fixed visual base)</div>
+            </div>
+
+            <div class="control-group">
+                <label for="m2">Magnitude Object 2 ($m_2$)</label>
+                <div class="slider-row">
+                    <input type="range" id="m2" min="-5" max="20" step="0.1" value="5">
+                    <span id="val_m2" class="val-display">5.0</span>
+                </div>
+                <div class="obj-label">Comparison Star</div>
+            </div>
+
+            <div class="results-panel">
+                <h3>Flux Ratio ($F_2 / F_1$)</h3>
+                <div id="output_ratio" class="big-result">0.010</div>
+                <p id="comparison_text">Object 2 is 100.00 times dimmer than Object 1.</p>
+            </div>
+        </aside>
+
+        <main class="viewport">
+            <canvas id="starCanvas"></canvas>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="dot ref-dot"></span> Object 1
+                </div>
+                <div class="legend-item">
+                    <span class="dot comp-dot"></span> Object 2
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

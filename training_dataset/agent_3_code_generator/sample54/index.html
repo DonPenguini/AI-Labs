@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S54 Darcy-Weisbach Pipe Flow</title>
+    <link rel="stylesheet" href="style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Darcy-Weisbach Pipe Flow</h1>
+        <p>Interactive Head Loss & Friction Simulation</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$h_f = f \cdot \frac{L}{D} \cdot \frac{v^2}{2g}$$
+            </div>
+
+            <div class="input-group">
+                <label for="f-slider">
+                    Friction Factor ($f$)
+                    <span class="tooltip">Controls wall roughness & turbulence</span>
+                </label>
+                <div class="control-row">
+                    <input type="range" id="f-slider" min="0.005" max="0.1" step="0.001" value="0.02">
+                    <span class="value-display" id="f-val">0.020</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="L-slider">Pipe Length ($L$) <span class="unit">m</span></label>
+                <div class="control-row">
+                    <input type="range" id="L-slider" min="0.1" max="1000" step="1" value="100">
+                    <span class="value-display" id="L-val">100</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="D-slider">Pipe Diameter ($D$) <span class="unit">m</span></label>
+                <div class="control-row">
+                    <input type="range" id="D-slider" min="0.01" max="2" step="0.01" value="0.5">
+                    <span class="value-display" id="D-val">0.50</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="v-slider">Flow Velocity ($v$) <span class="unit">m/s</span></label>
+                <div class="control-row">
+                    <input type="range" id="v-slider" min="0.01" max="10" step="0.01" value="2.5">
+                    <span class="value-display" id="v-val">2.50</span>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <h3>Head Loss ($h_f$)</h3>
+                <div class="hf-display">
+                    <span id="hf-result">0.00</span> <span class="unit">m</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="visualization">
+            <div class="canvas-wrapper">
+                <canvas id="flowCanvas"></canvas>
+                <div class="overlay-info">
+                    <span>Flow Direction &rarr;</span>
+                </div>
+            </div>
+            <div class="legend">
+                <div class="legend-item"><span class="dot water"></span> Water</div>
+                <div class="legend-item"><span class="dot wall"></span> Wall Roughness</div>
+                <div class="legend-item"><span class="dot turb"></span> Turbulence</div>
+            </div>
+            <div class="description">
+                <p><strong>Visual Guide:</strong> Increasing <em>Friction ($f$)</em> makes walls jagged and flow chaotic. Increasing <em>Velocity ($v$)</em> speeds up particles. Note how drag slows particles near the walls.</p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

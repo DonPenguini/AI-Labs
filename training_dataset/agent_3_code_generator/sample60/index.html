@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S60 Beer-Lambert Law Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Beer-Lambert Law</h1>
+        <p>Optical Attenuation & Exponential Decay</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$I = I_0 e^{-\alpha L}$$
+            </div>
+
+            <div class="input-group">
+                <label>Incident Intensity ($I_0$) <span class="unit">W/m²</span></label>
+                <div class="control-row">
+                    <input type="range" id="I0-slider" min="1000" max="10000" step="100" value="10000">
+                    <span class="value-display" id="I0-val">10000</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Absorption Coeff ($\alpha$) <span class="unit">m⁻¹</span></label>
+                <div class="control-row">
+                    <input type="range" id="alpha-slider" min="0" max="2" step="0.01" value="0.5">
+                    <span class="value-display" id="alpha-val">0.50</span>
+                </div>
+                <small style="color:#777; display:block; text-align:right;">Controls how fast light fades</small>
+            </div>
+
+            <div class="input-group">
+                <label>Path Length ($L$) <span class="unit">m</span></label>
+                <div class="control-row">
+                    <input type="range" id="L-slider" min="0" max="10" step="0.1" value="5">
+                    <span class="value-display" id="L-val">5.0</span>
+                </div>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="show-curve" checked>
+                <label for="show-curve">Overlay Theory Curve</label>
+            </div>
+
+            <div class="results-panel">
+                <div class="result-item">
+                    <h3>Transmitted ($I$)</h3>
+                    <span id="I-result">0.00</span> <span class="unit">W/m²</span>
+                </div>
+                <div class="result-item">
+                    <h3>Transmission</h3>
+                    <span id="trans-percent">0.00</span> <span class="unit">%</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="visualization">
+            <div class="canvas-wrapper">
+                <canvas id="opticsCanvas"></canvas>
+                <div class="beam-labels">
+                    <div class="label-left">Source</div>
+                    <div class="label-right">Detector</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="decayChart"></canvas>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S56 Manning Equation Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Manning Equation Calculator</h1>
+        <p>Open Channel Flow Velocity & Discharge</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$V = \frac{1}{n} R^{2/3} S^{1/2}$$
+                $$Q = A \cdot V$$
+            </div>
+
+            <div class="input-group">
+                <label for="n-slider">
+                    Manning's Roughness ($n$)
+                    <span class="tooltip-icon" title="0.01: Smooth Glass, 0.03: Gravel, 0.1+: Overgrown">?</span>
+                </label>
+                <div class="diagram-hint"></div>
+                <div class="control-row">
+                    <input type="range" id="n-slider" min="0.01" max="0.2" step="0.005" value="0.035">
+                    <span class="value-display" id="n-val">0.035</span>
+                </div>
+                <div id="material-hint" class="helper-text">Natural Channel (Stones/Weeds)</div>
+            </div>
+
+            <div class="input-group">
+                <label for="R-slider">Hydraulic Radius ($R$) <span class="unit">m</span></label>
+                <div class="control-row">
+                    <input type="range" id="R-slider" min="0.01" max="5" step="0.01" value="1.5">
+                    <span class="value-display" id="R-val">1.50</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="S-slider">Channel Slope ($S$)</label>
+                <div class="control-row">
+                    <input type="range" id="S-slider" min="0.00001" max="0.1" step="0.0001" value="0.01">
+                    <span class="value-display" id="S-val">0.0100</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="A-slider">Cross-Section Area ($A$) <span class="unit">m²</span></label>
+                <div class="control-row">
+                    <input type="range" id="A-slider" min="0.01" max="50" step="0.1" value="10">
+                    <span class="value-display" id="A-val">10.0</span>
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <div class="res-item">
+                    <h3>Velocity ($V$)</h3>
+                    <span id="V-result">0.00</span> <span class="unit">m/s</span>
+                </div>
+                <div class="res-item highlight">
+                    <h3>Discharge ($Q$)</h3>
+                    <span id="Q-result">0.00</span> <span class="unit">m³/s</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="visualization">
+            <div class="canvas-wrapper">
+                <canvas id="channelCanvas"></canvas>
+                <div class="overlay-info">
+                    <span id="flow-status">Flow Status: Normal</span>
+                </div>
+            </div>
+            
+            <div class="viz-legend">
+                <div class="legend-item">
+                    <div class="swatch water"></div> Water
+                </div>
+                <div class="legend-item">
+                    <div class="swatch bed"></div> Channel Bed
+                </div>
+            </div>
+            
+            <div class="explanation">
+                <p><strong>Simulation View:</strong> This side-view animation visualizes the flow velocity. The tilt represents the slope ($S$), and the jaggedness of the bottom represents roughness ($n$).</p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

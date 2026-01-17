@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S57 Shallow Water Wave Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>Shallow Water Wave Celerity</h1>
+        <p>Simulate how water depth affects wave propagation speed.</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$c = \sqrt{g \cdot h}$$
+                <small>Where $g \approx 9.81 \, m/s^2$</small>
+            </div>
+
+            <div class="input-group">
+                <label for="depthSlider">Water Depth ($h$)</label>
+                <input type="range" id="depthSlider" min="0.1" max="200" step="0.1" value="50">
+                <div class="value-display">
+                    <span id="val_h">50.0</span> m
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <div class="result-item">
+                    <span class="label">Wave Celerity ($c$)</span>
+                    <span class="value" id="out_c">0.00</span>
+                    <span class="unit">m/s</span>
+                </div>
+                <div class="result-item">
+                    <span class="label">Speed in km/h</span>
+                    <span class="value" id="out_kmh">0.00</span>
+                    <span class="unit">km/h</span>
+                </div>
+            </div>
+            
+            <div class="info-note">
+                <p><strong>Note:</strong> In shallow water physics, wave speed depends only on depth, not wavelength.</p>
+            </div>
+        </aside>
+
+        <main class="canvas-wrapper">
+            <canvas id="waveCanvas"></canvas>
+            <div class="overlay-data">
+                <span>Visual Scale: Auto-adjusting</span>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

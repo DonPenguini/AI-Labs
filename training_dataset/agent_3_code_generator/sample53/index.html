@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S53 Orifice Flow Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Hydraulic Orifice Flow</h1>
+        <p>Simulate flow rate through a sharp-edged orifice.</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-display">
+                $$Q = C_d \cdot A \sqrt{\frac{2 \Delta P}{\rho}}$$
+            </div>
+
+            <div class="input-group">
+                <label for="pressure_drop">Pressure Drop ($\Delta P$) [Pa]</label>
+                <input type="range" id="pressure_drop" min="10" max="100000" step="10" value="50000">
+                <div class="value-display"><span id="val_pressure_drop">50000</span> Pa</div>
+            </div>
+
+            <div class="input-group">
+                <label for="area">Orifice Area ($A$) [$m^2$]</label>
+                <input type="range" id="area" min="0.001" max="0.1" step="0.001" value="0.01">
+                <div class="value-display"><span id="val_area">0.01</span> m²</div>
+            </div>
+
+            <div class="input-group">
+                <label for="discharge_coeff">Discharge Coeff ($C_d$)</label>
+                <input type="range" id="discharge_coeff" min="0.5" max="0.9" step="0.01" value="0.61">
+                <div class="value-display"><span id="val_discharge_coeff">0.61</span></div>
+            </div>
+
+            <div class="input-group">
+                <label for="density">Fluid Density ($\rho$) [$kg/m^3$]</label>
+                <input type="range" id="density" min="100" max="1500" step="10" value="1000">
+                <div class="value-display"><span id="val_density">1000</span> kg/m³</div>
+            </div>
+
+            <div class="result-box">
+                <h3>Flow Rate ($Q$)</h3>
+                <p id="output_flow">0.000 m³/s</p>
+            </div>
+        </aside>
+
+        <main class="visualizer">
+            <canvas id="simCanvas"></canvas>
+            <div class="legend">
+                <span><span class="dot high-p"></span> High Pressure</span>
+                <span><span class="dot low-p"></span> Low Pressure</span>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
