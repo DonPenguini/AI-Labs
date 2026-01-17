@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composite Wall Thermal Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="app">
+    <nav class="sidebar">
+        <div class="header">
+            <h2>Composite Wall</h2>
+            <p>Steady State Conduction</p>
+        </div>
+
+        <div class="controls-section">
+            <h3>Global Settings</h3>
+            <div class="control-row">
+                <label>Area ($A$) <span id="val-area">10</span> m²</label>
+                <input type="range" id="input-area" min="1" max="100" value="10">
+            </div>
+            <div class="control-row">
+                <label>$\Delta T$ <span id="val-dt">60</span> K</label>
+                <input type="range" id="input-dt" min="10" max="200" value="60">
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <div class="layer-header">
+                <h3>Layers</h3>
+                <div class="btn-group">
+                    <button id="btn-add" class="btn primary">+ Add</button>
+                    <button id="btn-remove" class="btn secondary">- Remove</button>
+                </div>
+            </div>
+            <div id="layers-container" class="layers-list">
+                </div>
+        </div>
+    </nav>
+
+    <main class="viewport">
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="label">Total Resistance ($R_{tot}$)</div>
+                <div class="value"><span id="out-R">0.00</span> <span class="unit">K/W</span></div>
+            </div>
+            <div class="stat-box highlight">
+                <div class="label">Heat Transfer Rate ($Q$)</div>
+                <div class="value"><span id="out-Q">0.00</span> <span class="unit">Watts</span></div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Overall Coefficient ($U$)</div>
+                <div class="value"><span id="out-U">0.00</span> <span class="unit">W/m²K</span></div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="mainCanvas"></canvas>
+            <div class="legend">
+                <div class="item"><span class="color-box hot"></span> Hot Side</div>
+                <div class="item"><span class="color-box cold"></span> Cold Side</div>
+                <div class="item"><span class="icon">→</span> Heat Flow</div>
+            </div>
+        </div>
+
+        <div class="math-footer">
+            $$ Q = \frac{\Delta T}{\sum (L_i / k_i A)} $$
+        </div>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

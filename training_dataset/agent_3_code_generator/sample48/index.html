@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S48 Convection Cooling Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Newton's Law of Cooling</h1>
+        <p>Surface Convection Heat Transfer</p>
+    </header>
+
+    <div class="simulation-layout">
+        <aside class="controls">
+            <div class="equation-box">
+                $$q = h \cdot A \cdot (T_s - T_{\infty})$$
+            </div>
+
+            <div class="input-group">
+                <label for="h-slider">
+                    Heat Transfer Coeff ($h$)
+                    <span class="unit">W/(m²·K)</span>
+                </label>
+                <input type="range" id="h-slider" min="1" max="500" step="1" value="50">
+                <span class="value-display" id="h-val">50</span>
+            </div>
+
+            <div class="input-group">
+                <label for="A-slider">
+                    Surface Area ($A$)
+                    <span class="unit">m²</span>
+                </label>
+                <input type="range" id="A-slider" min="0.01" max="100" step="0.1" value="10">
+                <span class="value-display" id="A-val">10</span>
+            </div>
+
+            <div class="input-group">
+                <label for="Ts-slider">
+                    Surface Temp ($T_s$)
+                    <span class="unit">K</span>
+                </label>
+                <input type="range" id="Ts-slider" min="250" max="800" step="1" value="350">
+                <span class="value-display" id="Ts-val">350</span>
+            </div>
+
+            <div class="input-group">
+                <label for="Tinf-slider">
+                    Ambient Temp ($T_{\infty}$)
+                    <span class="unit">K</span>
+                </label>
+                <input type="range" id="Tinf-slider" min="200" max="500" step="1" value="300">
+                <span class="value-display" id="Tinf-val">300</span>
+            </div>
+
+            <div class="result-box">
+                <h3>Heat Rate ($q$)</h3>
+                <span id="q-result">0.00</span> <span class="unit">Watts</span>
+            </div>
+        </aside>
+
+        <main class="visualization">
+            <div id="ambient-env" class="environment">
+                <div class="canvas-container">
+                    <canvas id="convectionCanvas"></canvas>
+                    <div id="surface-plate" class="plate">
+                        <span class="plate-label">Surface ($T_s$)</span>
+                    </div>
+                </div>
+                <div class="legend">
+                    <span id="env-label">Ambient Air ($T_{\infty}$)</span>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

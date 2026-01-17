@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counterflow Heat Exchanger LMTD</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Counterflow Heat Exchanger</h1>
+        <p class="subtitle">Log Mean Temperature Difference (LMTD) & Duty Calculator</p>
+    </header>
+
+    <div class="simulation-layout">
+        
+        <div class="controls-panel">
+            <div class="panel-header">Input Parameters</div>
+            
+            <div class="control-group">
+                <label>
+                    Overall Heat Transfer Coeff ($U$)
+                    <span class="unit">W/(m²·K)</span>
+                </label>
+                <div class="slider-row">
+                    <input type="range" id="u-slider" min="10" max="2000" step="10" value="800">
+                    <input type="number" id="u-number" value="800">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>
+                    Heat Transfer Area ($A$)
+                    <span class="unit">m²</span>
+                </label>
+                <div class="slider-row">
+                    <input type="range" id="a-slider" min="0.1" max="500" step="0.1" value="50">
+                    <input type="number" id="a-number" value="50">
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="control-group">
+                <label>
+                    $\Delta T_1$ (Left Side Gap)
+                    <span class="tooltip">Hot In - Cold Out</span>
+                </label>
+                <div class="slider-row">
+                    <input type="range" id="dt1-slider" min="5" max="200" step="1" value="90">
+                    <input type="number" id="dt1-number" value="90">
+                    <span class="unit">K</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>
+                    $\Delta T_2$ (Right Side Gap)
+                    <span class="tooltip">Hot Out - Cold In</span>
+                </label>
+                <div class="slider-row">
+                    <input type="range" id="dt2-slider" min="5" max="200" step="1" value="40">
+                    <input type="number" id="dt2-number" value="40">
+                    <span class="unit">K</span>
+                </div>
+            </div>
+
+            <div class="results-box">
+                <div class="result-row">
+                    <span>LMTD:</span>
+                    <strong id="res-lmtd" class="highlight-text">0.00 K</strong>
+                </div>
+                <div class="result-row">
+                    <span>Heat Duty (Q):</span>
+                    <strong id="res-q" class="highlight-text">0.00 kW</strong>
+                </div>
+            </div>
+            
+            <div class="equations">
+                $$Q = U \cdot A \cdot \text{LMTD}$$
+                $$\text{LMTD} = \frac{\Delta T_1 - \Delta T_2}{\ln(\Delta T_1 / \Delta T_2)}$$
+            </div>
+        </div>
+
+        <div class="visualization-panel">
+            <div class="canvas-wrapper">
+                <canvas id="simCanvas"></canvas>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color hot"></div> 
+                    <span>Hot Fluid (Flows Right &rarr;)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color cold"></div> 
+                    <span>Cold Fluid (Flows Left &larr;)</span>
+                </div>
+            </div>
+            <div class="info-text">
+                Note: In Counterflow, the outlet temperature of the cold fluid can exceed the outlet temperature of the hot fluid, making it more efficient than parallel flow.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
