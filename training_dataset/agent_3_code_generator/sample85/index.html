@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brownian Motion MSD Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="layout-container">
+        <header>
+            <h1>Brownian Motion: 1D Diffusion</h1>
+            <p class="subtitle">Mean Square Displacement: MSD = 2 &middot; D &middot; t</p>
+        </header>
+
+        <div class="simulation-stage">
+            <div class="canvas-wrapper">
+                <canvas id="particleCanvas"></canvas>
+                <div class="axis-label">Position (x)</div>
+                <div class="center-marker">x = 0</div>
+            </div>
+            
+            <div class="metrics-overlay">
+                <div class="metric">
+                    <span class="label">Time (t)</span>
+                    <span class="value" id="disp-time">0.00 s</span>
+                </div>
+                <div class="metric">
+                    <span class="label">Theoretical MSD (2Dt)</span>
+                    <span class="value" id="disp-theo">0.00</span>
+                </div>
+                <div class="metric highlight">
+                    <span class="label">Measured MSD (&lang;x²&rang;)</span>
+                    <span class="value" id="disp-measured">0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="controls">
+                <h3>Simulation Parameters</h3>
+                
+                <div class="control-group">
+                    <label>
+                        Diffusion Coefficient (D)
+                        <span class="val-display" id="val-d"></span>
+                    </label>
+                    <input type="range" id="input-d" min="1" max="50" step="1" value="10">
+                    <div class="range-labels">
+                        <span>Slow</span>
+                        <span>Fast</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <button id="btn-reset" class="btn">Reset Simulation</button>
+                    <button id="btn-pause" class="btn secondary">Pause</button>
+                </div>
+            </div>
+
+            <div class="calculator">
+                <h3>Quick Calculator</h3>
+                <p>Calculate specific MSD for a given time without waiting.</p>
+                <div class="calc-row">
+                    <label>Time (t):</label>
+                    <input type="number" id="calc-t" value="10">
+                </div>
+                <div class="calc-result">
+                    Resulting MSD = <span id="calc-res">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

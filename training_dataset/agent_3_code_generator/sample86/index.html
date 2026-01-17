@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S86 Monte Carlo Pi Estimation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <header>
+        <h1>Monte Carlo Estimation of $\pi$</h1>
+        <p>Approximating $\pi$ by throwing random "darts" at a square.</p>
+    </header>
+
+    <div class="dashboard">
+        
+        <div class="panel controls">
+            <h3>Simulation Control</h3>
+            
+            <div class="control-group">
+                <div class="label-row">
+                    <label>Total Samples ($N$)</label>
+                    <span id="val-N" class="val">10000</span>
+                </div>
+                <input type="range" id="in-N" min="100" max="100000" step="100" value="10000">
+                <div class="hint">More samples = Higher accuracy (Error $\propto \frac{1}{\sqrt{N}}$)</div>
+            </div>
+
+            <div class="button-row">
+                <button id="btn-start" class="btn primary">Run Simulation</button>
+                <button id="btn-reset" class="btn secondary">Reset</button>
+            </div>
+
+            <hr>
+
+            <div class="stats-box">
+                <div class="stat-item big">
+                    <label>Estimated $\hat{\pi}$</label>
+                    <div id="out-pi" class="highlight">0.00000</div>
+                </div>
+                
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <label>Points Inside</label>
+                        <span id="out-inside">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Points Total</label>
+                        <span id="out-total">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Absolute Error</label>
+                        <span id="out-error">0.00000</span>
+                    </div>
+                    <div class="stat-item">
+                        <label>Real $\pi$</label>
+                        <span>3.14159...</span>
+                    </div>
+                </div>
+
+                <div class="formula-block">
+                    $$\hat{\pi} = 4 \times \frac{N_{inside}}{N_{total}}$$
+                </div>
+            </div>
+        </div>
+
+        <div class="vis-column">
+            
+            <div class="panel visual-panel">
+                <h3>1. The Geometry</h3>
+                <div class="canvas-wrapper square-wrap">
+                    <canvas id="boardCanvas"></canvas>
+                </div>
+                <div class="legend">
+                    <span class="dot in"></span> Inside ($x^2 + y^2 \le 1$)
+                    <span class="dot out"></span> Outside
+                </div>
+            </div>
+
+            <div class="panel visual-panel">
+                <h3>2. Convergence (Accuracy vs $N$)</h3>
+                <div class="canvas-wrapper graph-wrap">
+                    <canvas id="graphCanvas"></canvas>
+                </div>
+                <div class="legend">
+                    <span class="line est"></span> Estimate
+                    <span class="line real"></span> Actual $\pi$
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S90 Call Delta Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>Black-Scholes Call Delta ($\Delta$)</h1>
+        <p>Delta is the cumulative normal distribution of $d_1$. It represents the hedge ratio.</p>
+    </header>
+
+    <div class="dashboard">
+        
+        <div class="panel controls">
+            <h3>Parameters</h3>
+            
+            <div class="control-group">
+                <div class="label-row">
+                    <label>Parameter $d_1$</label>
+                    <span id="val-d1" class="val">0.00</span>
+                </div>
+                <input type="range" id="in-d1" min="-4" max="4" step="0.01" value="0.00">
+                <div class="range-labels">
+                    <span>-4 (OTM)</span>
+                    <span>0 (ATM)</span>
+                    <span>+4 (ITM)</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="result-box">
+                <label>Call Delta ($\Delta$)</label>
+                <div id="out-delta" class="big-result">0.5000</div>
+                <div class="sub-text">Shares to buy per Option</div>
+            </div>
+
+            <div class="formula-box">
+                $$ \Delta = N(d_1) = \int_{-\infty}^{d_1} \frac{1}{\sqrt{2\pi}} e^{-x^2/2} \, dx $$
+            </div>
+        </div>
+
+        <div class="visuals-col">
+            
+            <div class="panel">
+                <h3>1. The Definition: Area under Curve</h3>
+                <div class="canvas-container">
+                    <canvas id="pdfCanvas"></canvas>
+                </div>
+                <div class="legend">
+                    <span class="item"><span class="box fill"></span>$\Delta$ (Shaded Area)</span>
+                    <span class="item"><span class="line cut"></span>$d_1$ Threshold</span>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>2. The Relationship: CDF Curve</h3>
+                <div class="canvas-container">
+                    <canvas id="cdfCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>3. The Physical Hedge (Share Equivalence)</h3>
+                <div class="hedge-container">
+                    <div class="share-tank">
+                        <div id="share-liquid" class="liquid"></div>
+                        <div class="tank-label">1.0 Share</div>
+                    </div>
+                    <div class="hedge-info">
+                        If you sold <strong>1 Call Option</strong>,<br>
+                        you must hold <strong id="txt-shares">0.50</strong> shares<br>
+                        to be Delta Neutral.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

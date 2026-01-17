@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law of Large Numbers Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="layout-wrapper">
+        <header>
+            <h1>Law of Large Numbers</h1>
+            <p class="subtitle">Convergence of Sample Mean to Population Mean</p>
+        </header>
+
+        <div class="viz-card">
+            <div class="canvas-container">
+                <canvas id="llnCanvas"></canvas>
+                <div class="graph-label y-axis">Value</div>
+                <div class="graph-label x-axis">Number of Samples (N)</div>
+            </div>
+            
+            <div class="legend">
+                <span class="legend-item"><span class="line theory"></span> Theoretical Bounds (&pm;2&sigma;/&radic;N)</span>
+                <span class="legend-item"><span class="line mean"></span> Running Sample Mean</span>
+                <span class="legend-item"><span class="line target"></span> True Mean (&mu;=0)</span>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            
+            <div class="controls-panel">
+                <h3>Population Parameters</h3>
+                
+                <div class="control-group">
+                    <label>
+                        Population Variance (&sigma;<sup>2</sup>): <span id="val-sigma2">1.0</span>
+                    </label>
+                    <input type="range" id="input-sigma2" min="0.1" max="5.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <label>
+                        Simulation Speed
+                    </label>
+                    <div class="speed-controls">
+                        <button class="btn-speed active" data-speed="1">1x</button>
+                        <button class="btn-speed" data-speed="5">5x</button>
+                        <button class="btn-speed" data-speed="20">Max</button>
+                    </div>
+                </div>
+
+                <button id="btn-restart" class="btn-primary">Restart Simulation</button>
+            </div>
+
+            <div class="stats-panel">
+                <h3>Current Statistics (N = <span id="disp-n">0</span>)</h3>
+                
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <span class="stat-label">Theoretical Variance of Mean</span>
+                        <span class="stat-formula">&sigma;<sup>2</sup> / N</span>
+                        <span class="stat-value" id="disp-theo-var">--</span>
+                    </div>
+                    
+                    <div class="stat-box highlight">
+                        <span class="stat-label">Current Sample Mean</span>
+                        <span class="stat-formula">&mu; &approx; 0</span>
+                        <span class="stat-value" id="disp-mean">--</span>
+                    </div>
+                </div>
+                
+                <div class="stat-note">
+                    Note how the "Variance of the Mean" shrinks as N grows, pulling the sample mean tighter to the center.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
