@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S67 Length Contraction Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Relativity: Length Contraction</h1>
+        <p class="subtitle">Observe how an object's length contracts as it approaches the speed of light.</p>
+    </header>
+
+    <div class="simulation-wrapper">
+        <div class="scene">
+            <div class="track-label">Rest Frame (Observer co-moving with rod)</div>
+            <div class="track" id="track-rest">
+                <div class="rod rod-rest" id="rod-rest">
+                    <span class="rod-label">L₀</span>
+                </div>
+            </div>
+
+            <div class="track-label">Laboratory Frame (Observer watching rod move)</div>
+            <div class="track" id="track-moving">
+                <div class="rod rod-moving" id="rod-moving">
+                    <span class="rod-label">L</span>
+                </div>
+            </div>
+            
+            <div class="grid-lines"></div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="equation-box">
+                $$L = L_0 \sqrt{1 - \frac{v^2}{c^2}}$$
+            </div>
+
+            <div class="control-group">
+                <label for="l0-input">Rest Length ($L_0$)</label>
+                <input type="range" id="l0-input" min="10" max="100" value="80" step="1">
+                <span class="value-display"><span id="l0-value">80</span> m</span>
+            </div>
+
+            <div class="control-group">
+                <label for="v-input">Velocity ($v$)</label>
+                <input type="range" id="v-input" min="0" max="0.995" value="0" step="0.001">
+                <span class="value-display"><span id="v-value">0.000</span> c</span>
+            </div>
+
+            <div class="output-panel">
+                <div class="output-item">
+                    <span class="label">Contraction Factor ($\sqrt{1-\beta^2}$):</span>
+                    <span class="value" id="factor-value">1.000</span>
+                </div>
+                <div class="output-item highlight">
+                    <span class="label">Contracted Length ($L$):</span>
+                    <span class="value" id="l-value">80.00</span> m
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

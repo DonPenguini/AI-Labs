@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S65 Doppler Light Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Relativistic Doppler Effect</h1>
+        <p>Simulation of a light source moving away from an observer (Longitudinal Doppler Shift).</p>
+    </header>
+
+    <div class="simulation-layout">
+        
+        <aside class="controls">
+            <div class="control-group">
+                <h3>Parameters</h3>
+                <label for="speedInput">
+                    Source Speed ($v$)
+                    <span class="tooltip">Velocity relative to observer</span>
+                </label>
+                <input type="range" id="speedInput" min="-299000000" max="299000000" step="1000000" value="0">
+                <div class="value-display">
+                    <span id="speedValue">0</span> m/s (<span id="betaValue">0.00</span> $c$)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="freqInput">
+                    Source Frequency ($f_{source}$)
+                    <span class="tooltip">Emitted frequency</span>
+                </label>
+                <input type="range" id="freqInput" min="14" max="15.5" step="0.01" value="14.7"> 
+                <div class="value-display">
+                    <span id="freqValue">5.00e14</span> Hz
+                </div>
+            </div>
+
+            <div class="output-panel">
+                <h3>Calculated Outputs</h3>
+                <div class="equation">
+                    $$ f_{obs} = f_{source} \sqrt{\frac{1 - \beta}{1 + \beta}} $$
+                </div>
+                <div class="result-box">
+                    <label>Observed Frequency ($f_{obs}$):</label>
+                    <span id="obsFreqValue" class="highlight">--</span> Hz
+                </div>
+                <div class="result-box">
+                    <label>Doppler Shift:</label>
+                    <span id="shiftType" class="highlight">None</span>
+                </div>
+            </div>
+            
+            <button id="resetBtn">Reset Source</button>
+        </aside>
+
+        <main class="canvas-container">
+            <canvas id="simCanvas"></canvas>
+            <div class="legend">
+                <div class="legend-item"><span class="dot obs"></span> Observer</div>
+                <div class="legend-item"><span class="dot src"></span> Moving Source</div>
+                <div class="legend-item"><span class="line wave"></span> Light Wavefront</div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S66 Time Dilation Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>S66 Time Dilation</h1>
+            <p>Explore how time slows down for a moving object relative to a stationary observer.</p>
+        </header>
+
+        <main class="sim-layout">
+            <section class="controls-panel">
+                <h2>Parameters</h2>
+                
+                <div class="control-group">
+                    <label for="velocity-slider">
+                        Relative Speed ($v$) <span class="unit">(m/s)</span>
+                    </label>
+                    <input type="range" id="velocity-slider" min="0" max="299000000" step="100000" value="0">
+                    <div class="value-display">
+                        <span id="velocity-val">0</span> m/s 
+                        <span class="secondary-val">(<span id="beta-val">0.00</span>$c$)</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="time-slider">
+                        Proper Time ($\tau$) <span class="unit">(s)</span>
+                    </label>
+                    <input type="range" id="time-slider" min="1" max="60" step="1" value="10">
+                    <div class="value-display">
+                        <span id="time-val">10</span> s
+                    </div>
+                </div>
+
+                <div class="equations-box">
+                    <h3>Equations</h3>
+                    <div class="math-row">
+                        $$ \gamma = \frac{1}{\sqrt{1 - \beta^2}} $$
+                    </div>
+                    <div class="math-row">
+                        $$ t = \gamma \tau $$
+                    </div>
+                    <p class="small">Where $\beta = v/c$ and $c \approx 3 \times 10^8$ m/s.</p>
+                </div>
+            </section>
+
+            <section class="visualization-panel">
+                <div class="canvas-container">
+                    <canvas id="simCanvas"></canvas>
+                    
+                    <div class="clock-labels">
+                        <div class="label-stationary">Stationary Frame<br>(Observer)</div>
+                        <div class="label-moving">Moving Frame<br>(Rocket)</div>
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <div class="result-card">
+                        <span class="label">Lorentz Factor ($\gamma$)</span>
+                        <span class="value" id="gamma-result">1.000</span>
+                    </div>
+                    <div class="result-card highlight">
+                        <span class="label">Coordinate Time ($t$)</span>
+                        <span class="value" id="coord-time-result">10.00 s</span>
+                        <span class="description">Time elapsed for stationary observer</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

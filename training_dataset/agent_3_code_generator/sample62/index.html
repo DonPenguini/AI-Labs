@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S62 Double Slit Interference Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Double Slit Interference</h1>
+            <p class="subtitle">Optics Domain: First-Order Maximum Analysis</p>
+        </header>
+
+        <main>
+            <div class="canvas-container">
+                <canvas id="simCanvas"></canvas>
+                <div class="legend">
+                    <span style="color: #4facfe;">● Wavefronts</span>
+                    <span style="color: #ff5e62;">● Intensity Profile</span>
+                    <span style="color: #ffd700;">● 1st Order Max (m=1)</span>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label for="lambdaSlider">
+                        Wavelength ($\lambda$)
+                        <span class="unit-display" id="lambdaVal">5.00e-7 m</span>
+                    </label>
+                    <input type="range" id="lambdaSlider" min="-9" max="-3" step="0.01" value="-6.3">
+                    <div class="range-labels">
+                        <span>1nm</span>
+                        <span>1mm</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="dSlider">
+                        Slit Spacing ($d$)
+                        <span class="unit-display" id="dVal">2.00e-6 m</span>
+                    </label>
+                    <input type="range" id="dSlider" min="-6" max="-2" step="0.01" value="-5.7">
+                    <div class="range-labels">
+                        <span>1&mu;m</span>
+                        <span>1cm</span>
+                    </div>
+                </div>
+
+                <div class="output-group">
+                    <h2>Results ($m=1$)</h2>
+                    <div class="result-box">
+                        <span class="label">Angle ($\theta$):</span>
+                        <span class="value" id="thetaOutput">--</span>
+                    </div>
+                    <div class="result-box">
+                        <span class="label">Ratio ($\lambda/d$):</span>
+                        <span class="value" id="ratioOutput">--</span>
+                    </div>
+                    <div id="errorMsg" class="error-message hidden">
+                        Error: $\lambda > d$ (No interference pattern)
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S64 Doppler Sound Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="simulation-container">
+        <header>
+            <h1>S64 Doppler Sound</h1>
+            <p>Classical Doppler effect for a moving source and stationary observer.</p>
+        </header>
+
+        <div class="main-content">
+            <div class="canvas-wrapper">
+                <canvas id="simCanvas"></canvas>
+                <div class="legend">
+                    <span class="legend-item"><span class="dot source-dot"></span> Source</span>
+                    <span class="legend-item"><span class="dot observer-dot"></span> Observer</span>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <h2>Parameters</h2>
+                
+                <div class="control-group">
+                    <label for="f_slider">
+                        Source Frequency ($f$)
+                        <span class="value-display" id="f_val">440</span> Hz
+                    </label>
+                    <input type="range" id="f_slider" min="10" max="20000" step="10" value="440">
+                </div>
+
+                <div class="control-group">
+                    <label for="c_slider">
+                        Speed of Sound ($c$)
+                        <span class="value-display" id="c_val">340</span> m/s
+                    </label>
+                    <input type="range" id="c_slider" min="300" max="360" step="1" value="340">
+                </div>
+
+                <div class="control-group">
+                    <label for="vs_slider">
+                        Source Speed ($v_s$)
+                        <span class="value-display" id="vs_val">0</span> m/s
+                    </label>
+                    <input type="range" id="vs_slider" min="-100" max="100" step="1" value="50">
+                    <small class="note">Positive = Moving towards observer</small>
+                </div>
+
+                <hr>
+
+                <div class="output-group">
+                    <h2>Results</h2>
+                    <div class="equation">
+                        $$f_{obs} = f \left( \frac{c}{c - v_s} \right)$$
+                    </div>
+                    <div class="result-box">
+                        <span class="label">Observed Frequency ($f_{obs}$):</span>
+                        <span class="value" id="f_obs_display">--</span>
+                        <span class="unit">Hz</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

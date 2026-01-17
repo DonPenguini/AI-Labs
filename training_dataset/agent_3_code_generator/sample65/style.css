@@ -1,0 +1,199 @@
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #4CAF50;
+    --accent-color: #2196F3;
+    --text-color: #e0e0e0;
+    --secondary-text: #b0b0b0;
+    --border-color: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+header {
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
+
+header p {
+    color: var(--secondary-text);
+    margin: 5px 0 0;
+}
+
+.simulation-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+}
+
+/* Controls Styling */
+.controls {
+    background-color: var(--surface-color);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tooltip {
+    font-size: 0.75rem;
+    color: var(--secondary-text);
+    font-weight: normal;
+}
+
+input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.value-display {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-align: right;
+}
+
+/* Output Panel */
+.output-panel {
+    background-color: #252525;
+    padding: 15px;
+    border-radius: 6px;
+    border-top: 3px solid var(--accent-color);
+}
+
+.output-panel h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: var(--secondary-text);
+}
+
+.equation {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    text-align: center;
+}
+
+.result-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.highlight {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+#resetBtn {
+    background-color: var(--border-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#resetBtn:hover {
+    background-color: #444;
+}
+
+/* Canvas Area */
+.canvas-container {
+    background-color: black;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at left, #0a0a0a, #000);
+}
+
+.legend {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--secondary-text);
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.dot.obs { background-color: #4CAF50; }
+.dot.src { background-color: white; }
+.line.wave {
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background-color: #555;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+@media (max-width: 800px) {
+    .simulation-layout {
+        grid-template-columns: 1fr;
+    }
+    .canvas-container {
+        height: 400px;
+    }
+}

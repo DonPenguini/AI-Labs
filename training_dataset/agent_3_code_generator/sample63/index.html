@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S63 Malus Law Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="simulation-container">
+        <header>
+            <h1>Malus' Law Simulation</h1>
+            <p>Polarizer Transmission: $I = I_0 \cos^2(\theta)$</p>
+        </header>
+
+        <div class="canvas-wrapper">
+            <canvas id="simCanvas"></canvas>
+            <div class="labels">
+                <span class="label-left">Incident Light ($I_0$)</span>
+                <span class="label-center">Polarizer ($\theta$)</span>
+                <span class="label-right">Transmitted Light ($I$)</span>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="i0-slider">Incident Intensity ($I_0$): <span id="i0-val">5000</span> $W/m^2$</label>
+                <input type="range" id="i0-slider" min="0" max="10000" step="100" value="5000">
+            </div>
+
+            <div class="control-group">
+                <label for="theta-slider">Angle ($\theta$): <span id="theta-val">0.00</span> rad (<span id="deg-val">0</span>°)</label>
+                <input type="range" id="theta-slider" min="0" max="3.1416" step="0.01" value="0">
+            </div>
+        </div>
+
+        <div class="results-section">
+            <div class="result-card">
+                <h3>Transmitted Intensity ($I$)</h3>
+                <p class="big-number"><span id="output-i">5000.00</span> <small>W/m²</small></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

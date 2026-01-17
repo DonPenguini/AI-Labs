@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S61 Single Slit Diffraction (Visible Light)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Single Slit Diffraction</h1>
+            <p class="subtitle">Visible Spectrum Analysis (380nm - 750nm)</p>
+        </header>
+
+        <main>
+            <div class="canvas-container">
+                <canvas id="diffractionCanvas"></canvas>
+                <div class="overlay-info">
+                    Intensity Profile: \( I(\theta) \propto \text{sinc}^2(\beta) \)
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label for="wavelength">Wavelength (\(\lambda\))</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="wavelength" min="380" max="750" step="1" value="550">
+                        <div class="spectrum-bar"></div>
+                    </div>
+                    <div class="value-display">
+                        <span id="wavelength-val">550</span> <span id="wavelength-unit">nm</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="slit_width">Slit Width (\(a\))</label>
+                    <input type="range" id="slit_width" min="-6" max="-3.5" step="0.01" value="-5">
+                    <div class="value-display">
+                        <span id="slit-val">10.0</span> <span id="slit-unit">μm</span>
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <h3>Calculated Results (m=1)</h3>
+                    <div class="equation">
+                        $$ \theta = \arcsin\left(\frac{\lambda}{a}\right) $$
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="label">Diffraction Ratio (\(\lambda/a\)):</span>
+                        <span class="value" id="ratio-val">0.055</span>
+                    </div>
+
+                    <div class="result-item highlight">
+                        <span class="label">First Minimum Angle (\(\theta\)):</span>
+                        <span class="value" id="theta-val">3.15</span>&deg;
+                    </div>
+                    
+                    <div id="warning-msg" class="warning hidden">
+                        Warning: \(\lambda > a\). No diffraction minimum exists.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
