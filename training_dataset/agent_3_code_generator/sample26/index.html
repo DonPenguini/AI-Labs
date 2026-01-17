@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S26 Reversible First Order Reaction</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Reversible First-Order Reaction</h1>
+            <p>Simulation of kinetics: A <span style="color: #3b82f6;">&#8652;</span> B</p>
+        </header>
+
+        <div class="main-content">
+            <aside class="controls-panel">
+                <div class="control-group">
+                    <label for="A0">Initial Concentration A ($A_0$)</label>
+                    <div class="slider-container">
+                        <input type="range" id="A0" min="0" max="5" step="0.1" value="5">
+                        <span id="val-A0">5.0</span> <span class="unit">mol/L</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="B0">Initial Concentration B ($B_0$)</label>
+                    <div class="slider-container">
+                        <input type="range" id="B0" min="0" max="5" step="0.1" value="0">
+                        <span id="val-B0">0.0</span> <span class="unit">mol/L</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="k1">Forward Rate Constant ($k_1$)</label>
+                    <div class="slider-container">
+                        <input type="range" id="k1" min="0.01" max="1" step="0.01" value="0.2">
+                        <span id="val-k1">0.20</span> <span class="unit">1/s</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="k2">Reverse Rate Constant ($k_2$)</label>
+                    <div class="slider-container">
+                        <input type="range" id="k2" min="0.01" max="1" step="0.01" value="0.1">
+                        <span id="val-k2">0.10</span> <span class="unit">1/s</span>
+                    </div>
+                </div>
+
+                <div class="simulation-status">
+                    <h3>Current State (t = <span id="time-display">0.00</span>s)</h3>
+                    <div class="stat-row">
+                        <span class="label-a">Conc. A:</span>
+                        <span id="curr-A">0.00</span> mol/L
+                    </div>
+                    <div class="stat-row">
+                        <span class="label-b">Conc. B:</span>
+                        <span id="curr-B">0.00</span> mol/L
+                    </div>
+                    <div class="stat-row eq-row">
+                        <span>Equilibrium A ($A_{eq}$):</span>
+                        <span id="eq-A">0.00</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-reset">Reset Simulation</button>
+                    <button id="btn-pause">Pause/Play</button>
+                </div>
+            </aside>
+
+            <main class="vis-panel">
+                <div class="canvas-card" id="particle-container">
+                    <h3>Molecular View</h3>
+                    <canvas id="simCanvas"></canvas>
+                    <div class="legend">
+                        <span class="dot a-dot"></span> Species A
+                        <span class="dot b-dot" style="margin-left: 15px;"></span> Species B
+                    </div>
+                </div>
+
+                <div class="canvas-card">
+                    <h3>Concentration Profile</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="chartCanvas"></canvas>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

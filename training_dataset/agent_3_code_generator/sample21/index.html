@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Van der Waals Gas Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Header -->
+            <div class="header">
+                <h1>Van der Waals Gas Simulation</h1>
+                <p class="subtitle">Non-ideal gas behavior with molecular interactions</p>
+                <div class="equation">
+                    (P + a(n/V)²)(V - nb) = nRT
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <!-- Visualization Section -->
+                <div class="left-panel">
+                    <div class="section">
+                        <h3>Gas Container</h3>
+                        <div class="container-wrapper">
+                            <canvas id="gasCanvas" width="400" height="400"></canvas>
+                        </div>
+                        
+                        <!-- Controls -->
+                        <div class="controls">
+                            <button id="playBtn" class="btn btn-primary">
+                                <span id="playIcon">▶</span> Play
+                            </button>
+                            <button id="resetBtn" class="btn btn-secondary">
+                                ↺ Reset
+                            </button>
+                        </div>
+                        
+                        <div class="speed-control">
+                            <label>Animation Speed: <span id="speedValue">1.0</span>x</label>
+                            <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1">
+                        </div>
+                    </div>
+                    
+                    <!-- Results -->
+                    <div class="section results" id="resultsSection">
+                        <h3>Calculated Pressure</h3>
+                        <div id="pressureDisplay">
+                            <div class="pressure-value" id="pressureValue">—</div>
+                            <div class="pressure-details" id="pressureDetails"></div>
+                        </div>
+                        <div id="constraintWarning" class="warning hidden">
+                            ⚠ Constraint violation: V must be greater than n×b
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Parameters Section -->
+                <div class="right-panel">
+                    <div class="section parameters">
+                        <h3>Parameters</h3>
+                        
+                        <!-- Amount -->
+                        <div class="param-group">
+                            <label>
+                                <span>Amount (n)</span>
+                                <span class="param-value" id="nValue">1.00 mol</span>
+                            </label>
+                            <input type="range" id="nSlider" min="0.01" max="10" step="0.01" value="1">
+                        </div>
+                        
+                        <!-- Temperature -->
+                        <div class="param-group">
+                            <label>
+                                <span>Temperature (T)</span>
+                                <span class="param-value" id="tValue">300 K</span>
+                            </label>
+                            <input type="range" id="tSlider" min="200" max="800" step="1" value="300">
+                        </div>
+                        
+                        <!-- Volume -->
+                        <div class="param-group">
+                            <label>
+                                <span>Volume (V)</span>
+                                <span class="param-value" id="vValue">0.1000 m³</span>
+                            </label>
+                            <input type="range" id="vSlider" min="0.001" max="1" step="0.001" value="0.1">
+                            <div class="constraint-info" id="minVolume">Min: 5.00e-5 m³</div>
+                        </div>
+                        
+                        <!-- Attraction -->
+                        <div class="param-group">
+                            <label>
+                                <span>Attraction (a)</span>
+                                <span class="param-value" id="aValue">0.500 Pa·m⁶/mol²</span>
+                            </label>
+                            <input type="range" id="aSlider" min="0.01" max="10" step="0.01" value="0.5">
+                        </div>
+                        
+                        <!-- Co-volume -->
+                        <div class="param-group">
+                            <label>
+                                <span>Co-volume (b)</span>
+                                <span class="param-value" id="bValue">5.00e-5 m³/mol</span>
+                            </label>
+                            <input type="range" id="bSlider" min="0.00001" max="0.001" step="0.00001" value="0.00005">
+                        </div>
+                    </div>
+                    
+                    <!-- Info -->
+                    <div class="section info">
+                        <h3>About Van der Waals Gas</h3>
+                        <p><strong>Parameter a:</strong> Accounts for intermolecular attractive forces</p>
+                        <p><strong>Parameter b:</strong> Accounts for finite molecular volume (excluded volume)</p>
+                        <p class="info-note">Unlike ideal gases, Van der Waals equation considers real molecular interactions and sizes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

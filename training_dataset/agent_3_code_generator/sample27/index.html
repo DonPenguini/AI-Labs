@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michaelis-Menten Kinetics Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Michaelis-Menten Kinetics</h1>
+            <p>Simulating Enzyme Saturation Kinetics</p>
+        </header>
+
+        <main class="sim-layout">
+            <div class="panel controls-panel">
+                <div class="equation-box">
+                    $$v = \frac{V_{max} \cdot [S]}{K_m + [S]}$$
+                </div>
+
+                <div class="control-group">
+                    <label for="vmax">
+                        Vmax <span class="unit">(mol/L·s)</span>
+                        <span class="value-display" id="val-vmax">0.005</span>
+                    </label>
+                    <input type="range" id="vmax" min="0.0001" max="0.01" step="0.0001" value="0.005">
+                </div>
+
+                <div class="control-group">
+                    <label for="km">
+                        Km <span class="unit">(mol/L)</span>
+                        <span class="value-display" id="val-km">0.05</span>
+                    </label>
+                    <input type="range" id="km" min="0.001" max="0.1" step="0.001" value="0.05">
+                </div>
+
+                <div class="control-group">
+                    <label for="substrate">
+                        Substrate [S] <span class="unit">(mol/L)</span>
+                        <span class="value-display" id="val-substrate">0.5</span>
+                    </label>
+                    <input type="range" id="substrate" min="0" max="1" step="0.01" value="0.5">
+                </div>
+
+                <div class="stats-box">
+                    <h3>Current Rate (v)</h3>
+                    <div class="big-stat">
+                        <span id="output-v">0.0000</span> <small>mol/(L·s)</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel visual-panel">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="graph">Kinetics Graph</button>
+                    <button class="tab-btn" data-tab="simulation">Molecular View</button>
+                </div>
+
+                <div class="tab-content active" id="view-graph">
+                    <canvas id="kineticsGraph"></canvas>
+                    <div class="graph-legend">
+                        <span class="dot red"></span> Current Operating Point
+                    </div>
+                </div>
+
+                <div class="tab-content" id="view-simulation">
+                    <canvas id="moleculeCanvas"></canvas>
+                    <div class="sim-legend">
+                        <span class="dot blue"></span> Enzyme
+                        <span class="dot small-orange"></span> Substrate
+                        <span class="dot green"></span> Product
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

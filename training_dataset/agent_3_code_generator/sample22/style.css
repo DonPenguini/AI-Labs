@@ -1,0 +1,203 @@
+:root {
+    --primary-color: #007bff;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --accent-color: #dc3545;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Simulation Grid Layout */
+.simulation-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 800px) {
+    .simulation-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Controls Styles */
+.controls {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.controls h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.controls h3 {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.val-display {
+    color: var(--primary-color);
+    font-family: monospace;
+}
+
+input[type=range] {
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.separator {
+    height: 1px;
+    background: var(--border-color);
+    margin: 15px 0;
+}
+
+.highlight-group {
+    background-color: #eef7ff;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cce5ff;
+}
+
+/* Visuals Section */
+.visuals {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Output Cards */
+.outputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.output-card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: center;
+    border-left: 5px solid var(--accent-color);
+}
+
+.output-card .label {
+    display: block;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.output-card .value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.output-card .unit {
+    font-size: 0.9em;
+    color: #888;
+    margin-left: 5px;
+}
+
+/* Canvas Area */
+.canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.canvas-box {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.canvas-box h4 {
+    margin: 0 0 10px 0;
+    color: #555;
+}
+
+canvas {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.legend {
+    margin-top: 10px;
+    font-size: 0.85em;
+    color: #666;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.dot-start {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #999;
+    display: inline-block;
+}
+
+.dot-current {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ff0000;
+    display: inline-block;
+}

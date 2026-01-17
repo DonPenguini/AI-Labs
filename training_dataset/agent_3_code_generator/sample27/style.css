@@ -1,0 +1,233 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #212529;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+header {
+    background: var(--primary-color);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.sim-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.panel {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Left Panel: Controls */
+.controls-panel {
+    flex: 1;
+    border-right: 1px solid #e9ecef;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.equation-box {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.control-group {
+    background: white;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.control-group .unit {
+    font-weight: 400;
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+}
+
+.value-display {
+    float: right;
+    color: var(--primary-color);
+    font-family: monospace;
+}
+
+input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.stats-box {
+    margin-top: auto;
+    background: #e7f5ff;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.stats-box h3 {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.big-stat {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.big-stat small {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    font-weight: normal;
+}
+
+/* Right Panel: Visualization */
+.visual-panel {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--secondary-color);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+canvas {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background: #fff;
+    max-width: 100%;
+}
+
+.graph-legend, .sim-legend {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.dot.red { background-color: #dc3545; }
+.dot.blue { background-color: #007bff; }
+.dot.small-orange { background-color: #fd7e14; transform: scale(0.8); }
+.dot.green { background-color: #28a745; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sim-layout {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    
+    .controls-panel {
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    body {
+        padding: 0;
+        height: auto;
+    }
+    
+    .container {
+        border-radius: 0;
+        height: auto;
+        min-height: 100vh;
+    }
+}

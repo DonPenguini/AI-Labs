@@ -1,0 +1,147 @@
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --bg-color: #f4f7f6;
+    --panel-bg: #ffffff;
+    --text-color: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.simulation-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr 250px;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .simulation-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Panels */
+.controls-panel, .results-panel, .visual-panel {
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--bg-color);
+    padding-bottom: 10px;
+    color: var(--primary-color);
+}
+
+/* Controls */
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.unit {
+    font-weight: normal;
+    color: #777;
+    font-size: 0.85rem;
+}
+
+input[type=range] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.value-display {
+    text-align: right;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.equations-box {
+    background-color: var(--bg-color);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+/* Canvas */
+.visual-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+canvas {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+}
+
+/* Results */
+.output-card {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+    border-left: 4px solid var(--accent-color);
+}
+
+.output-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.output-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 5px 0;
+}
+
+.output-unit {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.assumptions {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}

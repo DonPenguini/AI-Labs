@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S29 Batch Reactor Energy Balance</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Batch Reactor Energy Balance</h1>
+            <p class="subtitle">Lumped Parameter Simulation (S29)</p>
+        </header>
+
+        <main class="simulation-layout">
+            <section class="controls-panel">
+                <div class="control-group">
+                    <h3><i class="fas fa-sliders-h"></i> Parameters</h3>
+                    
+                    <div class="input-wrapper">
+                        <label for="Qin">Heat Input (Qin) <span class="unit">[W]</span></label>
+                        <input type="range" id="Qin" min="-100000" max="100000" step="1000" value="0">
+                        <span class="value-display" id="val-Qin">0</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="Ua">Heat Transfer Coeff (Ua) <span class="unit">[W/K]</span></label>
+                        <input type="range" id="Ua" min="0" max="10000" step="100" value="1000">
+                        <span class="value-display" id="val-Ua">1000</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="Tc">Coolant Temp (Tc) <span class="unit">[K]</span></label>
+                        <input type="range" id="Tc" min="250" max="500" step="1" value="298">
+                        <span class="value-display" id="val-Tc">298</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="Hr">Heat of Reaction (Hr) <span class="unit">[J/mol]</span></label>
+                        <input type="range" id="Hr" min="-500000" max="500000" step="5000" value="-50000">
+                        <span class="value-display" id="val-Hr">-50000</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="rV">Reaction Rate (rV) <span class="unit">[mol/s]</span></label>
+                        <input type="range" id="rV" min="-10" max="10" step="0.1" value="1">
+                        <span class="value-display" id="val-rV">1</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="rho">Density (ρ) <span class="unit">[kg/m³]</span></label>
+                        <input type="range" id="rho" min="500" max="1500" step="10" value="1000">
+                        <span class="value-display" id="val-rho">1000</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="Cp">Heat Capacity (Cp) <span class="unit">[J/kg·K]</span></label>
+                        <input type="range" id="Cp" min="1000" max="5000" step="50" value="4184">
+                        <span class="value-display" id="val-Cp">4184</span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="V">Volume (V) <span class="unit">[m³]</span></label>
+                        <input type="range" id="V" min="0.01" max="10" step="0.01" value="1.0">
+                        <span class="value-display" id="val-V">1.0</span>
+                    </div>
+
+                    <div class="input-wrapper highlight-input">
+                        <label for="T">Reactor Temp (T) <span class="unit">[K]</span></label>
+                        <input type="range" id="T" min="250" max="600" step="1" value="300">
+                        <span class="value-display" id="val-T">300</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="visuals-panel">
+                <div class="equation-box">
+                    <div class="math-display">
+                        $$ \frac{dT}{dt} = \frac{Q_{in} - Ua(T - T_c) + H_r \cdot rV}{\rho \cdot C_p \cdot V} $$
+                    </div>
+                    <div class="result-display">
+                        <span class="label">Temperature Slope (dT/dt):</span>
+                        <span id="output-dTdt" class="result-value">0.000</span>
+                        <span class="unit">K/s</span>
+                    </div>
+                </div>
+
+                <div class="reactor-container">
+                    <div class="jacket">
+                        <div class="coolant-label">Coolant (Tc)</div>
+                        <div class="reactor-wall">
+                            <div class="liquid" id="liquid">
+                                <div class="bubbles"></div>
+                                <div class="mixer">
+                                    <div class="shaft"></div>
+                                    <div class="blade"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="arrow-qin" class="arrow-indicator hidden"><span class="arrow-label">Qin</span></div>
+                    <div id="arrow-loss" class="arrow-indicator hidden"><span class="arrow-label">Heat Transfer</span></div>
+                </div>
+
+                <div class="status-bar">
+                    <div class="status-item">
+                        <span class="status-label">Reaction Energy:</span>
+                        <span id="stat-reaction">0 W</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Transfer Energy:</span>
+                        <span id="stat-transfer">0 W</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Net Energy Flow:</span>
+                        <span id="stat-net">0 W</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

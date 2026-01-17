@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideal Gas Entropy Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ideal Gas Entropy Change ($$\Delta S$$)</h1>
+            <p>Constant Volume Process</p>
+        </header>
+
+        <main class="simulation-layout">
+            <section class="controls">
+                <div class="input-group">
+                    <label for="amount">Amount ($$n$$) <span id="val-n">1.0</span> mol</label>
+                    <input type="range" id="amount" min="0.01" max="10" step="0.1" value="1.0">
+                </div>
+                
+                <div class="input-group">
+                    <label for="cv">Heat Capacity ($$C_v$$) <span id="val-cv">25</span> J/(mol·K)</label>
+                    <input type="range" id="cv" min="10" max="40" step="1" value="25">
+                </div>
+
+                <div class="input-group">
+                    <label for="t1">Initial Temp ($$T_1$$) <span id="val-t1">300</span> K</label>
+                    <input type="range" id="t1" min="200" max="600" step="10" value="300">
+                </div>
+
+                <div class="input-group">
+                    <label for="t2">Final Temp ($$T_2$$) <span id="val-t2">600</span> K</label>
+                    <input type="range" id="t2" min="250" max="1200" step="10" value="600">
+                </div>
+
+                <div class="control-buttons">
+                    <button id="btn-reset">Reset</button>
+                    <button id="btn-animate" class="primary-btn">Heat Gas ($$T_1 \to T_2$$)</button>
+                </div>
+
+                <div class="formula-box">
+                    <h3>Formula</h3>
+                    <p>$$ \Delta S = n C_v \ln\left(\frac{T_2}{T_1}\right) $$</p>
+                </div>
+            </section>
+
+            <section class="visuals">
+                <div class="canvas-container">
+                    <div class="overlay-info">
+                        <div>Current T: <span id="current-temp">300</span> K</div>
+                    </div>
+                    <canvas id="gasCanvas"></canvas>
+                </div>
+                
+                <div class="results-panel">
+                    <div class="result-card">
+                        <span class="label">Total Entropy Change ($$\Delta S$$)</span>
+                        <span class="value" id="result-ds">0.00 J/K</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="temp-progress"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

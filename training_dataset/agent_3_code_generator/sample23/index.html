@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S23 Isothermal Expansion Work</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Isothermal Expansion of Ideal Gas</h1>
+            <p class="subtitle">Thermodynamics: Reversible Work Calculation</p>
+        </header>
+
+        <main>
+            <section class="controls-panel">
+                <div class="card">
+                    <h2>Parameters</h2>
+                    
+                    <div class="control-group">
+                        <label for="amount">Moles of Gas ($n$)</label>
+                        <div class="input-row">
+                            <input type="range" id="amount" min="0.1" max="10" step="0.1" value="1">
+                            <span class="value-display"><span id="amount-val">1</span> mol</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="temperature">Temperature ($T$)</label>
+                        <div class="input-row">
+                            <input type="range" id="temperature" min="250" max="700" step="10" value="300">
+                            <span class="value-display"><span id="temp-val">300</span> K</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="v1">Initial Volume ($V_1$)</label>
+                        <div class="input-row">
+                            <input type="range" id="v1" min="0.1" max="5.0" step="0.1" value="1.0">
+                            <span class="value-display"><span id="v1-val">1.0</span> $m^3$</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="v2">Final Volume ($V_2$)</label>
+                        <div class="input-row">
+                            <input type="range" id="v2" min="0.1" max="5.0" step="0.1" value="2.0">
+                            <span class="value-display"><span id="v2-val">2.0</span> $m^3$</span>
+                        </div>
+                    </div>
+
+                    <button id="animate-btn" class="primary-btn">Play Expansion Animation</button>
+                </div>
+
+                <div class="card results">
+                    <h2>Calculated Work</h2>
+                    <div class="equation">
+                        $$W = nRT \ln\left(\frac{V_2}{V_1}\right)$$
+                    </div>
+                    <div class="output-box">
+                        <span class="label">Work Done ($W$):</span>
+                        <span class="value" id="work-output">0</span>
+                        <span class="unit">Joules</span>
+                    </div>
+                    <div class="output-sub">
+                        <span class="label">Gas Constant ($R$):</span>
+                        <span>8.314 J/(mol·K)</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="viz-panel">
+                <div class="viz-card">
+                    <h3>System Visualization</h3>
+                    <div class="piston-container">
+                        <div class="cylinder">
+                            <div class="gas-particles" id="particles"></div>
+                            <div class="piston" id="piston">
+                                <div class="piston-head"></div>
+                                <div class="piston-rod"></div>
+                            </div>
+                            <div class="volume-marker" id="volume-marker"></div>
+                        </div>
+                        <div class="axis-labels">
+                            <span>0</span>
+                            <span>Volume ($m^3$)</span>
+                            <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="viz-card">
+                    <h3>P-V Diagram</h3>
+                    <div class="canvas-wrapper">
+                        <canvas id="pv-graph"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

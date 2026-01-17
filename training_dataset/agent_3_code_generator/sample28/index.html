@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S28 Competitive Inhibition Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>Competitive Enzyme Inhibition</h1>
+            <p class="formula">
+                <span class="math">v = \frac{V_{max}[S]}{K_m(1 + \frac{[I]}{K_i}) + [S]}</span>
+            </p>
+        </header>
+
+        <div class="simulation-layout">
+            <div class="controls-panel">
+                <h2>Parameters</h2>
+                
+                <div class="control-group">
+                    <label for="vmax">Vmax (Max Velocity) <span id="val-vmax"></span></label>
+                    <input type="range" id="vmax" min="0.001" max="0.01" step="0.0001">
+                </div>
+
+                <div class="control-group">
+                    <label for="km">Km (Michaelis Constant) <span id="val-km"></span></label>
+                    <input type="range" id="km" min="0.01" max="0.1" step="0.001">
+                </div>
+
+                <div class="control-group">
+                    <label for="ki">Ki (Inhibition Constant) <span id="val-ki"></span></label>
+                    <input type="range" id="ki" min="0.000001" max="0.5" step="0.0001">
+                    <small>Lower Ki = Stronger Inhibitor</small>
+                </div>
+
+                <hr>
+
+                <div class="control-group">
+                    <label for="s-conc" style="color: #2ecc71;">[S] Substrate Conc. <span id="val-s"></span></label>
+                    <input type="range" id="s-conc" min="0" max="1" step="0.01">
+                </div>
+
+                <div class="control-group">
+                    <label for="i-conc" style="color: #e74c3c;">[I] Inhibitor Conc. <span id="val-i"></span></label>
+                    <input type="range" id="i-conc" min="0" max="1" step="0.01">
+                </div>
+
+                <div class="output-box">
+                    <h3>Reaction Rate (v)</h3>
+                    <div id="output-rate">0.0000</div>
+                    <div class="unit">mol/(L·s)</div>
+                </div>
+            </div>
+
+            <div class="visuals-panel">
+                
+                <div class="canvas-wrapper">
+                    <h3>Michaelis-Menten Plot</h3>
+                    <canvas id="graphCanvas"></canvas>
+                    <div class="legend">
+                        <span class="l-item"><span class="dot dashed"></span> No Inhibitor</span>
+                        <span class="l-item"><span class="dot solid"></span> With Inhibitor</span>
+                        <span class="l-item"><span class="dot current"></span> Current State</span>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <h3>Molecular View</h3>
+                    <canvas id="simCanvas"></canvas>
+                    <div class="legend">
+                        <span class="l-item"><span class="shape enzyme"></span> Enzyme</span>
+                        <span class="l-item"><span class="shape sub"></span> Substrate</span>
+                        <span class="l-item"><span class="shape inh"></span> Inhibitor</span>
+                        <span class="l-item"><span class="shape prod"></span> Product</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

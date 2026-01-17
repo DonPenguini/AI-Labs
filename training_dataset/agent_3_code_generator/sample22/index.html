@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S22 Adiabatic Compression Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Adiabatic Compression (Ideal Gas)</h1>
+        <p class="subtitle">Simulate the reversible adiabatic process: \( P_1 V_1^\gamma = P_2 V_2^\gamma \)</p>
+    </header>
+
+    <div class="simulation-grid">
+        <aside class="controls">
+            <h2>Parameters</h2>
+            
+            <div class="control-group">
+                <h3>Initial State (1)</h3>
+                
+                <label for="p1-slider">
+                    Pressure (\(P_1\))
+                    <span id="p1-val" class="val-display">100 kPa</span>
+                </label>
+                <input type="range" id="p1-slider" min="10000" max="10000000" step="10000" value="100000">
+
+                <label for="v1-slider">
+                    Volume (\(V_1\))
+                    <span id="v1-val" class="val-display">5.0 m³</span>
+                </label>
+                <input type="range" id="v1-slider" min="0.1" max="10" step="0.1" value="5.0">
+
+                <label for="t1-slider">
+                    Temperature (\(T_1\))
+                    <span id="t1-val" class="val-display">300 K</span>
+                </label>
+                <input type="range" id="t1-slider" min="200" max="800" step="10" value="300">
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="control-group">
+                <label for="gamma-slider">
+                    Heat Capacity Ratio (\(\gamma\))
+                    <span id="gamma-val" class="val-display">1.40</span>
+                </label>
+                <input type="range" id="gamma-slider" min="1.1" max="1.67" step="0.01" value="1.4">
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="control-group highlight-group">
+                <h3>Final State (2) - Control</h3>
+                <label for="v2-slider">
+                    Final Volume (\(V_2\))
+                    <span id="v2-val" class="val-display">2.5 m³</span>
+                </label>
+                <input type="range" id="v2-slider" min="0.1" max="10" step="0.1" value="2.5">
+            </div>
+        </aside>
+
+        <main class="visuals">
+            <div class="outputs">
+                <div class="output-card">
+                    <span class="label">Final Pressure (\(P_2\))</span>
+                    <span class="value" id="p2-output">--</span>
+                    <span class="unit">Pa</span>
+                </div>
+                <div class="output-card">
+                    <span class="label">Final Temperature (\(T_2\))</span>
+                    <span class="value" id="t2-output">--</span>
+                    <span class="unit">K</span>
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <div class="canvas-box">
+                    <h4>Piston Simulation</h4>
+                    <canvas id="pistonCanvas"></canvas>
+                    <div class="legend">
+                        <span class="dot-start"></span> Initial State
+                        <span class="dot-current"></span> Current State
+                    </div>
+                </div>
+                <div class="canvas-box">
+                    <h4>P-V Diagram</h4>
+                    <canvas id="graphCanvas"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
