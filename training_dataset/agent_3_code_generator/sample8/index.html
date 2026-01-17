@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1D Heat Diffusion Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>1D Heat Diffusion Simulator</h1>
+            <p class="subtitle">Explicit FTCS Finite Difference Method</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <h2>Simulation Parameters</h2>
+                
+                <div class="control-group">
+                    <label for="alpha">
+                        Thermal Diffusivity (α)
+                        <span class="value" id="alpha-value">1.00e-5</span> m²/s
+                    </label>
+                    <input type="range" id="alpha" min="-7" max="-4" step="0.1" value="-5">
+                </div>
+
+                <div class="control-group">
+                    <label for="length">
+                        Rod Length (L)
+                        <span class="value" id="length-value">1.00</span> m
+                    </label>
+                    <input type="range" id="length" min="0.05" max="5" step="0.05" value="1">
+                </div>
+
+                <div class="control-group">
+                    <label for="dx">
+                        Spatial Step (dx)
+                        <span class="value" id="dx-value">0.02</span> m
+                    </label>
+                    <input type="range" id="dx" min="0.001" max="0.1" step="0.001" value="0.02">
+                </div>
+
+                <div class="control-group">
+                    <label for="dt">
+                        Time Step (dt)
+                        <span class="value" id="dt-value">0.10</span> s
+                    </label>
+                    <input type="range" id="dt" min="0.001" max="1" step="0.001" value="0.1">
+                </div>
+
+                <div class="stability-indicator" id="stability">
+                    <div class="stability-label">Fourier Number (Fo):</div>
+                    <div class="fourier-value" id="fourier-value">0.250</div>
+                    <div class="stability-status" id="stability-status">STABLE</div>
+                    <div class="stability-condition">Condition: Fo ≤ 0.5</div>
+                </div>
+
+                <div class="initial-conditions">
+                    <h3>Initial Conditions</h3>
+                    <div class="control-group">
+                        <label for="temp-left">
+                            Left Boundary
+                            <span class="value" id="temp-left-value">100</span> °C
+                        </label>
+                        <input type="range" id="temp-left" min="0" max="200" step="1" value="100">
+                    </div>
+                    <div class="control-group">
+                        <label for="temp-right">
+                            Right Boundary
+                            <span class="value" id="temp-right-value">0</span> °C
+                        </label>
+                        <input type="range" id="temp-right" min="0" max="200" step="1" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label for="temp-initial">
+                            Initial Interior
+                            <span class="value" id="temp-initial-value">20</span> °C
+                        </label>
+                        <input type="range" id="temp-initial" min="0" max="200" step="1" value="20">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="start-btn" class="btn btn-primary">Start</button>
+                    <button id="pause-btn" class="btn btn-secondary" disabled>Pause</button>
+                    <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div class="info-panel">
+                    <div class="info-row">
+                        <span>Time:</span>
+                        <span id="time-display">0.00 s</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Nodes:</span>
+                        <span id="nodes-display">51</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="visualization-panel">
+                <h2>Temperature Distribution</h2>
+                <canvas id="temperature-canvas"></canvas>
+                
+                <div class="equation-panel">
+                    <h3>Update Equation</h3>
+                    <div class="equation">
+                        T<sub>i</sub><sup>n+1</sup> = T<sub>i</sub><sup>n</sup> + Fo × (T<sub>i+1</sub><sup>n</sup> - 2T<sub>i</sub><sup>n</sup> + T<sub>i-1</sub><sup>n</sup>)
+                    </div>
+                    <div class="equation-detail">
+                        where Fo = α·dt / dx²
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color hot"></div>
+                        <span>Hot (100°C)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color medium"></div>
+                        <span>Medium (50°C)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color cold"></div>
+                        <span>Cold (0°C)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

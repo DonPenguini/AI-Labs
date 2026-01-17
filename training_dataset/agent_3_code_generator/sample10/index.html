@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1-bit Full Adder Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>1-bit Full Adder Simulator</h1>
+            <p class="subtitle">Interactive Digital Logic Circuit</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Controls -->
+            <div class="input-panel">
+                <h2>Inputs</h2>
+                <div class="input-group">
+                    <label for="inputA">Input A</label>
+                    <div class="toggle-wrapper">
+                        <input type="checkbox" id="inputA" class="toggle-input">
+                        <label for="inputA" class="toggle-label">
+                            <span class="toggle-value">0</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="inputB">Input B</label>
+                    <div class="toggle-wrapper">
+                        <input type="checkbox" id="inputB" class="toggle-input">
+                        <label for="inputB" class="toggle-label">
+                            <span class="toggle-value">0</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="inputCin">Carry In (Cin)</label>
+                    <div class="toggle-wrapper">
+                        <input type="checkbox" id="inputCin" class="toggle-input">
+                        <label for="inputCin" class="toggle-label">
+                            <span class="toggle-value">0</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Circuit Visualization -->
+            <div class="circuit-panel">
+                <h2>Circuit Diagram</h2>
+                <svg id="circuit" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Input lines -->
+                    <line id="lineA" x1="50" y1="80" x2="150" y2="80" class="wire" />
+                    <line id="lineB" x1="50" y1="150" x2="150" y2="150" class="wire" />
+                    <line id="lineCin" x1="50" y1="220" x2="150" y2="220" class="wire" />
+                    
+                    <!-- XOR gate 1 (A XOR B) -->
+                    <path d="M 150 60 Q 180 60 180 115 Q 180 170 150 170 Q 165 115 150 60" 
+                          fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <path d="M 140 60 Q 155 115 140 170" fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <line x1="150" y1="80" x2="180" y2="95" class="wire"/>
+                    <line x1="150" y1="150" x2="180" y2="135" class="wire"/>
+                    <line id="xor1Out" x1="240" y1="115" x2="320" y2="115" class="wire"/>
+                    <circle cx="240" cy="115" r="3" fill="#4a5568"/>
+                    
+                    <!-- XOR gate 2 (A XOR B XOR Cin) -->
+                    <path d="M 320 95 Q 350 95 350 150 Q 350 205 320 205 Q 335 150 320 95" 
+                          fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <path d="M 310 95 Q 325 150 310 205" fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <line x1="320" y1="115" x2="350" y2="130" class="wire"/>
+                    <line x1="150" y1="220" x2="300" y2="220" class="wire"/>
+                    <line x1="300" y1="220" x2="350" y2="170" class="wire"/>
+                    <line id="sumOut" x1="410" y1="150" x2="550" y2="150" class="wire"/>
+                    <circle cx="410" cy="150" r="3" fill="#4a5568"/>
+                    
+                    <!-- AND gates for Cout -->
+                    <!-- AND gate 1 (A AND B) -->
+                    <rect x="150" y="260" width="60" height="40" rx="5" fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <line x1="150" y1="80" x2="120" y2="80" class="wire"/>
+                    <line x1="120" y1="80" x2="120" y2="270" class="wire"/>
+                    <line x1="120" y1="270" x2="150" y2="270" class="wire"/>
+                    <line x1="150" y1="150" x2="100" y2="150" class="wire"/>
+                    <line x1="100" y1="150" x2="100" y2="290" class="wire"/>
+                    <line x1="100" y1="290" x2="150" y2="290" class="wire"/>
+                    <line id="and1Out" x1="210" y1="280" x2="380" y2="280" class="wire"/>
+                    <circle cx="210" cy="280" r="3" fill="#4a5568"/>
+                    
+                    <!-- OR gate for final Cout -->
+                    <path d="M 380 260 Q 410 260 430 290 Q 410 320 380 320 Q 395 290 380 260" 
+                          fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <line x1="380" y1="280" x2="410" y2="275" class="wire"/>
+                    <line x1="240" y1="115" x2="240" y2="240" class="wire"/>
+                    <line x1="240" y1="240" x2="370" y2="240" class="wire"/>
+                    <line x1="370" y1="240" x2="370" y2="300" class="wire"/>
+                    <line x1="370" y1="300" x2="410" y2="305" class="wire"/>
+                    <line id="coutOut" x1="490" y1="290" x2="550" y2="290" class="wire"/>
+                    <circle cx="490" cy="290" r="3" fill="#4a5568"/>
+                    
+                    <!-- Labels -->
+                    <text x="30" y="85" class="label">A</text>
+                    <text x="30" y="155" class="label">B</text>
+                    <text x="20" y="225" class="label">Cin</text>
+                    <text x="165" y="125" class="gate-label">XOR</text>
+                    <text x="335" y="160" class="gate-label">XOR</text>
+                    <text x="165" y="285" class="gate-label">AND</text>
+                    <text x="395" y="295" class="gate-label">OR</text>
+                    <text x="555" y="155" class="label output-label">Sum</text>
+                    <text x="555" y="295" class="label output-label">Cout</text>
+                </svg>
+            </div>
+
+            <!-- Output Display -->
+            <div class="output-panel">
+                <h2>Outputs</h2>
+                <div class="output-group">
+                    <label>Sum</label>
+                    <div class="output-display" id="sumDisplay">0</div>
+                </div>
+                <div class="output-group">
+                    <label>Carry Out (Cout)</label>
+                    <div class="output-display" id="coutDisplay">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Equations Panel -->
+        <div class="equations-panel">
+            <h2>Boolean Algebra Equations</h2>
+            <div class="equation-grid">
+                <div class="equation-card">
+                    <h3>Sum Output</h3>
+                    <div class="equation">Sum = A ⊕ B ⊕ Cin</div>
+                    <p class="equation-desc">XOR of all three inputs</p>
+                </div>
+                <div class="equation-card">
+                    <h3>Carry Out</h3>
+                    <div class="equation">Cout = (A·B) + (A·Cin) + (B·Cin)</div>
+                    <p class="equation-desc">True when two or more inputs are 1</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Truth Table -->
+        <div class="truth-table-panel">
+            <h2>Truth Table</h2>
+            <table class="truth-table">
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>Cin</th>
+                        <th>Sum</th>
+                        <th>Cout</th>
+                    </tr>
+                </thead>
+                <tbody id="truthTableBody">
+                    <!-- Generated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

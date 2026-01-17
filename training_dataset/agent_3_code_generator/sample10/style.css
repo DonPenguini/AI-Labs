@@ -1,0 +1,315 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #2d3748;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 20px;
+    padding: 30px;
+}
+
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Input Panel */
+.input-panel, .output-panel {
+    background: #f7fafc;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.input-panel h2, .output-panel h2, .circuit-panel h2, .equations-panel h2, .truth-table-panel h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #5a67d8;
+    border-bottom: 3px solid #5a67d8;
+    padding-bottom: 10px;
+}
+
+.input-group, .output-group {
+    margin-bottom: 25px;
+}
+
+.input-group label, .output-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #4a5568;
+}
+
+/* Toggle Switch */
+.toggle-wrapper {
+    position: relative;
+}
+
+.toggle-input {
+    display: none;
+}
+
+.toggle-label {
+    display: block;
+    width: 100px;
+    height: 50px;
+    background: #e2e8f0;
+    border-radius: 25px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-label::after {
+    content: '';
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: white;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-value {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    font-size: 1.3em;
+    color: #718096;
+    transition: all 0.3s ease;
+}
+
+.toggle-input:checked + .toggle-label {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.toggle-input:checked + .toggle-label::after {
+    left: 54px;
+}
+
+.toggle-input:checked + .toggle-label .toggle-value {
+    left: 15px;
+    right: auto;
+    color: white;
+}
+
+/* Circuit Panel */
+.circuit-panel {
+    background: #f7fafc;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+#circuit {
+    width: 100%;
+    height: auto;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.wire {
+    stroke: #cbd5e0;
+    stroke-width: 3;
+    transition: stroke 0.3s ease;
+}
+
+.wire.active {
+    stroke: #48bb78;
+    stroke-width: 4;
+    filter: drop-shadow(0 0 8px #48bb78);
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.label {
+    font-size: 16px;
+    font-weight: bold;
+    fill: #4a5568;
+}
+
+.gate-label {
+    font-size: 12px;
+    font-weight: 600;
+    fill: #5a67d8;
+}
+
+.output-label {
+    fill: #38a169;
+}
+
+/* Output Display */
+.output-display {
+    width: 100px;
+    height: 60px;
+    background: #2d3748;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #e2e8f0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.output-display.active {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    box-shadow: 0 0 20px rgba(72, 187, 120, 0.6);
+    transform: scale(1.05);
+}
+
+/* Equations Panel */
+.equations-panel {
+    padding: 30px;
+    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+}
+
+.equation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.equation-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.equation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.equation-card h3 {
+    color: #5a67d8;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.equation {
+    font-family: 'Courier New', monospace;
+    font-size: 1.2em;
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 4px solid #5a67d8;
+    color: #2d3748;
+}
+
+.equation-desc {
+    color: #718096;
+    font-size: 0.95em;
+    font-style: italic;
+}
+
+/* Truth Table */
+.truth-table-panel {
+    padding: 30px;
+    background: white;
+}
+
+.truth-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.truth-table thead {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    color: white;
+}
+
+.truth-table th {
+    padding: 15px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.truth-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 1.05em;
+    transition: background 0.3s ease;
+}
+
+.truth-table tbody tr:hover {
+    background: #f7fafc;
+}
+
+.truth-table tbody tr.highlight {
+    background: linear-gradient(90deg, #c6f6d5 0%, #9ae6b4 100%);
+    animation: highlightRow 0.5s ease;
+}
+
+@keyframes highlightRow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.truth-table tbody tr:last-child td {
+    border-bottom: none;
+}
