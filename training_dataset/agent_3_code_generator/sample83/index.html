@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERT Analysis Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>PERT Activity Estimator</h1>
+            <p>Calculate Expected Time ($t_e$) and Variance using the Beta Distribution approximation.</p>
+        </header>
+
+        <div class="viz-container">
+            <canvas id="pertCanvas"></canvas>
+            <div class="legend">
+                <span class="legend-item"><span class="dot opt"></span> Optimistic (a)</span>
+                <span class="legend-item"><span class="dot likely"></span> Most Likely (m)</span>
+                <span class="legend-item"><span class="dot pess"></span> Pessimistic (b)</span>
+                <span class="legend-item"><span class="dot expected"></span> Expected ($t_e$)</span>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="controls">
+                <h3>Estimates (Hours/Days)</h3>
+                
+                <div class="control-group">
+                    <label>Optimistic (a): <span id="val-a">2</span></label>
+                    <input type="range" id="input-a" min="0" max="100" value="2">
+                </div>
+
+                <div class="control-group">
+                    <label>Most Likely (m): <span id="val-m">5</span></label>
+                    <input type="range" id="input-m" min="0" max="100" value="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Pessimistic (b): <span id="val-b">14</span></label>
+                    <input type="range" id="input-b" min="0" max="100" value="14">
+                </div>
+                
+                <p class="note" id="error-msg"></p>
+            </div>
+
+            <div class="results">
+                <h3>Calculated Output</h3>
+                
+                <div class="result-card">
+                    <div class="label">Expected Time ($t_e$)</div>
+                    <div class="value" id="res-te">0.00</div>
+                    <div class="formula">$t_e = \frac{a + 4m + b}{6}$</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="label">Variance ($\sigma^2$)</div>
+                    <div class="value" id="res-var">0.00</div>
+                    <div class="formula">$Var = (\frac{b - a}{6})^2$</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="label">Standard Deviation ($\sigma$)</div>
+                    <div class="value" id="res-std">0.00</div>
+                    <div class="formula">$\sigma = \frac{b - a}{6}$</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

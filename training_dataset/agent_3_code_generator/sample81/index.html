@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little's Law Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>Little's Law Simulator</h1>
+            <p class="subtitle">Operations Research: Work-in-Process (L) = Throughput (&lambda;) &times; Cycle Time (W)</p>
+        </header>
+
+        <div class="simulation-window">
+            <div class="label-entry">Entry (&lambda;)</div>
+            <div class="system-box" id="systemBox">
+                <div class="system-label">The System (Time = W)</div>
+            </div>
+            <div class="label-exit">Exit</div>
+        </div>
+
+        <div class="dashboard">
+            <div class="controls-panel">
+                <h3>System Parameters</h3>
+                
+                <div class="control-group">
+                    <label for="lambdaInput">
+                        Throughput (&lambda;): <span id="lambdaVal">1.0</span> items/sec
+                    </label>
+                    <input type="range" id="lambdaInput" min="0.1" max="5.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <label for="wInput">
+                        Cycle Time (W): <span id="wVal">2.0</span> sec
+                    </label>
+                    <input type="range" id="wInput" min="0.5" max="10.0" step="0.5" value="2.0">
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <h3>Real-time Metrics</h3>
+                <div class="metric-card">
+                    <span class="metric-label">Theoretical WIP (Formula)</span>
+                    <span class="metric-value" id="mathWip">0.00</span>
+                    <span class="metric-sub">L = &lambda; * W</span>
+                </div>
+                <div class="metric-card highlight">
+                    <span class="metric-label">Actual Items in System</span>
+                    <span class="metric-value" id="countWip">0</span>
+                    <span class="metric-sub">Visual Count</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <p><strong>How it works:</strong> Items enter the system at a rate of <strong>&lambda;</strong>. Each item stays in the system for exactly <strong>W</strong> seconds (represented by the travel speed across the box). Notice that the number of items visible (Actual WIP) stabilizes to match the theoretical Little's Law calculation.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

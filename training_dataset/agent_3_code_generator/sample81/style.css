@@ -1,0 +1,195 @@
+:root {
+    --primary-color: #2563eb;
+    --accent-color: #10b981;
+    --bg-color: #f8fafc;
+    --panel-bg: #ffffff;
+    --text-color: #1e293b;
+    --item-color: #ef4444;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.main-container {
+    max-width: 900px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #0f172a;
+}
+
+.subtitle {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+/* Simulation Window */
+.simulation-window {
+    background-color: #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    overflow: hidden; /* Keeps items contained */
+}
+
+.label-entry, .label-exit {
+    font-weight: bold;
+    color: #64748b;
+    width: 80px;
+    text-align: center;
+    z-index: 2;
+}
+
+.system-box {
+    flex-grow: 1;
+    height: 120px;
+    background-color: white;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    position: relative;
+    margin: 0 10px;
+    overflow: hidden; /* Items disappear when they hit the edge of this box if needed, though we handle logic in JS */
+}
+
+.system-label {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* The Moving Item */
+.item {
+    width: 24px;
+    height: 24px;
+    background-color: var(--item-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: white;
+    font-weight: bold;
+    /* Transition is handled via JS for smooth linear movement, 
+       but we add a small pop-in animation */
+    animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from { transform: translate(-50%, -50%) scale(0); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Dashboard */
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background-color: var(--panel-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.controls-panel h3, .results-panel h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+input[type=range] {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Results */
+.results-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.metric-card.highlight {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.metric-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.metric-sub {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.explanation {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}

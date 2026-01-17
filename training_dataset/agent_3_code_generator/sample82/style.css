@@ -1,0 +1,129 @@
+:root {
+    --bg-app: #f1f5f9;
+    --bg-panel: #ffffff;
+    --primary: #2563eb;     /* Blue */
+    --holding: #ea580c;     /* Orange */
+    --setup: #16a34a;       /* Green */
+    --total: #0f172a;       /* Dark */
+    --text: #334155;
+    --border: #e2e8f0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg-app);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+}
+
+.main-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 { margin: 0 0 10px 0; color: var(--total); }
+header p { margin: 0; color: #64748b; }
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: var(--bg-panel);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+}
+
+h3 {
+    margin-top: 0;
+    color: var(--total);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 10px;
+    font-size: 1.1em;
+}
+
+/* Controls */
+.control-group { margin-bottom: 20px; }
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.val { color: var(--primary); font-family: monospace; }
+
+input[type=range] { width: 100%; cursor: pointer; }
+
+.hint { font-size: 0.8em; color: #94a3b8; font-style: italic; margin-top: 4px; }
+
+.results-box {
+    background: #eff6ff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #dbeafe;
+}
+
+.big-result {
+    font-size: 2em;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.cost-summary {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #475569;
+}
+
+/* Visuals Column */
+.visuals-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.canvas-wrap {
+    width: 100%;
+    position: relative;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    font-size: 0.85em;
+}
+
+.l-item { display: flex; align-items: center; gap: 5px; }
+
+.color-box { width: 12px; height: 12px; border-radius: 3px; }
+.color-box.holding { background: var(--holding); }
+.color-box.setup { background: var(--setup); }
+.color-box.total { background: var(--total); }
+
+@media (max-width: 800px) {
+    .dashboard { grid-template-columns: 1fr; }
+}

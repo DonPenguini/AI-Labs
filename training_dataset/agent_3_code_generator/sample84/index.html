@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S84 Random Walk 2D</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <header>
+        <h1>2D Unbiased Random Walk</h1>
+        <p>Simulating diffusion with independent steps on X and Y axes.</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="panel controls">
+            <h3>Parameters</h3>
+            
+            <div class="control-group">
+                <div class="label-row">
+                    <label>Step Count ($n$)</label>
+                    <span id="val-n" class="val">1000</span>
+                </div>
+                <input type="range" id="in-n" min="100" max="10000" step="100" value="1000">
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <label>Step Size ($s$)</label>
+                    <span id="val-s" class="val">1.0</span>
+                </div>
+                <input type="range" id="in-s" min="0.5" max="5.0" step="0.5" value="1.0">
+            </div>
+
+            <div class="button-row">
+                <button id="btn-start" class="btn primary">Start Simulation</button>
+                <button id="btn-reset" class="btn secondary">Reset</button>
+            </div>
+
+            <div class="stats-box">
+                <h4>Statistics</h4>
+                
+                <div class="stat-row">
+                    <span>Theoretical RMS ($s\sqrt{2n}$):</span>
+                    <strong id="stat-theo-rms" class="highlight">--</strong>
+                </div>
+                <div class="stat-row">
+                    <span>Current Distance ($R$):</span>
+                    <strong id="stat-curr-dist">0.00</strong>
+                </div>
+                <div class="stat-row">
+                    <span>Theoretical Variance ($ns^2$):</span>
+                    <span id="stat-theo-var">--</span>
+                </div>
+                
+                <hr>
+                
+                <div class="formula-block">
+                    $$R_{RMS} = s\sqrt{2n}$$
+                </div>
+            </div>
+        </div>
+
+        <div class="panel visual">
+            <div class="canvas-container">
+                <canvas id="walkCanvas"></canvas>
+                <div class="overlay-legend">
+                    <span class="dot origin"></span> Start
+                    <span class="dot current"></span> Current
+                    <span class="circle-legend"></span> RMS Radius
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
