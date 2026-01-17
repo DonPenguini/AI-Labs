@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratic Drag & Terminal Velocity</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Quadratic Drag: Terminal Velocity</h1>
+        <div class="formula-box">
+            $$ v_{term} = \sqrt{\frac{2mg}{\rho C_d A}} $$
+        </div>
+    </header>
+
+    <div class="sim-layout">
+        <aside class="controls">
+            <h2>Object Properties</h2>
+            
+            <div class="control-group">
+                <label for="mass">Mass ($m$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="mass" min="1" max="200" step="1" value="70">
+                    <span id="val-m" class="val-display">70 kg</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="area">Cross-Section Area ($A$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="area" min="0.01" max="2.0" step="0.01" value="0.5">
+                    <span id="val-A" class="val-display">0.50 m²</span>
+                </div>
+                <small>Determines object visual size</small>
+            </div>
+
+            <div class="control-group">
+                <label for="cd">Drag Coefficient ($C_d$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="cd" min="0.1" max="2.0" step="0.1" value="0.5">
+                    <span id="val-cd" class="val-display">0.5 (Sphere/Person)</span>
+                </div>
+            </div>
+
+            <h2>Environment</h2>
+            <div class="control-group">
+                <label for="rho">Air Density ($\rho$)</label>
+                <div class="input-wrapper">
+                    <input type="range" id="rho" min="0.5" max="1.5" step="0.01" value="1.22">
+                    <span id="val-rho" class="val-display">1.22 kg/m³</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="reset-btn">Drop / Reset</button>
+            </div>
+        </aside>
+
+        <main class="visuals">
+            <div class="canvas-container">
+                <canvas id="simCanvas"></canvas>
+                <div class="overlay-data">
+                    <div class="data-row">
+                        <span class="label">Current Velocity ($v$):</span>
+                        <span id="curr-v" class="value">0.0 m/s</span>
+                    </div>
+                    <div class="data-row highlight">
+                        <span class="label">Terminal Velocity ($v_{term}$):</span>
+                        <span id="term-v" class="value">0.0 m/s</span>
+                    </div>
+                    <div class="data-row status" id="status-text">
+                        Accelerating...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3>Force Balance Diagram</h3>
+                <p>
+                    
+                    <br>
+                    At terminal velocity, the upward Drag force ($F_d$) exactly balances the downward Weight ($mg$). The object stops accelerating and falls at a constant speed.
+                </p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

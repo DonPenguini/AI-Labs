@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exponential Atmosphere Model</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Exponential Atmosphere Model</h1>
+        <div class="equation-box">
+            $$ \rho(h) = \rho_0 \cdot e^{-h/H} $$
+        </div>
+    </header>
+
+    <div class="simulation-layout">
+        
+        <aside class="controls">
+            <h2>Parameters</h2>
+
+            <div class="control-group">
+                <label for="rho0">Sea Level Density ($\rho_0$)</label>
+                <div class="input-row">
+                    <input type="range" id="rho0" min="0.5" max="1.4" step="0.01" value="1.225">
+                    <span id="val-rho0" class="value-display">1.225</span> <span class="unit">kg/m³</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="scaleHeight">Scale Height ($H$)</label>
+                <div class="input-row">
+                    <input type="range" id="scaleHeight" min="5000" max="10000" step="100" value="8500">
+                    <span id="val-H" class="value-display">8500</span> <span class="unit">m</span>
+                </div>
+                <p class="description">Height at which density drops by factor $1/e$.</p>
+            </div>
+
+            <div class="control-group highlight-control">
+                <label for="altitude">Target Altitude ($h$)</label>
+                <div class="input-row">
+                    <input type="range" id="altitude" min="0" max="25000" step="100" value="0">
+                    <span id="val-h" class="value-display">0</span> <span class="unit">m</span>
+                </div>
+            </div>
+
+            <div class="output-panel">
+                <h3>Calculated Density ($\rho$)</h3>
+                <div class="result-value" id="result-rho">1.225</div>
+                <div class="unit">kg/m³</div>
+                <div class="ratio-bar-container">
+                    <div id="ratio-bar" style="width: 100%;"></div>
+                </div>
+                <div class="ratio-text" id="ratio-text">100% of Sea Level</div>
+            </div>
+        </aside>
+
+        <main class="visuals">
+            <div class="canvas-wrapper">
+                <h3>Visual Representation</h3>
+                <div class="canvas-stack">
+                    <canvas id="skyCanvas"></canvas>
+                    <div class="overlay-info">Probe</div>
+                </div>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <h3>Density Profile ($\rho$ vs $h$)</h3>
+                <canvas id="graphCanvas"></canvas>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

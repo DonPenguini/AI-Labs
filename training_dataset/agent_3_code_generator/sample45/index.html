@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S45 HVAC Conductive Load</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>HVAC Conductive Load Simulator</h1>
+        <p>Steady State Heat Transfer: Single Zone</p>
+    </header>
+
+    <div class="simulation-layout">
+        <div class="canvas-container">
+            <canvas id="simCanvas"></canvas>
+            <div class="canvas-overlay">
+                <div class="temp-label outside" id="label-tout">Outside: 35°C</div>
+                <div class="temp-label inside" id="label-tin">Inside: 24°C</div>
+            </div>
+        </div>
+
+        <div class="controls-container">
+            
+            <div class="result-card">
+                <h3>Calculated Heat Rate ($Q$)</h3>
+                <div class="equation">
+                    $$ Q = UA \cdot (T_{out} - T_{in}) $$
+                </div>
+                <div class="result-value">
+                    <span id="q-value">0</span> <span class="unit">Watts</span>
+                </div>
+                <div class="status-badge" id="load-status">Cooling Required</div>
+            </div>
+
+            <div class="input-group">
+                <label for="tout">
+                    Outdoor Temp ($T_{out}$): <span id="val-tout">35</span>°C
+                </label>
+                <input type="range" id="tout" min="-30" max="50" step="1" value="35">
+                <div class="slider-track-visual temp-track"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="tin">
+                    Indoor Temp ($T_{in}$): <span id="val-tin">24</span>°C
+                </label>
+                <input type="range" id="tin" min="10" max="40" step="1" value="24">
+                <div class="slider-track-visual temp-track"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="ua">
+                    Overall UA Value: <span id="val-ua">200</span> W/K
+                </label>
+                <input type="range" id="ua" min="10" max="2000" step="10" value="200">
+                <small>Conductance (Insulation Level)</small>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
