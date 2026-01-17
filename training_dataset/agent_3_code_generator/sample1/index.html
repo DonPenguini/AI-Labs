@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Projectile Motion Simulation</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --panel-bg: #ffffff;
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 { margin-top: 0; }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        /* Controls Panel */
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            background: var(--panel-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        #launchBtn { background-color: var(--primary-color); color: white; }
+        #resetBtn { background-color: #cbd5e1; color: var(--text-color); }
+        button:hover { opacity: 0.9; }
+
+        /* Stats Display */
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .stat-row:last-child { border-bottom: none; }
+
+        /* Canvas Area */
+        .canvas-container {
+            flex: 2;
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+        }
+
+        canvas {
+            background: radial-gradient(circle at top right, #e0f2fe, #ffffff);
+            width: 100%;
+            height: 100%;
+        }
+
+        .value-display { color: var(--primary-color); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="controls">
+            <h2>Configuration</h2>
+            
+            <div class="control-group">
+                <label>Launch Speed (v₀) <span id="val_v0" class="value-display">50 m/s</span></label>
+                <input type="range" id="v0" min="1" max="120" value="50" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Launch Angle (θ) <span id="val_theta" class="value-display">45°</span></label>
+                <input type="range" id="theta" min="0" max="90" value="45" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Platform Height (h) <span id="val_h" class="value-display">10 m</span></label>
+                <input type="range" id="h" min="0" max="50" value="10" step="1">
+            </div>
+
+            <div class="stats">
+                <div class="stat-row"><span>Time of Flight:</span> <strong id="out_time">0.00 s</strong></div>
+                <div class="stat-row"><span>Total Range:</span> <strong id="out_range">0.00 m</strong></div>
+                <div class="stat-row"><span>Current Time (t):</span> <span id="curr_time">0.00 s</span></div>
+                <div class="stat-row"><span>Position (x, y):</span> <span id="curr_pos">(0.0, 0.0)</span></div>
+            </div>
+
+            <div class="buttons">
+                <button id="launchBtn">Launch Ball</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="simCanvas"></canvas>
+        </div>
+    </div>
+
+<script>
+    // --- Constants & State ---
+    const g = 9.81;
+    let state = {
+        v0: 50,
+        thetaDeg: 45,
+        h: 10,
+        t: 0,
+        isAnimating: false,
+        flightTime: 0,
+        range: 0,
+        scale: 1 // pixels per meter
+    };
+
+    let animationId;
+
+    // --- DOM Elements ---
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Inputs
+    const inV0 = document.getElementById('v0');
+    const inTheta = document.getElementById('theta');
+    const inH = document.getElementById('h');
+    
+    // Labels
+    const lV0 = document.getElementById('val_v0');
+    const lTheta = document.getElementById('val_theta');
+    const lH = document.getElementById('val_h');
+    
+    // Outputs
+    const outTime = document.getElementById('out_time');
+    const outRange = document.getElementById('out_range');
+    const currTime = document.getElementById('curr_time');
+    const currPos = document.getElementById('curr_pos');
+
+    // --- Physics Engine ---
+    function calculatePhysics() {
+        const thetaRad = state.thetaDeg * (Math.PI / 180);
+        
+        // Quadratic formula components for time of flight: 0 = h + v0y*t - 0.5*g*t^2
+        // Rearranged: 0.5*g*t^2 - v0y*t - h = 0
+        const v0y = state.v0 * Math.sin(thetaRad);
+        const v0x = state.v0 * Math.cos(thetaRad);
+        
+        const discriminant = Math.sqrt(v0y * v0y + 2 * g * state.h);
+        state.flightTime = (v0y + discriminant) / g;
+        
+        state.range = v0x * state.flightTime;
+        
+        // Update Stats UI
+        outTime.textContent = state.flightTime.toFixed(2) + " s";
+        outRange.textContent = state.range.toFixed(2) + " m";
+    }
+
+    function getPositionAt(t) {
+        if (t > state.flightTime) t = state.flightTime; // Clamp to ground
+        const thetaRad = state.thetaDeg * (Math.PI / 180);
+        
+        const x = state.v0 * Math.cos(thetaRad) * t;
+        const y = state.h + (state.v0 * Math.sin(thetaRad) * t) - (0.5 * g * t * t);
+        
+        return { x, y };
+    }
+
+    // --- Drawing & Scaling ---
+    function resizeCanvas() {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+        drawFrame();
+    }
+
+    function setScale() {
+        // Calculate scale to fit the entire trajectory + 10% padding
+        // Max height approximation
+        const thetaRad = state.thetaDeg * (Math.PI / 180);
+        const v0y = state.v0 * Math.sin(thetaRad);
+        const maxHeight = state.h + (v0y * v0y) / (2 * g);
+        
+        const padding = 40; // pixels
+        const usableWidth = canvas.width - (padding * 2);
+        const usableHeight = canvas.height - (padding * 2);
+
+        // Determine scale based on whether width or height is the limiting factor
+        // Ensure range is at least 1m to prevent divide by zero on init
+        const maxX = Math.max(state.range, 10); 
+        const maxY = Math.max(maxHeight, 10);
+
+        const scaleX = usableWidth / maxX;
+        const scaleY = usableHeight / maxY;
+        
+        state.scale = Math.min(scaleX, scaleY);
+    }
+
+    function worldToScreen(x, y) {
+        // Origin is bottom-left, shifted by padding
+        const padding = 40;
+        const screenX = padding + (x * state.scale);
+        const screenY = canvas.height - padding - (y * state.scale); 
+        return { x: screenX, y: screenY };
+    }
+
+    function drawFrame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 1. Draw Ground
+        const groundY = canvas.height - 40;
+        ctx.beginPath();
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 2;
+        ctx.moveTo(0, groundY);
+        ctx.lineTo(canvas.width, groundY);
+        ctx.stroke();
+
+        // 2. Draw Platform
+        const platformW = 10; 
+        const platformH = state.h * state.scale;
+        const origin = worldToScreen(0, 0);
+        
+        if (state.h > 0) {
+            ctx.fillStyle = "#94a3b8";
+            ctx.fillRect(origin.x - (platformW/2), origin.y - platformH, platformW, platformH);
+        }
+
+        // 3. Draw Trajectory Path (Dotted Line)
+        ctx.beginPath();
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.setLineDash([5, 5]);
+        ctx.lineWidth = 2;
+        
+        // Draw path using segments
+        for(let i = 0; i <= 50; i++) {
+            const timeStep = (state.flightTime / 50) * i;
+            const pos = getPositionAt(timeStep);
+            const screenPos = worldToScreen(pos.x, pos.y);
+            if(i === 0) ctx.moveTo(screenPos.x, screenPos.y);
+            else ctx.lineTo(screenPos.x, screenPos.y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 4. Draw Ball
+        const currentPos = getPositionAt(state.t);
+        const ballScreen = worldToScreen(currentPos.x, currentPos.y);
+
+        ctx.beginPath();
+        ctx.fillStyle = "#ef4444"; // Red ball
+        ctx.arc(ballScreen.x, ballScreen.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Update UI Text
+        currTime.textContent = state.t.toFixed(2) + " s";
+        currPos.textContent = `(${currentPos.x.toFixed(1)}, ${currentPos.y.toFixed(1)})`;
+    }
+
+    // --- Animation Loop ---
+    function animate(timestamp) {
+        if (!state.isAnimating) return;
+
+        // Simple time step (approx 60fps)
+        const dt = 1/60; 
+        
+        // Speed up simulation factor (optional, 1.0 = real time)
+        const timeScale = 1.0; 
+
+        state.t += dt * timeScale;
+
+        if (state.t >= state.flightTime) {
+            state.t = state.flightTime;
+            state.isAnimating = false;
+            document.getElementById('launchBtn').textContent = "Launch Ball";
+        }
+
+        drawFrame();
+        
+        if (state.isAnimating) {
+            animationId = requestAnimationFrame(animate);
+        }
+    }
+
+    // --- Event Listeners ---
+    function updateInputs() {
+        state.v0 = parseFloat(inV0.value);
+        state.thetaDeg = parseFloat(inTheta.value);
+        state.h = parseFloat(inH.value);
+
+        lV0.textContent = state.v0 + " m/s";
+        lTheta.textContent = state.thetaDeg + "°";
+        lH.textContent = state.h + " m";
+
+        calculatePhysics();
+        // Only rescale if not animating to prevent jarring zooms
+        if(!state.isAnimating && state.t === 0) {
+            setScale();
+            drawFrame();
+        }
+    }
+
+    inV0.addEventListener('input', updateInputs);
+    inTheta.addEventListener('input', updateInputs);
+    inH.addEventListener('input', updateInputs);
+
+    document.getElementById('launchBtn').addEventListener('click', () => {
+        if (state.isAnimating) return;
+        
+        // If ball is at end, reset first
+        if (state.t >= state.flightTime) {
+            state.t = 0;
+        }
+
+        state.isAnimating = true;
+        document.getElementById('launchBtn').textContent = "In Air...";
+        
+        // Recalculate scale before launch to ensure fit
+        calculatePhysics();
+        setScale();
+        
+        animate();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        state.isAnimating = false;
+        state.t = 0;
+        document.getElementById('launchBtn').textContent = "Launch Ball";
+        cancelAnimationFrame(animationId);
+        updateInputs(); // resets scale and draws
+    });
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        setScale();
+        drawFrame();
+    });
+
+    // --- Initialization ---
+    resizeCanvas();
+    updateInputs();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S03: RC Step Response Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>S03: RC Low-Pass Step Response</h1>
+        <p>First-order RC circuit charging from a DC step input ($V_{in}$) at $t=0$.</p>
+    </header>
+
+    <div class="sim-grid">
+        <section class="visualizer">
+            <canvas id="simCanvas" width="600" height="400"></canvas>
+            <div class="legend">
+                <span class="legend-item"><span class="color-box voltage"></span>Voltage ($v_c$)</span>
+                <span class="legend-item"><span class="color-box current"></span>Current ($i_c$)</span>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="panel">
+                <h3>Circuit Parameters</h3>
+                
+                <div class="control-group">
+                    <label>Input Voltage ($V_{in}$): <span id="val-vin" class="readout">5.0</span> V</label>
+                    <input type="range" id="slider-vin" min="0" max="50" step="0.5" value="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Resistance ($R$): <span id="val-r" class="readout">1.00 k</span>&Omega;</label>
+                    <input type="range" id="slider-r" min="0" max="100" step="0.1" value="33"> 
+                </div>
+
+                <div class="control-group">
+                    <label>Capacitance ($C$): <span id="val-c" class="readout">100</span> &mu;F</label>
+                    <input type="range" id="slider-c" min="0" max="100" step="0.1" value="60">
+                </div>
+
+                <div class="btn-group">
+                    <button id="btn-reset" class="primary-btn">Step Input (Reset t=0)</button>
+                    <button id="btn-pause" class="secondary-btn">Pause</button>
+                </div>
+            </div>
+
+            <div class="panel data-panel">
+                <h3>Live Readings</h3>
+                <div class="data-row">
+                    <span>Time ($t$):</span> <span id="out-time">0.00</span> s
+                </div>
+                <div class="data-row">
+                    <span>Time Constant ($\tau = RC$):</span> <span id="out-tau">--</span> s
+                </div>
+                <div class="data-row">
+                    <span>Capacitor Voltage ($v_c$):</span> <span id="out-vc" class="highlight-v">--</span> V
+                </div>
+                <div class="data-row">
+                    <span>Capacitor Current ($i_c$):</span> <span id="out-ic" class="highlight-i">--</span> A
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
