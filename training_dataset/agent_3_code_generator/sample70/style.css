@@ -1,0 +1,204 @@
+:root {
+    --bg-color: #121212;
+    --panel-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --accent-color: #00bcd4;
+    --graph-grid: #333;
+    --graph-line: #ffeb3b;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    max-width: 1100px;
+    width: 100%;
+    background-color: var(--panel-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+h1 { margin: 0; font-weight: 300; letter-spacing: 1px; }
+.subtitle { color: #aaa; margin-top: 10px; font-size: 1.1em; }
+
+.simulation-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+/* Visualization Panel */
+.viz-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.canvas-container {
+    position: relative;
+    background: #000;
+    border: 1px solid #444;
+    border-radius: 8px;
+    height: 350px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.graph-label {
+    position: absolute;
+    font-size: 0.8rem;
+    color: #888;
+}
+.y-axis { top: 10px; left: 10px; transform-origin: top left; }
+.x-axis { bottom: 5px; right: 10px; }
+
+.color-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: #252525;
+    border-radius: 8px;
+}
+
+.glowing-orb {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
+    transition: background-color 0.1s, box-shadow 0.1s;
+}
+
+/* Controls Panel */
+.controls-panel {
+    background: #2c2c2c;
+    padding: 25px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.parameter-group { margin-bottom: 20px; }
+
+label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--accent-color); }
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+input[type=range] {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.value-display {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    min-width: 70px;
+    text-align: right;
+}
+
+.description { font-size: 0.85rem; color: #888; margin-top: 5px; }
+
+hr { width: 100%; border: 0; border-top: 1px solid #444; margin: 20px 0; }
+
+.results-group h3 { margin-top: 0; font-size: 1rem; color: #aaa; }
+
+.result-box {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid var(--accent-color);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.result-box .value { font-size: 1.8rem; font-weight: bold; color: #fff; }
+
+/* Spectrum Bar */
+.spectrum-indicator {
+    position: relative;
+    height: 60px;
+    margin-top: 20px;
+}
+
+.spectrum-bar {
+    height: 20px;
+    width: 100%;
+    border-radius: 10px;
+    background: linear-gradient(to right, 
+        #333 0%, #333 30%, /* UV area (symbolic) */
+        #4b0082 35%, #0000ff 40%, #00ff00 45%, #ffff00 50%, #ff7f00 55%, #ff0000 60%, /* Visible */
+        #333 65%, #333 100% /* IR area */
+    );
+    /* Note: This gradient is symbolic for the UI slider, actual calculation handles the logic */
+    background: linear-gradient(90deg, 
+        #444 0%,      /* Far UV */
+        #800080 20%,  /* UV border */
+        #0000ff 30%,  /* Blue */
+        #00ff00 38%,  /* Green */
+        #ff0000 46%,  /* Red */
+        #440000 55%,  /* Near IR */
+        #222 100%     /* Far IR */
+    );
+    margin-bottom: 5px;
+}
+
+.pointer {
+    width: 0; 
+    height: 0; 
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 10px solid #fff;
+    position: absolute;
+    top: 22px;
+    transform: translateX(-50%);
+    transition: left 0.1s;
+}
+
+.spectrum-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.context-text {
+    text-align: center;
+    font-style: italic;
+    color: var(--accent-color);
+    margin-top: 5px;
+}
+
+@media (max-width: 800px) {
+    .simulation-grid { grid-template-columns: 1fr; }
+    .canvas-container { height: 250px; }
+}

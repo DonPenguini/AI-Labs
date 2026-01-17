@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wien's Displacement Law Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>Wien's Displacement Law</h1>
+            <p class="subtitle">Peak Wavelength: \( \lambda_{max} = \frac{b}{T} \)</p>
+        </header>
+
+        <div class="simulation-grid">
+            
+            <div class="viz-panel">
+                <div class="canvas-container">
+                    <canvas id="radiationGraph"></canvas>
+                    <div class="graph-label y-axis">Intensity (arb.)</div>
+                    <div class="graph-label x-axis">Wavelength (\( \lambda \))</div>
+                </div>
+                
+                <div class="color-preview">
+                    <div id="blackbodyObject" class="glowing-orb"></div>
+                    <p>Approximate Color</p>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="parameter-group">
+                    <label for="tempInput">Temperature (\(T\))</label>
+                    <div class="slider-container">
+                        <input type="range" id="tempInput" min="100" max="10000" step="50" value="5800">
+                        <span class="value-display"><span id="tempVal">5800</span> K</span>
+                    </div>
+                    <div class="description">Move slider to change blackbody temperature.</div>
+                </div>
+
+                <hr>
+
+                <div class="results-group">
+                    <h3>Calculation Result</h3>
+                    <div class="result-box">
+                        <span class="label">\(\lambda_{max}\):</span>
+                        <span class="value" id="lambdaOutput">500</span>
+                        <span class="unit" id="unitOutput">nm</span>
+                    </div>
+                    
+                    <div class="spectrum-indicator">
+                        <div class="pointer" id="spectrumPointer"></div>
+                        <div class="spectrum-bar"></div>
+                        <div class="spectrum-labels">
+                            <span>UV</span>
+                            <span>Visible</span>
+                            <span>IR</span>
+                        </div>
+                    </div>
+                    <p class="context-text" id="regionText">Region: Visible Light</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

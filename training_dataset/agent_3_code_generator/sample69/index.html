@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bohr Model Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Bohr Model: Hydrogen-like Atom</h1>
+            <p class="subtitle">Simulating Energy Levels: \( E_n = -13.6 \text{ eV} \cdot \frac{Z^2}{n^2} \)</p>
+        </header>
+
+        <div class="simulation-layout">
+            <div class="canvas-wrapper">
+                <canvas id="atomCanvas"></canvas>
+                <div class="legend">
+                    <span><span class="dot electron-dot"></span> Electron</span>
+                    <span><span class="dot nucleus-dot"></span> Nucleus</span>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                
+                <div class="control-group">
+                    <label for="zInput">Atomic Number (\(Z\)): <span id="zVal">1</span></label>
+                    <input type="range" id="zInput" min="1" max="10" step="1" value="1">
+                    <div class="description">Protons in nucleus. Increases attraction.</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="nInput">Principal Quantum Number (\(n\)): <span id="nVal">1</span></label>
+                    <input type="range" id="nInput" min="1" max="10" step="1" value="1">
+                    <div class="description">Energy level/Orbit shell.</div>
+                </div>
+
+                <hr>
+
+                <div class="results">
+                    <h3>Calculated Energy</h3>
+                    <div class="energy-display" id="energyOutput">-13.60 eV</div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Relative Radius (\( \propto n^2/Z \))</span>
+                            <span class="stat-value" id="radiusOutput">1.00 \(a_0\)</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Relative Velocity (\( \propto Z/n \))</span>
+                            <span class="stat-value" id="velocityOutput">1.00 \(v_1\)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
