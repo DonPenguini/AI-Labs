@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenske Minimum Stages Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Fenske Equation - Minimum Distillation Stages</h1>
+            <p class="subtitle">N<sub>min</sub> = log[(x<sub>D</sub>/(1-x<sub>D</sub>))·((1-x<sub>B</sub>)/x<sub>B</sub>)] / log(α)</p>
+            <div class="tags">
+                <span class="tag tag-blue">Total Reflux</span>
+                <span class="tag tag-green">Constant Relative Volatility</span>
+                <span class="tag tag-purple">Ideal Stages</span>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <div class="card">
+                    <h2>Control Parameters</h2>
+                    
+                    <!-- Distillate Composition -->
+                    <div class="control-group">
+                        <label>
+                            Distillate (x<sub>D</sub>): <span id="xd-value">0.950</span>
+                        </label>
+                        <input type="range" id="xd-slider" min="0.5" max="0.999" step="0.001" value="0.95" class="slider slider-blue">
+                        <div class="composition-info">Light component mole fraction in distillate</div>
+                    </div>
+
+                    <!-- Bottoms Composition -->
+                    <div class="control-group">
+                        <label>
+                            Bottoms (x<sub>B</sub>): <span id="xb-value">0.050</span>
+                        </label>
+                        <input type="range" id="xb-slider" min="0.001" max="0.5" step="0.001" value="0.05" class="slider slider-green">
+                        <div class="composition-info">Light component mole fraction in bottoms</div>
+                    </div>
+
+                    <!-- Relative Volatility -->
+                    <div class="control-group">
+                        <label>
+                            Relative Volatility (α): <span id="alpha-value">2.50</span>
+                        </label>
+                        <input type="range" id="alpha-slider" min="1.1" max="5" step="0.01" value="2.5" class="slider slider-purple">
+                        <div class="composition-info">Ease of separation (α > 1)</div>
+                    </div>
+
+                    <button id="visualize-btn" class="animate-btn">Visualize Column</button>
+                </div>
+
+                <!-- Results -->
+                <div class="card results-card">
+                    <h2>Results</h2>
+                    <div class="result-item result-blue">
+                        <p class="result-label">Minimum Stages (N<sub>min</sub>)</p>
+                        <p class="result-value" id="nmin">0.00</p>
+                    </div>
+                    <div class="result-item result-green">
+                        <p class="result-label">Separation Factor</p>
+                        <p class="result-value" id="separation-factor">0.00</p>
+                    </div>
+                    <div class="result-item result-purple">
+                        <p class="result-label">Recovery (%)</p>
+                        <p class="result-value" id="recovery">0.0%</p>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card info-card">
+                    <h3>Fenske Equation</h3>
+                    <p>Calculates the minimum number of theoretical stages required for a binary distillation at total reflux (infinite reflux ratio).</p>
+                    <ul>
+                        <li><strong>N<sub>min</sub>:</strong> Minimum equilibrium stages</li>
+                        <li><strong>x<sub>D</sub>:</strong> Distillate purity (top)</li>
+                        <li><strong>x<sub>B</sub>:</strong> Bottoms purity (bottom)</li>
+                        <li><strong>α:</strong> Relative volatility (selectivity)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="visualization-panel">
+                <!-- Distillation Column Visualization -->
+                <div class="card">
+                    <h2>Distillation Column (Total Reflux)</h2>
+                    <div class="column-container">
+                        <div class="column-wrapper">
+                            <!-- Condenser -->
+                            <div class="condenser">
+                                <div class="equipment-label">Condenser</div>
+                                <div class="stream-label distillate-label">
+                                    Distillate<br>x<sub>D</sub> = <span id="xd-display">0.950</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Column with stages -->
+                            <div class="column" id="column">
+                                <div class="column-body" id="column-body">
+                                    <!-- Stages will be generated here -->
+                                </div>
+                                <div class="reflux-arrow">
+                                    <div class="arrow-down"></div>
+                                    <div class="reflux-label">Total Reflux</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Reboiler -->
+                            <div class="reboiler">
+                                <div class="equipment-label">Reboiler</div>
+                                <div class="stream-label bottoms-label">
+                                    Bottoms<br>x<sub>B</sub> = <span id="xb-display">0.050</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- McCabe-Thiele Diagram -->
+                <div class="card">
+                    <h2>McCabe-Thiele Diagram (Total Reflux)</h2>
+                    <div class="chart-container">
+                        <canvas id="mcCabeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Nmin vs Alpha Chart -->
+                <div class="card">
+                    <h2>Minimum Stages vs Relative Volatility</h2>
+                    <div class="chart-container">
+                        <canvas id="alphaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

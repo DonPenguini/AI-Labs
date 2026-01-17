@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Pendulum - Linearized Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Linearized Double Pendulum - Natural Frequencies</h1>
+            <p class="subtitle">Small-angle oscillations with coupled masses</p>
+            <div class="tags">
+                <span class="tag tag-blue">Small Angles</span>
+                <span class="tag tag-green">No Damping</span>
+                <span class="tag tag-purple">Normal Modes</span>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <div class="card">
+                    <h2>System Parameters</h2>
+                    
+                    <!-- Length 1 -->
+                    <div class="control-group">
+                        <label>
+                            Length 1 (L<sub>1</sub>): <span id="l1-value">1.00</span> m
+                        </label>
+                        <input type="range" id="l1-slider" min="0.1" max="3" step="0.01" value="1.0" class="slider slider-blue">
+                    </div>
+
+                    <!-- Length 2 -->
+                    <div class="control-group">
+                        <label>
+                            Length 2 (L<sub>2</sub>): <span id="l2-value">1.00</span> m
+                        </label>
+                        <input type="range" id="l2-slider" min="0.1" max="3" step="0.01" value="1.0" class="slider slider-green">
+                    </div>
+
+                    <!-- Mass 1 -->
+                    <div class="control-group">
+                        <label>
+                            Mass 1 (m<sub>1</sub>): <span id="m1-value">1.00</span> kg
+                        </label>
+                        <input type="range" id="m1-slider" min="0.1" max="5" step="0.01" value="1.0" class="slider slider-purple">
+                    </div>
+
+                    <!-- Mass 2 -->
+                    <div class="control-group">
+                        <label>
+                            Mass 2 (m<sub>2</sub>): <span id="m2-value">1.00</span> kg
+                        </label>
+                        <input type="range" id="m2-slider" min="0.1" max="5" step="0.01" value="1.0" class="slider slider-orange">
+                    </div>
+
+                    <button id="animate-btn" class="animate-btn">Animate Modes</button>
+                </div>
+
+                <!-- Results -->
+                <div class="card results-card">
+                    <h2>Natural Frequencies</h2>
+                    <div class="result-item result-blue">
+                        <p class="result-label">Mode 1 (Lower Frequency)</p>
+                        <p class="result-value" id="omega1">0.00 rad/s</p>
+                        <p class="result-subtext">f<sub>1</sub> = <span id="freq1">0.00</span> Hz</p>
+                    </div>
+                    <div class="result-item result-green">
+                        <p class="result-label">Mode 2 (Higher Frequency)</p>
+                        <p class="result-value" id="omega2">0.00 rad/s</p>
+                        <p class="result-subtext">f<sub>2</sub> = <span id="freq2">0.00</span> Hz</p>
+                    </div>
+                    <div class="result-item result-purple">
+                        <p class="result-label">Frequency Ratio</p>
+                        <p class="result-value" id="ratio">0.00</p>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card info-card">
+                    <h3>Normal Modes</h3>
+                    <p>A double pendulum has two natural frequencies (eigenfrequencies) where the system oscillates in pure normal modes.</p>
+                    <ul>
+                        <li><strong>Mode 1:</strong> Both pendulums swing together (in-phase)</li>
+                        <li><strong>Mode 2:</strong> Pendulums swing oppositely (out-of-phase)</li>
+                        <li><strong>ω:</strong> Angular frequency (rad/s)</li>
+                        <li><strong>f:</strong> Frequency (Hz) = ω/(2π)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="visualization-panel">
+                <!-- Pendulum Animation -->
+                <div class="card">
+                    <h2>Double Pendulum Visualization</h2>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="mode1">Mode 1</button>
+                        <button class="mode-btn" data-mode="mode2">Mode 2</button>
+                        <button class="mode-btn" data-mode="mixed">Mixed</button>
+                    </div>
+                    <div class="pendulum-container">
+                        <canvas id="pendulumCanvas" width="600" height="500"></canvas>
+                    </div>
+                </div>
+
+                <!-- Frequency Response -->
+                <div class="card">
+                    <h2>Modal Frequencies vs System Parameters</h2>
+                    <div class="chart-container">
+                        <canvas id="frequencyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Time Response -->
+                <div class="card">
+                    <h2>Angular Displacement vs Time</h2>
+                    <div class="chart-container">
+                        <canvas id="timeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

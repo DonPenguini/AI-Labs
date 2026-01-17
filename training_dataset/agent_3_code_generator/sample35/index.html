@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raoult's Law Bubble Point Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Raoult's Law - Bubble Point Pressure</h1>
+            <p class="subtitle">P = x<sub>1</sub>·P<sub>1</sub><sup>sat</sup> + x<sub>2</sub>·P<sub>2</sub><sup>sat</sup></p>
+            <div class="tags">
+                <span class="tag tag-blue">Ideal Solution</span>
+                <span class="tag tag-green">Binary Mixture</span>
+                <span class="tag tag-purple">VLE</span>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <div class="card">
+                    <h2>Control Parameters</h2>
+                    
+                    <!-- Liquid Mole Fraction -->
+                    <div class="control-group">
+                        <label>
+                            Liquid Mole Fraction (x<sub>1</sub>): <span id="x1-value">0.500</span>
+                        </label>
+                        <input type="range" id="x1-slider" min="0" max="1" step="0.001" value="0.5" class="slider slider-blue">
+                        <div class="composition-bar">
+                            <div class="comp-1" id="comp1-bar"></div>
+                            <div class="comp-2" id="comp2-bar"></div>
+                        </div>
+                        <div class="composition-labels">
+                            <span>Component 1: <span id="x1-percent">50.0</span>%</span>
+                            <span>Component 2: <span id="x2-percent">50.0</span>%</span>
+                        </div>
+                    </div>
+
+                    <!-- Saturation Pressure 1 -->
+                    <div class="control-group">
+                        <label>
+                            P<sub>1</sub><sup>sat</sup> (Component 1): <span id="p1sat-value">200</span> kPa
+                        </label>
+                        <input type="range" id="p1sat-slider" min="1" max="500" step="1" value="200" class="slider slider-green">
+                        <div class="pressure-info">Vapor pressure of pure component 1</div>
+                    </div>
+
+                    <!-- Saturation Pressure 2 -->
+                    <div class="control-group">
+                        <label>
+                            P<sub>2</sub><sup>sat</sup> (Component 2): <span id="p2sat-value">100</span> kPa
+                        </label>
+                        <input type="range" id="p2sat-slider" min="1" max="500" step="1" value="100" class="slider slider-purple">
+                        <div class="pressure-info">Vapor pressure of pure component 2</div>
+                    </div>
+
+                    <button id="animate-btn" class="animate-btn">Visualize Bubble Formation</button>
+                </div>
+
+                <!-- Results -->
+                <div class="card results-card">
+                    <h2>Results</h2>
+                    <div class="result-item result-blue">
+                        <p class="result-label">Bubble Pressure (P)</p>
+                        <p class="result-value" id="bubble-pressure">150.0 kPa</p>
+                    </div>
+                    <div class="result-item result-green">
+                        <p class="result-label">Vapor Mole Fraction (y<sub>1</sub>)</p>
+                        <p class="result-value" id="vapor-fraction">0.667</p>
+                    </div>
+                    <div class="result-item result-purple">
+                        <p class="result-label">Relative Volatility (α)</p>
+                        <p class="result-value" id="rel-volatility">2.00</p>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card info-card">
+                    <h3>Raoult's Law</h3>
+                    <p>For an ideal binary mixture, the bubble point pressure is the sum of partial pressures.</p>
+                    <ul>
+                        <li><strong>Bubble Point:</strong> Temperature/pressure where first vapor bubble forms</li>
+                        <li><strong>x<sub>i</sub>:</strong> Liquid mole fraction</li>
+                        <li><strong>P<sub>i</sub><sup>sat</sup>:</strong> Pure component vapor pressure</li>
+                        <li><strong>y<sub>1</sub> = x<sub>1</sub>·P<sub>1</sub><sup>sat</sup>/P</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="visualization-panel">
+                <!-- Bubble Formation Visualization -->
+                <div class="card">
+                    <h2>Bubble Formation in Liquid Mixture</h2>
+                    <div class="vessel-container">
+                        <div class="vessel">
+                            <div class="liquid-phase" id="liquid-phase">
+                                <div class="liquid-label">Liquid Phase</div>
+                                <div class="molecules-container" id="liquid-molecules"></div>
+                                <div class="bubble-container" id="bubble-container"></div>
+                            </div>
+                            <div class="vapor-phase" id="vapor-phase">
+                                <div class="vapor-label">Vapor Phase</div>
+                                <div class="molecules-container" id="vapor-molecules"></div>
+                            </div>
+                        </div>
+                        <div class="pressure-gauge">
+                            <div class="gauge-label">System Pressure</div>
+                            <div class="gauge-value" id="gauge-pressure">150.0 kPa</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P-x-y Diagram -->
+                <div class="card">
+                    <h2>Pressure-Composition (P-x-y) Diagram</h2>
+                    <div class="chart-container">
+                        <canvas id="pxyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Vapor Composition Chart -->
+                <div class="card">
+                    <h2>Vapor-Liquid Equilibrium (y vs x)</h2>
+                    <div class="chart-container">
+                        <canvas id="yxChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

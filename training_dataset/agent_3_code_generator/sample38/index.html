@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S38 Circular Orbit Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <!-- Header -->
+            <div class="header">
+                <h1>S38 Circular Orbit</h1>
+                <p class="subtitle">Keplerian Circular Orbit Simulator</p>
+                <div class="formulas">
+                    <p class="formula">v = √(μ/r)</p>
+                    <p class="formula">T = 2π√(r³/μ)</p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Visualization -->
+                <div class="visualization-section">
+                    <h2>Orbital Visualization</h2>
+                    <svg id="orbitCanvas" width="500" height="500">
+                        <!-- Star glow effect -->
+                        <defs>
+                            <radialGradient id="starGlow">
+                                <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#d97706;stop-opacity:0.6" />
+                            </radialGradient>
+                            <radialGradient id="planetGlow">
+                                <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+                                <stop offset="70%" style="stop-color:#3b82f6;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0" />
+                            </radialGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Background space -->
+                        <rect width="500" height="500" fill="#0f172a"/>
+                        
+                        <!-- Stars background -->
+                        <g id="stars"></g>
+                        
+                        <!-- Orbit path -->
+                        <circle id="orbitPath" cx="250" cy="250" r="150" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+                        
+                        <!-- Central body (star/planet) -->
+                        <circle cx="250" cy="250" r="25" fill="url(#starGlow)" filter="url(#glow)"/>
+                        <text x="250" y="290" fill="#fbbf24" font-size="12" text-anchor="middle" font-weight="bold">Central Body</text>
+                        
+                        <!-- Orbiting satellite -->
+                        <g id="satellite">
+                            <circle cx="0" cy="0" r="12" fill="url(#planetGlow)" filter="url(#glow)"/>
+                            <circle cx="0" cy="0" r="8" fill="#3b82f6"/>
+                        </g>
+                        
+                        <!-- Velocity vector -->
+                        <defs>
+                            <marker id="velocityArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#10b981" />
+                            </marker>
+                        </defs>
+                        <line id="velocityVector" x1="0" y1="0" x2="0" y2="0" stroke="#10b981" stroke-width="2.5" marker-end="url(#velocityArrow)" opacity="0.9"/>
+                        
+                        <!-- Radius line -->
+                        <line id="radiusLine" x1="250" y1="250" x2="400" y2="250" stroke="#ec4899" stroke-width="2" stroke-dasharray="3,3" opacity="0.7"/>
+                        <text id="radiusLabel" x="325" y="240" fill="#ec4899" font-size="11" text-anchor="middle">r</text>
+                        
+                        <!-- Info display -->
+                        <text x="250" y="30" fill="#94a3b8" font-size="14" text-anchor="middle" font-weight="bold">
+                            <tspan id="orbitInfo">Orbit: 1 of ∞</tspan>
+                        </text>
+                    </svg>
+                    
+                    <!-- Legend -->
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f59e0b;"></div>
+                            <span>Central Body</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div>
+                            <span>Satellite</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>Velocity (v)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ec4899;"></div>
+                            <span>Radius (r)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-section">
+                    <h2>Orbital Parameters</h2>
+                    
+                    <!-- Gravitational Parameter -->
+                    <div class="control-group">
+                        <label>Gravitational Parameter (μ): <span id="muValue">3.99e14</span> m³/s²</label>
+                        <input type="range" id="muSlider" min="11" max="15" step="0.01" value="14.6">
+                        <div class="slider-labels">
+                            <span>10¹¹</span>
+                            <span>10¹³</span>
+                            <span>10¹⁵</span>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" data-mu="3.986e14">Earth</button>
+                            <button class="preset-btn" data-mu="4.283e13">Mars</button>
+                            <button class="preset-btn" data-mu="1.327e20">Sun</button>
+                        </div>
+                    </div>
+
+                    <!-- Orbit Radius -->
+                    <div class="control-group">
+                        <label>Orbit Radius (r): <span id="radiusValue">6.78e6</span> m</label>
+                        <input type="range" id="radiusSlider" min="6" max="9" step="0.01" value="6.83">
+                        <div class="slider-labels">
+                            <span>10⁶</span>
+                            <span>10⁷·⁵</span>
+                            <span>10⁹</span>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" data-radius="6.78e6">LEO</button>
+                            <button class="preset-btn" data-radius="4.22e7">GEO</button>
+                            <button class="preset-btn" data-radius="1.50e11">Earth-Sun</button>
+                        </div>
+                    </div>
+
+                    <!-- Animation Speed -->
+                    <div class="control-group">
+                        <label>Animation Speed: <span id="speedValue">1.0</span>x</label>
+                        <input type="range" id="speedSlider" min="0.1" max="5" step="0.1" value="1">
+                        <div class="slider-labels">
+                            <span>0.1x</span>
+                            <span>2.5x</span>
+                            <span>5x</span>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="results-box">
+                        <h3>Calculated Results</h3>
+                        <div class="result-item">
+                            <span>Orbital Speed (v):</span>
+                            <span id="speedResult" class="result-value">7668 m/s</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Orbital Period (T):</span>
+                            <span id="periodResult" class="result-value">5558 s</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Period (readable):</span>
+                            <span id="periodReadable">1h 32m 38s</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Circumference:</span>
+                            <span id="circumferenceResult">4.26e7 m</span>
+                        </div>
+                    </div>
+
+                    <!-- Animation Controls -->
+                    <div class="button-group">
+                        <button id="playPauseBtn" class="btn btn-primary">Pause</button>
+                        <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="info-box">
+                        <h4>About Circular Orbits</h4>
+                        <p>In a circular orbit, the gravitational force provides exactly the centripetal 
+                        force needed to maintain circular motion. The orbital speed depends only on the 
+                        gravitational parameter (μ) and the orbital radius (r).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physics Information -->
+        <div class="physics-info">
+            <h3>Astrodynamics Concepts</h3>
+            <div class="concepts-grid">
+                <div class="concept-card concept-blue">
+                    <h4>Two-Body Problem</h4>
+                    <p>Assumes only gravitational interaction between two bodies, ignoring all other forces and perturbations.</p>
+                </div>
+                <div class="concept-card concept-green">
+                    <h4>Circular Orbit</h4>
+                    <p>A special case where orbital eccentricity is zero and the distance from the central body remains constant.</p>
+                </div>
+                <div class="concept-card concept-purple">
+                    <h4>Keplerian Motion</h4>
+                    <p>Orbital motion following Kepler's laws, valid for ideal two-body systems with inverse-square gravitational force.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

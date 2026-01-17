@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFR First Order Reactor Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Plug Flow Reactor - First Order Reaction</h1>
+            <p class="subtitle">A → Products | C = C<sub>f</sub> · exp(-k·τ)</p>
+            <div class="tags">
+                <span class="tag tag-blue">Isothermal</span>
+                <span class="tag tag-green">No Axial Mixing</span>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <div class="card">
+                    <h2>Control Parameters</h2>
+                    
+                    <!-- Feed Concentration -->
+                    <div class="control-group">
+                        <label>
+                            Feed Concentration (C<sub>f</sub>): <span id="cf-value">2.00</span> mol/L
+                        </label>
+                        <input type="range" id="cf-slider" min="0" max="5" step="0.1" value="2.0" class="slider slider-blue">
+                    </div>
+
+                    <!-- Rate Constant -->
+                    <div class="control-group">
+                        <label>
+                            Rate Constant (k): <span id="k-value">0.1000</span> s<sup>-1</sup>
+                        </label>
+                        <input type="range" id="k-slider" min="0.00001" max="1" step="0.00001" value="0.1" class="slider slider-green">
+                        <input type="number" id="k-input" value="0.1" step="0.001" class="number-input">
+                    </div>
+
+                    <!-- Space Time -->
+                    <div class="control-group">
+                        <label>
+                            Space Time (τ): <span id="tau-value">10.00</span> s
+                        </label>
+                        <input type="range" id="tau-slider" min="0.01" max="100" step="0.1" value="10" class="slider slider-purple">
+                        <input type="number" id="tau-input" value="10" step="1" class="number-input">
+                    </div>
+
+                    <button id="animate-btn" class="animate-btn">Animate Flow</button>
+                </div>
+
+                <!-- Results -->
+                <div class="card results-card">
+                    <h2>Results</h2>
+                    <div class="result-item result-blue">
+                        <p class="result-label">Outlet Concentration</p>
+                        <p class="result-value" id="outlet-conc">0.0000 mol/L</p>
+                    </div>
+                    <div class="result-item result-green">
+                        <p class="result-label">Conversion</p>
+                        <p class="result-value" id="conversion">0.00%</p>
+                    </div>
+                    <div class="result-item result-purple">
+                        <p class="result-label">Damköhler Number (Da)</p>
+                        <p class="result-value" id="damkohler">0.0000</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="visualization-panel">
+                <!-- Reactor Animation -->
+                <div class="card">
+                    <h2>Reactor Visualization</h2>
+                    <div class="reactor-container">
+                        <div class="reactor-tube">
+                            <div class="concentration-gradient"></div>
+                            <div class="flow-particle" id="particle"></div>
+                            <div class="reactor-label label-inlet">IN: <span id="inlet-label">2.00</span></div>
+                            <div class="reactor-label label-outlet">OUT: <span id="outlet-label">0.00</span></div>
+                        </div>
+                        <div class="arrow arrow-left">→</div>
+                        <div class="arrow arrow-right">→</div>
+                    </div>
+                </div>
+
+                <!-- Concentration Profile Chart -->
+                <div class="card">
+                    <h2>Concentration Profile</h2>
+                    <div class="chart-container">
+                        <canvas id="profileChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

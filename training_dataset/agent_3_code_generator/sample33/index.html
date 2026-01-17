@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membrane Diffusion Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Membrane Diffusion - Steady State</h1>
+            <p class="subtitle">J = D · (C<sub>1</sub> - C<sub>2</sub>) / L</p>
+            <div class="tags">
+                <span class="tag tag-blue">1D Steady Diffusion</span>
+                <span class="tag tag-green">Fickian Transport</span>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <div class="card">
+                    <h2>Control Parameters</h2>
+                    
+                    <!-- Diffusivity -->
+                    <div class="control-group">
+                        <label>
+                            Diffusivity (D): <span id="d-value">1.00e-9</span> m²/s
+                        </label>
+                        <input type="range" id="d-slider" min="-12" max="-6" step="0.1" value="-9" class="slider slider-blue">
+                        <div class="log-scale-info">Log scale: 10<sup id="d-exponent">-9</sup> m²/s</div>
+                    </div>
+
+                    <!-- Upstream Concentration -->
+                    <div class="control-group">
+                        <label>
+                            Upstream Conc. (C<sub>1</sub>): <span id="c1-value">800</span> mol/m³
+                        </label>
+                        <input type="range" id="c1-slider" min="0" max="1000" step="1" value="800" class="slider slider-green">
+                    </div>
+
+                    <!-- Downstream Concentration -->
+                    <div class="control-group">
+                        <label>
+                            Downstream Conc. (C<sub>2</sub>): <span id="c2-value">200</span> mol/m³
+                        </label>
+                        <input type="range" id="c2-slider" min="0" max="1000" step="1" value="200" class="slider slider-purple">
+                    </div>
+
+                    <!-- Thickness -->
+                    <div class="control-group">
+                        <label>
+                            Membrane Thickness (L): <span id="l-value">1.00e-3</span> m
+                        </label>
+                        <input type="range" id="l-slider" min="-6" max="-2" step="0.1" value="-3" class="slider slider-orange">
+                        <div class="log-scale-info">Log scale: 10<sup id="l-exponent">-3</sup> m = <span id="l-mm">1.00</span> mm</div>
+                    </div>
+
+                    <button id="animate-btn" class="animate-btn">Animate Diffusion</button>
+                </div>
+
+                <!-- Results -->
+                <div class="card results-card">
+                    <h2>Results</h2>
+                    <div class="result-item result-blue">
+                        <p class="result-label">Diffusive Flux (J)</p>
+                        <p class="result-value" id="flux">0.000e+0 mol/(m²·s)</p>
+                    </div>
+                    <div class="result-item result-green">
+                        <p class="result-label">Concentration Gradient</p>
+                        <p class="result-value" id="gradient">0.00e+0 mol/m⁴</p>
+                    </div>
+                    <div class="result-item result-purple">
+                        <p class="result-label">Driving Force (ΔC)</p>
+                        <p class="result-value" id="delta-c">0 mol/m³</p>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card info-card">
+                    <h3>Fick's First Law</h3>
+                    <p>Describes steady-state diffusion through a membrane under a concentration gradient.</p>
+                    <ul>
+                        <li><strong>J:</strong> Diffusive flux</li>
+                        <li><strong>D:</strong> Diffusion coefficient</li>
+                        <li><strong>ΔC/L:</strong> Concentration gradient</li>
+                        <li><strong>Direction:</strong> High → Low concentration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div class="visualization-panel">
+                <!-- Membrane Visualization -->
+                <div class="card">
+                    <h2>Membrane Cross-Section</h2>
+                    <div class="membrane-container">
+                        <div class="membrane-wrapper">
+                            <!-- Upstream side -->
+                            <div class="side upstream">
+                                <div class="side-label">Upstream</div>
+                                <div class="concentration-label">C<sub>1</sub> = <span id="c1-display">800</span></div>
+                                <div class="particles-container" id="upstream-particles"></div>
+                            </div>
+                            
+                            <!-- Membrane -->
+                            <div class="membrane" id="membrane">
+                                <div class="membrane-label">Membrane</div>
+                                <div class="thickness-label">L = <span id="l-display">1.00</span> mm</div>
+                                <div class="diffusing-particles" id="diffusing-particles"></div>
+                            </div>
+                            
+                            <!-- Downstream side -->
+                            <div class="side downstream">
+                                <div class="side-label">Downstream</div>
+                                <div class="concentration-label">C<sub>2</sub> = <span id="c2-display">200</span></div>
+                                <div class="particles-container" id="downstream-particles"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Flux Arrow -->
+                        <div class="flux-arrow" id="flux-arrow">
+                            <div class="arrow-label">Flux J</div>
+                            <div class="arrow-body"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concentration Profile Chart -->
+                <div class="card">
+                    <h2>Concentration Profile Across Membrane</h2>
+                    <div class="chart-container">
+                        <canvas id="profileChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Flux vs Driving Force -->
+                <div class="card">
+                    <h2>Flux vs Driving Force (ΔC)</h2>
+                    <div class="chart-container">
+                        <canvas id="fluxChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

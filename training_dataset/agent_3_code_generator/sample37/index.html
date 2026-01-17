@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S37 Gyro Precession Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <!-- Header -->
+            <div class="header">
+                <h1>S37 Gyro Precession</h1>
+                <p class="subtitle">Gyroscope Torque-Induced Precession Simulator</p>
+                <p class="formula">Ωₚ = τ/(I·ω)</p>
+            </div>
+
+            <div class="content-grid">
+                <!-- Visualization -->
+                <div class="visualization-section">
+                    <h2>Gyroscope Visualization</h2>
+                    <svg id="gyroCanvas" width="400" height="400">
+                        <!-- Background circle -->
+                        <circle id="bgCircle" cx="200" cy="200" r="150" fill="none" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="5,5" />
+                        
+                        <!-- Center pivot -->
+                        <circle cx="200" cy="200" r="8" fill="#374151" />
+                        
+                        <!-- Support arm -->
+                        <line id="supportArm" x1="200" y1="200" x2="320" y2="200" stroke="#6366f1" stroke-width="4" />
+                        
+                        <!-- Gyroscope group -->
+                        <g id="gyroGroup" transform="translate(320, 200)">
+                            <!-- Disc -->
+                            <ellipse id="gyroDisc" cx="0" cy="0" rx="30" ry="15" fill="#3b82f6" opacity="0.7" />
+                            
+                            <!-- Spin axis -->
+                            <line id="spinAxis" x1="-35" y1="0" x2="35" y2="0" stroke="#1e40af" stroke-width="3" />
+                            
+                            <!-- Rotation indicator -->
+                            <circle id="rotIndicator" cx="25" cy="0" r="4" fill="#ef4444" />
+                        </g>
+                        
+                        <!-- Torque arrow -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#ef4444" />
+                            </marker>
+                            <marker id="precession-arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#10b981" />
+                            </marker>
+                        </defs>
+                        
+                        <g id="torqueArrow" style="display: none;">
+                            <line id="torqueLine" x1="320" y1="160" x2="320" y2="130" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowhead)" />
+                            <text id="torqueLabel" x="330" y="145" fill="#ef4444" font-size="14" font-weight="bold">τ</text>
+                        </g>
+                        
+                        <!-- Precession direction arrow -->
+                        <path id="precessionPath" d="" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#precession-arrow)" style="display: none;" />
+                        
+                        <!-- Result label -->
+                        <text id="resultLabel" x="200" y="380" fill="#6b7280" font-size="12" text-anchor="middle">
+                            Ωₚ = 0.000 rad/s
+                        </text>
+                    </svg>
+                    
+                    <!-- Legend -->
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div>
+                            <span>Gyroscope</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div>
+                            <span>Torque (τ)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #6366f1;"></div>
+                            <span>Support Arm</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>Precession (Ωₚ)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-section">
+                    <h2>Simulation Controls</h2>
+                    
+                    <!-- Torque -->
+                    <div class="control-group">
+                        <label>Torque (τ): <span id="torqueValue">10.00</span> N·m</label>
+                        <input type="range" id="torqueSlider" min="-50" max="50" step="0.5" value="10">
+                        <div class="slider-labels">
+                            <span>-50</span>
+                            <span>0</span>
+                            <span>50</span>
+                        </div>
+                    </div>
+
+                    <!-- Spin Rate -->
+                    <div class="control-group">
+                        <label>Spin Rate (ω): <span id="spinRateValue">100.00</span> rad/s</label>
+                        <input type="range" id="spinRateSlider" min="1" max="500" step="1" value="100">
+                        <div class="slider-labels">
+                            <span>1</span>
+                            <span>250</span>
+                            <span>500</span>
+                        </div>
+                    </div>
+
+                    <!-- Moment of Inertia -->
+                    <div class="control-group">
+                        <label>Moment of Inertia (I): <span id="inertiaValue">1.000</span> kg·m²</label>
+                        <input type="range" id="inertiaSlider" min="0.001" max="10" step="0.01" value="1">
+                        <div class="slider-labels">
+                            <span>0.001</span>
+                            <span>5</span>
+                            <span>10</span>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="results-box">
+                        <h3>Results</h3>
+                        <div class="result-item">
+                            <span>Precession Rate (Ωₚ):</span>
+                            <span id="precessionResult" class="result-value">0.1000 rad/s</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Direction:</span>
+                            <span id="directionResult">Counter-clockwise</span>
+                        </div>
+                    </div>
+
+                    <!-- Animation Controls -->
+                    <div class="button-group">
+                        <button id="playPauseBtn" class="btn btn-primary">Pause</button>
+                        <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="info-box">
+                        <h4>About Gyroscope Precession</h4>
+                        <p>When torque is applied perpendicular to a spinning gyroscope's axis, 
+                        the gyroscope precesses around the vertical axis. The precession rate 
+                        is inversely proportional to both the spin rate and moment of inertia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physics Information -->
+        <div class="physics-info">
+            <h3>Physics Concepts</h3>
+            <div class="concepts-grid">
+                <div class="concept-card concept-blue">
+                    <h4>Symmetric Top</h4>
+                    <p>A rigid body with rotational symmetry around one axis, like a spinning top or gyroscope.</p>
+                </div>
+                <div class="concept-card concept-green">
+                    <h4>Small Nutation</h4>
+                    <p>Assumes minimal wobbling motion, allowing simplified precession calculations.</p>
+                </div>
+                <div class="concept-card concept-purple">
+                    <h4>Constraints</h4>
+                    <p>I &gt; 0 (positive inertia) and ω ≠ 0 (non-zero spin rate) are required.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

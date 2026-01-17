@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S39 Hohmann Transfer Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <!-- Header -->
+            <div class="header">
+                <h1>S39 Hohmann Transfer</h1>
+                <p class="subtitle">Two-Impulse Hohmann Transfer Orbit</p>
+                <div class="formulas">
+                    <p class="formula">ΔV₁ = √(μ(2/r₁ - 1/a)) - √(μ/r₁)</p>
+                    <p class="formula">ΔV₂ = √(μ/r₂) - √(μ(2/r₂ - 1/a))</p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Visualization -->
+                <div class="visualization-section">
+                    <h2>Transfer Orbit Visualization</h2>
+                    <svg id="transferCanvas" width="600" height="600">
+                        <!-- Star glow effect -->
+                        <defs>
+                            <radialGradient id="starGlow">
+                                <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#d97706;stop-opacity:0.6" />
+                            </radialGradient>
+                            <radialGradient id="satelliteGlow">
+                                <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+                                <stop offset="70%" style="stop-color:#3b82f6;stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0" />
+                            </radialGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                            <marker id="burnArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#ef4444" />
+                            </marker>
+                        </defs>
+                        
+                        <!-- Background space -->
+                        <rect width="600" height="600" fill="#0a0e1a"/>
+                        
+                        <!-- Stars background -->
+                        <g id="stars"></g>
+                        
+                        <!-- Initial orbit (r1) -->
+                        <circle id="orbit1" cx="300" cy="300" r="100" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.6"/>
+                        
+                        <!-- Final orbit (r2) -->
+                        <circle id="orbit2" cx="300" cy="300" r="200" fill="none" stroke="#10b981" stroke-width="2.5" opacity="0.6"/>
+                        
+                        <!-- Transfer orbit (ellipse) -->
+                        <ellipse id="transferOrbit" cx="300" cy="300" rx="150" ry="150" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="5,5" opacity="0.8"/>
+                        
+                        <!-- Central body -->
+                        <circle cx="300" cy="300" r="20" fill="url(#starGlow)" filter="url(#glow)"/>
+                        
+                        <!-- Satellite -->
+                        <g id="satellite">
+                            <circle cx="0" cy="0" r="10" fill="url(#satelliteGlow)" filter="url(#glow)"/>
+                            <circle cx="0" cy="0" r="6" fill="#3b82f6"/>
+                        </g>
+                        
+                        <!-- Burn markers -->
+                        <g id="burn1Marker" style="display: none;">
+                            <circle cx="0" cy="0" r="8" fill="none" stroke="#ef4444" stroke-width="2"/>
+                            <line x1="0" y1="0" x2="0" y2="0" stroke="#ef4444" stroke-width="3" marker-end="url(#burnArrow)"/>
+                            <text x="0" y="0" fill="#ef4444" font-size="12" font-weight="bold">ΔV₁</text>
+                        </g>
+                        
+                        <g id="burn2Marker" style="display: none;">
+                            <circle cx="0" cy="0" r="8" fill="none" stroke="#ef4444" stroke-width="2"/>
+                            <line x1="0" y1="0" x2="0" y2="0" stroke="#ef4444" stroke-width="3" marker-end="url(#burnArrow)"/>
+                            <text x="0" y="0" fill="#ef4444" font-size="12" font-weight="bold">ΔV₂</text>
+                        </g>
+                        
+                        <!-- Labels -->
+                        <text id="r1Label" x="410" y="300" fill="#3b82f6" font-size="14" font-weight="bold">r₁</text>
+                        <text id="r2Label" x="510" y="300" fill="#10b981" font-size="14" font-weight="bold">r₂</text>
+                        
+                        <!-- Phase indicator -->
+                        <text id="phaseText" x="300" y="40" fill="#94a3b8" font-size="16" text-anchor="middle" font-weight="bold">
+                            Phase: Initial Orbit
+                        </text>
+                    </svg>
+                    
+                    <!-- Legend -->
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #3b82f6;"></div>
+                            <span>Initial Orbit (r₁)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>Final Orbit (r₂)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #a855f7;"></div>
+                            <span>Transfer Orbit</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ef4444;"></div>
+                            <span>Burn Impulses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-section">
+                    <h2>Transfer Parameters</h2>
+                    
+                    <!-- Gravitational Parameter -->
+                    <div class="control-group">
+                        <label>Gravitational Parameter (μ): <span id="muValue">3.99e14</span> m³/s²</label>
+                        <input type="range" id="muSlider" min="11" max="15" step="0.01" value="14.6">
+                        <div class="slider-labels">
+                            <span>10¹¹</span>
+                            <span>10¹³</span>
+                            <span>10¹⁵</span>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" data-mu="3.986e14">Earth</button>
+                            <button class="preset-btn" data-mu="4.283e13">Mars</button>
+                            <button class="preset-btn" data-mu="1.327e20">Sun</button>
+                        </div>
+                    </div>
+
+                    <!-- Initial Radius -->
+                    <div class="control-group">
+                        <label>Initial Radius (r₁): <span id="r1Value">6.78e6</span> m</label>
+                        <input type="range" id="r1Slider" min="6" max="9" step="0.01" value="6.83">
+                        <div class="slider-labels">
+                            <span>10⁶</span>
+                            <span>10⁷·⁵</span>
+                            <span>10⁹</span>
+                        </div>
+                    </div>
+
+                    <!-- Final Radius -->
+                    <div class="control-group">
+                        <label>Final Radius (r₂): <span id="r2Value">4.22e7</span> m</label>
+                        <input type="range" id="r2Slider" min="6" max="9" step="0.01" value="7.625">
+                        <div class="slider-labels">
+                            <span>10⁶</span>
+                            <span>10⁷·⁵</span>
+                            <span>10⁹</span>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="preset-btn-transfer" data-r1="6.78e6" data-r2="4.22e7">LEO to GEO</button>
+                            <button class="preset-btn-transfer" data-r1="6.78e6" data-r2="3.844e8">LEO to Moon</button>
+                        </div>
+                    </div>
+
+                    <!-- Animation Speed -->
+                    <div class="control-group">
+                        <label>Animation Speed: <span id="speedValue">1.0</span>x</label>
+                        <input type="range" id="speedSlider" min="0.1" max="3" step="0.1" value="1">
+                        <div class="slider-labels">
+                            <span>0.1x</span>
+                            <span>1.5x</span>
+                            <span>3x</span>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="results-box">
+                        <h3>Delta-V Budget</h3>
+                        <div class="result-item">
+                            <span>First Burn (ΔV₁):</span>
+                            <span id="dv1Result" class="result-value">2428 m/s</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Second Burn (ΔV₂):</span>
+                            <span id="dv2Result" class="result-value">1469 m/s</span>
+                        </div>
+                        <div class="result-item result-highlight">
+                            <span>Total ΔV:</span>
+                            <span id="dvTotalResult" class="result-value-large">3897 m/s</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Transfer Time:</span>
+                            <span id="transferTime">5h 15m 44s</span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="info-panel">
+                        <h4>Orbit Details</h4>
+                        <div class="info-item">
+                            <span>Initial Speed (v₁):</span>
+                            <span id="v1Info">7668 m/s</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Final Speed (v₂):</span>
+                            <span id="v2Info">3075 m/s</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Semi-major Axis (a):</span>
+                            <span id="smaInfo">2.45e7 m</span>
+                        </div>
+                    </div>
+
+                    <!-- Animation Controls -->
+                    <div class="button-group">
+                        <button id="playPauseBtn" class="btn btn-primary">Pause</button>
+                        <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="info-box">
+                        <h4>About Hohmann Transfer</h4>
+                        <p>The Hohmann transfer is the most fuel-efficient way to move between two circular coplanar orbits. It requires two engine burns: one to enter the elliptical transfer orbit, and another to circularize at the destination.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physics Information -->
+        <div class="physics-info">
+            <h3>Astrodynamics Concepts</h3>
+            <div class="concepts-grid">
+                <div class="concept-card concept-blue">
+                    <h4>Coplanar Orbits</h4>
+                    <p>Both initial and final orbits lie in the same plane, eliminating the need for plane-change maneuvers which are extremely costly in terms of delta-v.</p>
+                </div>
+                <div class="concept-card concept-green">
+                    <h4>Impulsive Maneuvers</h4>
+                    <p>The Hohmann transfer assumes instantaneous velocity changes (impulses). Real burns take time but this approximation is valid for high thrust-to-weight ratios.</p>
+                </div>
+                <div class="concept-card concept-purple">
+                    <h4>Energy Efficiency</h4>
+                    <p>The Hohmann transfer is optimal for transferring between circular orbits when the radius ratio is less than about 15.6. For larger ratios, bi-elliptic transfers become more efficient.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

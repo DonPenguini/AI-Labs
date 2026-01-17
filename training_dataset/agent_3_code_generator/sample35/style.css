@@ -1,0 +1,459 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0f2fe 0%, #fae8ff 100%);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    color: #0c4a6e;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tags {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.tag-blue {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.tag-green {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.tag-purple {
+    background: #e9d5ff;
+    color: #6b21a8;
+}
+
+/* Main Grid */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.card h2 {
+    color: #1f2937;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.card h3 {
+    color: #374151;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Control Groups */
+.control-group {
+    margin-bottom: 2rem;
+}
+
+.control-group label {
+    display: block;
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.control-group label span {
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Sliders */
+.slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.slider-blue {
+    background: #bfdbfe;
+}
+
+.slider-green {
+    background: #bbf7d0;
+}
+
+.slider-purple {
+    background: #e9d5ff;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0891b2;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0891b2;
+    cursor: pointer;
+    border: none;
+}
+
+.composition-bar {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    margin-top: 0.5rem;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #cbd5e1;
+}
+
+.comp-1 {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    transition: width 0.3s ease;
+}
+
+.comp-2 {
+    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    transition: width 0.3s ease;
+}
+
+.composition-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.pressure-info {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Animate Button */
+.animate-btn {
+    width: 100%;
+    background: #0891b2;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.animate-btn:hover {
+    background: #0e7490;
+}
+
+/* Results */
+.results-card {
+    margin-bottom: 1.5rem;
+}
+
+.result-item {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.result-item:last-child {
+    margin-bottom: 0;
+}
+
+.result-blue {
+    background: #eff6ff;
+}
+
+.result-green {
+    background: #f0fdf4;
+}
+
+.result-purple {
+    background: #faf5ff;
+}
+
+.result-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.result-blue .result-value {
+    color: #0c4a6e;
+}
+
+.result-green .result-value {
+    color: #15803d;
+}
+
+.result-purple .result-value {
+    color: #7c3aed;
+}
+
+/* Info Card */
+.info-card {
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+    border: 2px solid #3b82f6;
+}
+
+.info-card p {
+    color: #374151;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-card ul li {
+    color: #374151;
+    font-size: 0.875rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.info-card ul li:last-child {
+    border-bottom: none;
+}
+
+/* Vessel Visualization */
+.vessel-container {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 400px;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.vessel {
+    flex: 1;
+    height: 350px;
+    border: 4px solid #475569;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.liquid-phase {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background: linear-gradient(180deg, #67e8f9 0%, #06b6d4 100%);
+    border-top: 3px dashed #0891b2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.vapor-phase {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(180deg, rgba(224, 242, 254, 0.5) 0%, rgba(224, 242, 254, 0.8) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.liquid-label, .vapor-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0c4a6e;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    border: 2px solid #0891b2;
+}
+
+.molecules-container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+}
+
+.molecule {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.molecule-1 {
+    background: #3b82f6;
+}
+
+.molecule-2 {
+    background: #a855f7;
+}
+
+.bubble-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(186, 230, 253, 0.6));
+    border: 2px solid rgba(8, 145, 178, 0.4);
+    opacity: 0;
+}
+
+.bubble.animating {
+    animation: bubbleRise 3s ease-out;
+}
+
+@keyframes bubbleRise {
+    0% {
+        bottom: 10%;
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 95%;
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+.pressure-gauge {
+    width: 150px;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 3px solid #0891b2;
+}
+
+.gauge-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.gauge-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0891b2;
+}
+
+/* Chart */
+.chart-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .vessel-container {
+        flex-direction: column;
+    }
+
+    .vessel {
+        width: 100%;
+    }
+
+    .pressure-gauge {
+        width: 100%;
+    }
+}
