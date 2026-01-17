@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buck Converter Simulation (CCM)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Buck Converter Simulation</h1>
+            <p class="subtitle">Continuous Conduction Mode (CCM) Analysis</p>
+        </header>
+
+        <div class="main-grid">
+            <aside class="controls">
+                <h2>Parameters</h2>
+                
+                <div class="control-group">
+                    <label>Input Voltage ($V_{in}$)</label>
+                    <div class="input-row">
+                        <input type="range" id="vin" min="5" max="60" step="1" value="24">
+                        <span id="val-vin" class="value">24 V</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Duty Cycle ($D$)</label>
+                    <div class="input-row">
+                        <input type="range" id="duty" min="0.1" max="0.9" step="0.05" value="0.5">
+                        <span id="val-duty" class="value">0.50</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Switching Freq ($f_s$)</label>
+                    <div class="input-row">
+                        <input type="range" id="freq" min="10" max="500" step="10" value="100">
+                        <span id="val-freq" class="value">100 kHz</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Inductor ($L$)</label>
+                    <div class="input-row">
+                        <input type="range" id="inductance" min="10" max="1000" step="10" value="100">
+                        <span id="val-inductance" class="value">100 &mu;H</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Capacitor ($C$)</label>
+                    <div class="input-row">
+                        <input type="range" id="capacitance" min="1" max="500" step="1" value="47">
+                        <span id="val-capacitance" class="value">47 &mu;F</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Load Resistance ($R$)</label>
+                    <div class="input-row">
+                        <input type="range" id="load" min="1" max="100" step="1" value="10">
+                        <span id="val-load" class="value">10 &Omega;</span>
+                    </div>
+                </div>
+
+                <div class="results-panel">
+                    <h3>Steady State Outputs</h3>
+                    <div class="result-item">
+                        <span>$V_{out}$ (Avg):</span>
+                        <span id="out-vout" class="res-val">12.00 V</span>
+                    </div>
+                    <div class="result-item">
+                        <span>$\Delta I_L$ (Ripple):</span>
+                        <span id="out-ripple-i" class="res-val">1.20 A</span>
+                    </div>
+                    <div class="result-item">
+                        <span>$\Delta V_{out}$ (Ripple):</span>
+                        <span id="out-ripple-v" class="res-val">0.05 V</span>
+                    </div>
+                    <div class="result-item">
+                        <span>$I_{L,avg}$ (Load):</span>
+                        <span id="out-il-avg" class="res-val">1.20 A</span>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="visuals">
+                <div class="canvas-card">
+                    <div class="card-header">
+                        <span>Circuit Schematic</span>
+                        <span class="status-indicator" id="switch-status">SWITCH: ON</span>
+                    </div>
+                    <canvas id="circuitCanvas"></canvas>
+                </div>
+
+                <div class="canvas-card">
+                    <div class="card-header">
+                        <span>Oscilloscopes (Real-time)</span>
+                        <div class="legend">
+                            <span class="leg-item"><span class="dot" style="background:#e74c3c"></span>$I_L$</span>
+                            <span class="leg-item"><span class="dot" style="background:#3498db"></span>$V_{out}$</span>
+                        </div>
+                    </div>
+                    <canvas id="scopeCanvas"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

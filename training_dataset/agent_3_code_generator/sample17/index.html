@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shockley Diode Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Shockley Diode Equation</h1>
+        <div class="equation-display">
+            $$I = I_s \left( e^{\frac{V}{n V_t}} - 1 \right), \quad V_t = \frac{k_B T}{q}$$
+        </div>
+    </header>
+
+    <div class="simulation-grid">
+        <aside class="controls">
+            <h2>Parameters</h2>
+
+            <div class="control-group">
+                <label for="voltage">Applied Voltage ($V$)</label>
+                <div class="input-row">
+                    <input type="range" id="voltage" min="-0.5" max="1.0" step="0.01" value="0.7">
+                    <span class="value-display" id="val-v">0.70 V</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="temp">Temperature ($T$)</label>
+                <div class="input-row">
+                    <input type="range" id="temp" min="250" max="350" step="1" value="300">
+                    <span class="value-display" id="val-t">300 K</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="ideality">Ideality Factor ($n$)</label>
+                <div class="input-row">
+                    <input type="range" id="ideality" min="1.0" max="2.0" step="0.05" value="1.5">
+                    <span class="value-display" id="val-n">1.50</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="is_log">Saturation Current ($I_s$)</label>
+                <div class="input-row">
+                    <input type="range" id="is_log" min="-15" max="-6" step="0.1" value="-12">
+                    <span class="value-display" id="val-is">1.0 pA</span>
+                </div>
+                <small class="hint">Adjusts magnitude ($10^{-15}$ to $10^{-6}$)</small>
+            </div>
+
+            <div class="results-panel">
+                <h3>Calculated Output</h3>
+                <div class="result-row">
+                    <span>Thermal Voltage ($V_t$):</span>
+                    <span id="out-vt">25.85 mV</span>
+                </div>
+                <div class="result-row highlight">
+                    <span>Diode Current ($I$):</span>
+                    <span id="out-current">0.00 mA</span>
+                </div>
+                <div class="bias-indicator" id="bias-status">Forward Bias</div>
+            </div>
+        </aside>
+
+        <main class="visuals">
+            <div class="canvas-card">
+                <h3>I-V Characteristic Curve</h3>
+                <canvas id="graphCanvas"></canvas>
+            </div>
+
+            <div class="canvas-card">
+                <h3>Circuit Animation</h3>
+                <canvas id="circuitCanvas"></canvas>
+                <div class="legend">
+                    <span class="dot-legend"></span> Electron Flow (Conventionally opposite to I)
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

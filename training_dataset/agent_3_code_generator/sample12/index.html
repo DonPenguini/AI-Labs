@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLC Underdamped Step Response Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RLC Series Circuit - Underdamped Step Response</h1>
+            <p class="subtitle">Interactive Power Electronics Simulation</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Circuit Diagram -->
+            <div class="circuit-section">
+                <h2>Circuit Diagram</h2>
+                <svg id="circuit" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Voltage Source -->
+                    <circle cx="80" cy="150" r="40" fill="none" stroke="#4a5568" stroke-width="3"/>
+                    <text x="80" y="145" text-anchor="middle" class="component-label">V</text>
+                    <text x="80" y="165" text-anchor="middle" class="value-label" id="voltageLabel">10V</text>
+                    <line x1="80" y1="120" x2="80" y2="110" stroke="#4a5568" stroke-width="2"/>
+                    <line x1="80" y1="190" x2="80" y2="200" stroke="#4a5568" stroke-width="2"/>
+                    
+                    <!-- Top Wire -->
+                    <line id="wire1" x1="80" y1="110" x2="200" y2="110" class="wire"/>
+                    
+                    <!-- Resistor -->
+                    <rect x="200" y="100" width="80" height="20" fill="none" stroke="#4a5568" stroke-width="2"/>
+                    <line x1="205" y1="100" x2="205" y2="120" stroke="#4a5568" stroke-width="1"/>
+                    <line x1="215" y1="100" x2="215" y2="120" stroke="#4a5568" stroke-width="1"/>
+                    <line x1="225" y1="100" x2="225" y2="120" stroke="#4a5568" stroke-width="1"/>
+                    <line x1="235" y1="100" x2="235" y2="120" stroke="#4a5568" stroke-width="1"/>
+                    <text x="240" y="95" text-anchor="middle" class="component-label">R</text>
+                    <text x="240" y="145" text-anchor="middle" class="value-label" id="resistorLabel">10Ω</text>
+                    
+                    <line id="wire2" x1="280" y1="110" x2="350" y2="110" class="wire"/>
+                    
+                    <!-- Inductor -->
+                    <path d="M 350 110 Q 355 100 360 110 Q 365 120 370 110 Q 375 100 380 110 Q 385 120 390 110 Q 395 100 400 110" 
+                          fill="none" stroke="#4a5568" stroke-width="3"/>
+                    <text x="375" y="95" text-anchor="middle" class="component-label">L</text>
+                    <text x="375" y="145" text-anchor="middle" class="value-label" id="inductorLabel">1mH</text>
+                    
+                    <line id="wire3" x1="400" y1="110" x2="480" y2="110" class="wire"/>
+                    
+                    <!-- Capacitor -->
+                    <line x1="480" y1="90" x2="480" y2="130" stroke="#4a5568" stroke-width="3"/>
+                    <line x1="490" y1="90" x2="490" y2="130" stroke="#4a5568" stroke-width="3"/>
+                    <text x="485" y="80" text-anchor="middle" class="component-label">C</text>
+                    <text x="485" y="155" text-anchor="middle" class="value-label" id="capacitorLabel">10µF</text>
+                    
+                    <!-- Voltage indicator across capacitor -->
+                    <text x="520" y="110" class="voltage-indicator" id="vcIndicator">Vc = 0.0V</text>
+                    
+                    <!-- Bottom Wire -->
+                    <line id="wire4" x1="490" y1="110" x2="520" y2="110" class="wire"/>
+                    <line id="wire5" x1="520" y1="110" x2="520" y2="200" class="wire"/>
+                    <line id="wire6" x1="520" y1="200" x2="80" y2="200" class="wire"/>
+                    
+                    <!-- Current arrow -->
+                    <g id="currentArrow" class="current-arrow">
+                        <line x1="150" y1="110" x2="180" y2="110" stroke="#e53e3e" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="165" y="100" text-anchor="middle" fill="#e53e3e" font-size="14" font-weight="bold">i(t)</text>
+                    </g>
+                    
+                    <!-- Arrow marker -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#e53e3e"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <h2>Circuit Parameters</h2>
+                
+                <div class="control-group">
+                    <label for="resistanceSlider">Resistance (R): <span id="resistanceValue">10</span> Ω</label>
+                    <input type="range" id="resistanceSlider" min="0.1" max="100" step="0.1" value="10">
+                </div>
+                
+                <div class="control-group">
+                    <label for="inductanceSlider">Inductance (L): <span id="inductanceValue">1</span> mH</label>
+                    <input type="range" id="inductanceSlider" min="0.001" max="100" step="0.001" value="1">
+                </div>
+                
+                <div class="control-group">
+                    <label for="capacitanceSlider">Capacitance (C): <span id="capacitanceValue">10</span> µF</label>
+                    <input type="range" id="capacitanceSlider" min="0.001" max="1000" step="0.001" value="10">
+                </div>
+                
+                <div class="control-group">
+                    <label for="voltageSlider">Source Voltage (V): <span id="voltageValue">10</span> V</label>
+                    <input type="range" id="voltageSlider" min="1" max="100" step="1" value="10">
+                </div>
+
+                <div class="button-group">
+                    <button id="startBtn" class="btn btn-primary">Start Simulation</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div class="status-indicator">
+                    <div class="status-label">Circuit Status:</div>
+                    <div id="statusText" class="status-text">Ready</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculated Parameters -->
+        <div class="parameters-section">
+            <h2>Calculated Parameters</h2>
+            <div class="param-grid">
+                <div class="param-card">
+                    <div class="param-label">Natural Frequency (ω₀)</div>
+                    <div class="param-value" id="omega0Value">-</div>
+                </div>
+                <div class="param-card">
+                    <div class="param-label">Damping Ratio (ζ)</div>
+                    <div class="param-value" id="zetaValue">-</div>
+                </div>
+                <div class="param-card">
+                    <div class="param-label">Damped Frequency (ωd)</div>
+                    <div class="param-value" id="omegadValue">-</div>
+                </div>
+                <div class="param-card">
+                    <div class="param-label">Condition</div>
+                    <div class="param-value" id="conditionValue">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graph -->
+        <div class="graph-section">
+            <h2>Capacitor Voltage vs Time</h2>
+            <canvas id="graphCanvas"></canvas>
+            <div class="graph-controls">
+                <label><input type="checkbox" id="showGrid" checked> Show Grid</label>
+                <label><input type="checkbox" id="showPoints" checked> Show Points</label>
+            </div>
+        </div>
+
+        <!-- Equations -->
+        <div class="equations-section">
+            <h2>Mathematical Equations</h2>
+            <div class="equation-grid">
+                <div class="equation-card">
+                    <h3>Natural Frequency</h3>
+                    <div class="equation">ω₀ = 1 / √(L·C)</div>
+                </div>
+                <div class="equation-card">
+                    <h3>Damping Ratio</h3>
+                    <div class="equation">ζ = (R/2) · √(C/L)</div>
+                </div>
+                <div class="equation-card">
+                    <h3>Damped Frequency</h3>
+                    <div class="equation">ωd = ω₀ · √(1 - ζ²)</div>
+                    <div class="condition">Condition: ζ < 1</div>
+                </div>
+                <div class="equation-card full-width">
+                    <h3>Capacitor Voltage (Underdamped)</h3>
+                    <div class="equation">vc(t) = V · [1 - (1/√(1-ζ²)) · e^(-ζω₀t) · sin(ωd·t + arctan(√(1-ζ²)/ζ))]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

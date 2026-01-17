@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverting Buck-Boost Converter Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+    <header>
+        <h1>Inverting Buck-Boost Converter</h1>
+        <p class="subtitle">Continuous Conduction Mode (CCM) Analysis</p>
+    </header>
+
+    <div class="main-content">
+        <aside class="controls">
+            <div class="control-group">
+                <label for="vin">Input Voltage ($V_{in}$)</label>
+                <div class="slider-row">
+                    <input type="range" id="vin" min="1" max="40" step="0.5" value="12">
+                    <span id="val-vin" class="value-display">12.0 V</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="duty">Duty Cycle ($D$)</label>
+                <div class="slider-row">
+                    <input type="range" id="duty" min="0.1" max="0.85" step="0.01" value="0.4">
+                    <span id="val-duty" class="value-display">0.40</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="freq">Frequency ($f_s$)</label>
+                <div class="slider-row">
+                    <input type="range" id="freq" min="10" max="500" step="10" value="100">
+                    <span id="val-freq" class="value-display">100 kHz</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="ind">Inductance ($L$)</label>
+                <div class="slider-row">
+                    <input type="range" id="ind" min="10" max="1000" step="10" value="150">
+                    <span id="val-ind" class="value-display">150 μH</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="cap">Capacitance ($C$)</label>
+                <div class="slider-row">
+                    <input type="range" id="cap" min="1" max="1000" step="1" value="100">
+                    <span id="val-cap" class="value-display">100 μF</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="res">Load Resistance ($R$)</label>
+                <div class="slider-row">
+                    <input type="range" id="res" min="1" max="200" step="1" value="10">
+                    <span id="val-res" class="value-display">10 Ω</span>
+                </div>
+            </div>
+
+            <div class="results-box">
+                <h3>Steady State Outputs</h3>
+                <div class="result-item">
+                    <span>$V_{out}$ (Avg):</span>
+                    <span id="out-vout" class="res-value negative">-8.00 V</span>
+                </div>
+                <div class="result-item">
+                    <span>$\Delta I_L$ (Ripple):</span>
+                    <span id="out-ripple-i" class="res-value">0.32 A</span>
+                </div>
+                <div class="result-item">
+                    <span>$\Delta V_{out}$ (Ripple):</span>
+                    <span id="out-ripple-v" class="res-value">0.05 V</span>
+                </div>
+                <div class="result-item warning" id="ccm-warning" style="display:none;">
+                    Warning: Likely DCM
+                </div>
+            </div>
+        </aside>
+
+        <main class="visuals">
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <span>Circuit Diagram</span>
+                    <span id="switch-state" class="badge">SW: ON</span>
+                </div>
+                <canvas id="circuitCanvas"></canvas>
+            </div>
+
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <span>Waveforms (Oscilloscope)</span>
+                    <div class="legend">
+                        <span style="color:#e74c3c">● $I_L$</span>
+                        <span style="color:#3498db">● $V_{out}$</span>
+                    </div>
+                </div>
+                <canvas id="scopeCanvas"></canvas>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
