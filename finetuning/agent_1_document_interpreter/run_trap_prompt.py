@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Run prompts on the finetuned QLoRA model and print outputs.
+Run prompts on the finetuned LoRA model and print outputs.
 
 - Main prompt: replicates finetuning setup (instruction + input) → expect SSD JSON.
 - Trap prompts: general questions with NO instruction → expect natural language.
@@ -10,15 +10,16 @@ Run prompts on the finetuned QLoRA model and print outputs.
 import os
 from pathlib import Path
 
+import torch
 from unsloth import FastLanguageModel
 from peft import PeftModel
 
 
 # ---------------------------------------------------------------------------
-# Config (override via env to match train_qlora.py)
+# Config (override via env to match train.py)
 # ---------------------------------------------------------------------------
-MODEL_NAME = os.environ.get("FINETUNE_MODEL", "unsloth/llama-3.1-8b-unsloth-bnb-4bit")
-ADAPTER_PATH = os.environ.get("FINETUNE_OUTPUT", "outputs_qlora")
+MODEL_NAME = os.environ.get("FINETUNE_MODEL", "unsloth/Qwen3-4B")
+ADAPTER_PATH = os.environ.get("FINETUNE_OUTPUT", "outputs_lora")
 MAX_SEQ_LENGTH = int(os.environ.get("FINETUNE_MAX_SEQ_LENGTH", "4096"))
 MAX_NEW_TOKENS = int(os.environ.get("RUN_PROMPT_MAX_TOKENS", "1024"))
 
@@ -82,12 +83,14 @@ def main():
     if not adapter_path.exists():
         raise FileNotFoundError(f"Adapter path not found: {adapter_path}")
 
-    print("Loading base model (4-bit)...")
+    print("Loading base model (LoRA, 16-bit)...")
+    # Match the training setup: use bfloat16 when available, otherwise float16
+    preferred_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=MODEL_NAME,
         max_seq_length=MAX_SEQ_LENGTH,
-        dtype=None,
-        load_in_4bit=True,
+        dtype=preferred_dtype,
+        load_in_4bit=False,  # standard LoRA (no QLoRA quantization)
         trust_remote_code=False,
     )
 
