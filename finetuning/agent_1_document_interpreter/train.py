@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fine-tune a language model on model1_samples.jsonl using Unsloth + QLoRA.
+Fine-tune a language model on model1_samples.jsonl using Unsloth + LoRA.
 - Trains only on the OUTPUT (completion); instruction and input are used as context but excluded from loss.
 - Uses 2x V100 GPUs via Distributed Data Parallel (DDP) when launched with torchrun.
 """
@@ -20,8 +20,8 @@ import weave
 # Config (override via env or edit here)
 # ---------------------------------------------------------------------------
 DATA_PATH = os.environ.get("FINETUNE_DATA", "model1_samples.jsonl")
-MODEL_NAME = os.environ.get("FINETUNE_MODEL", "unsloth/llama-3.1-8b-unsloth-bnb-4bit")
-OUTPUT_DIR = os.environ.get("FINETUNE_OUTPUT", "outputs_qlora")
+MODEL_NAME = os.environ.get("FINETUNE_MODEL", "unsloth/Qwen3-8B")
+OUTPUT_DIR = os.environ.get("FINETUNE_OUTPUT", "outputs_lora")
 MAX_SEQ_LENGTH = int(os.environ.get("FINETUNE_MAX_SEQ_LENGTH", "4096"))
 NUM_EPOCHS = float(os.environ.get("FINETUNE_EPOCHS", "1"))
 PER_DEVICE_BATCH_SIZE = int(os.environ.get("FINETUNE_BATCH_SIZE", "2"))
@@ -104,16 +104,19 @@ def main():
     dataset = load_and_format_dataset(data_path)
     print(f"Dataset size: {len(dataset)}")
 
-    print(f"Loading model {model_name} (QLoRA 4-bit) ...")
+    print(f"Loading model {model_name} (LoRA, 16-bit) ...")
+    # For standard LoRA we keep the base model in 16-bit precision (no 4-bit quantization).
+    # Use bfloat16 when available, otherwise float16.
+    preferred_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=model_name,
         max_seq_length=MAX_SEQ_LENGTH,
-        dtype=None,  # auto
-        load_in_4bit=True,  # QLoRA
+        dtype=preferred_dtype,
+        load_in_4bit=False,  # standard LoRA (no QLoRA quantization)
         trust_remote_code=False,
     )
 
-    # LoRA adapter (QLoRA)
+    # LoRA adapter (standard LoRA on 16-bit base model)
     model = FastLanguageModel.get_peft_model(
         model,
         r=LORA_R,
@@ -142,7 +145,7 @@ def main():
 
     # WandB: set WANDB_PROJECT, WANDB_RUN_NAME, WANDB_ENTITY in env; run `wandb login` or set WANDB_API_KEY
     report_to = "none" if os.environ.get("WANDB_DISABLED", "").lower() in ("1", "true", "yes") else "wandb"
-    run_name = os.environ.get("WANDB_RUN_NAME") or f"qlora-{Path(output_dir).name}"
+    run_name = os.environ.get("WANDB_RUN_NAME") or f"lora-{Path(output_dir).name}"
 
     training_args = SFTConfig(
         output_dir=output_dir,
