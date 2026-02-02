@@ -26,11 +26,11 @@ MAX_SEQ_LENGTH = int(os.environ.get("FINETUNE_MAX_SEQ_LENGTH", "4096"))
 NUM_EPOCHS = float(os.environ.get("FINETUNE_EPOCHS", "1"))
 PER_DEVICE_BATCH_SIZE = int(os.environ.get("FINETUNE_BATCH_SIZE", "2"))
 GRADIENT_ACCUMULATION_STEPS = int(os.environ.get("FINETUNE_GRAD_ACCUM", "8"))
-LEARNING_RATE = float(os.environ.get("FINETUNE_LR", "2e-5"))
+LEARNING_RATE = float(os.environ.get("FINETUNE_LR", "1e-5"))
 LORA_R = int(os.environ.get("FINETUNE_LORA_R", "16"))
 LORA_ALPHA = int(os.environ.get("FINETUNE_LORA_ALPHA", "16"))
 SAVE_STEPS = int(os.environ.get("FINETUNE_SAVE_STEPS", "200"))
-LOGGING_STEPS = int(os.environ.get("FINETUNE_LOGGING_STEPS", "10"))
+LOGGING_STEPS = int(os.environ.get("FINETUNE_LOGGING_STEPS", "5"))
 
 
 def load_and_format_dataset(data_path: str):
@@ -67,12 +67,14 @@ def load_and_format_dataset(data_path: str):
 def tokenize_for_completion_only(dataset, tokenizer, max_length: int):
     """Pre-tokenize dataset to input_ids + completion_mask so Unsloth skips formatting_func.
     Loss will be applied only where completion_mask=1 (output tokens).
+    EOS is appended to each completion so the model learns to output it and stop generation.
     """
     def _tokenize(example):
         prompt = example["prompt"]
         completion = example["completion"]
         prompt_ids = tokenizer(prompt, truncation=True, max_length=max_length, add_special_tokens=True)["input_ids"]
-        full_text = prompt + completion
+        # Append EOS so the model learns to emit it at end of generation
+        full_text = prompt + completion + tokenizer.eos_token
         full_encoded = tokenizer(full_text, truncation=True, max_length=max_length, add_special_tokens=True)
         full_ids = full_encoded["input_ids"]
         prompt_len = len(prompt_ids)
